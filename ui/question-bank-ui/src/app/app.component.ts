@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { QuestionListComponent } from './question-list/question-list.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { StandardsComponent } from './standards/standards.component';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, QuestionListComponent],
+  imports: [RouterOutlet , StandardsComponent, SubjectsComponent , RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
