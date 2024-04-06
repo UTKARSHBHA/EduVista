@@ -1,1 +1,7 @@
-<p>options works!</p>
+<h2>Options</h2>
+<ul>
+ <!-- <li *ngFor="let question of questions">{{ question.question_text }}</li> -->
+ @for(option of options; track option.id){
+    <li>{{option.name}}</li>
+ }
+</ul>

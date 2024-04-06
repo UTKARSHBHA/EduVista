@@ -1,1 +1,7 @@
-<p>questions works!</p>
+<h2>Questions</h2>
+<ul>
+ <!-- <li *ngFor="let question of questions">{{ question.question_text }}</li> -->
+ @for(question of questions; track question.id){
+    <li>{{question.question_text}}</li>
+ }
+</ul>
