@@ -61,11 +61,10 @@ pip install -r requirements.txt
 
 
 6. Apply migrations:
-python manage.py makemigrations
-python manage.py migrate
+python manage.py makemigrations python manage.py migrate
 
 
-1. Run the development server:
+7. Run the development server:
 python manage.py runserver
 
 
@@ -96,4 +95,4 @@ To run the application, you need to start both the backend and frontend servers.
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) before getting started.
-
+This updated README.md reflects the current state of the project, including the setup instructions for both the backend and frontend, as well as an overview of the application's features.
