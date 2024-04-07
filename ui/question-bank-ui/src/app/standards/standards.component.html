@@ -1,4 +1,17 @@
+<!-- In standards.component.html -->
 <h2>Standards</h2>
+<form [formGroup]="standardForm" (ngSubmit)="onSubmit()">
+ <div>
+    <label for="name">Name:</label>
+    <input id="name" type="text" formControlName="name">
+ </div>
+ <button type="submit">Add Standard</button>
+</form>
+<!-- <ul>
+ <li *ngFor="let standard of standards">{{ standard.name }}</li>
+</ul> -->
+
+<!-- <h2>Standards</h2> -->
 <ul>
  <!-- <li *ngFor="let question of questions">{{ question.question_text }}</li> -->
  @for(standard of standards; track standard.id){

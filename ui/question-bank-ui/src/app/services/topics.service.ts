@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,4 +11,7 @@ export class TopicsService {
   getTopics(){
     return this.httpClient.get(this.url);
   }
+  addTopic(topic: any): Observable<any> {
+    return this.httpClient.post(this.url, topic);
+ }
 }
