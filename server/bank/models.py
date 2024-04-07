@@ -40,7 +40,7 @@ class Question(models.Model):
         ('easy', 'Easy'),
     ]
     difficulty_level = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
-    class_level = models.ForeignKey(Standard, on_delete=models.CASCADE)
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     marks = models.IntegerField()
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
