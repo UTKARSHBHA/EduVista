@@ -117,4 +117,21 @@ export class QuestionsComponent implements OnInit {
 onFileSelected(event: any) {
  this.selectedFile = <File>event.target.files[0];
 }
+
+
+deleteQuestion(questionId: number): void {
+  if (confirm('Are you sure you want to delete this question?')) {
+      this.questionsService.deleteQuestion(questionId).subscribe({
+          next: response => {
+              console.log(response);
+              // Reload the questions list to ensure it's up-to-date
+              this.loadQuestions();
+          },
+          error: error => {
+              console.error(error);
+          }
+      });
+  }
+}
+
  }

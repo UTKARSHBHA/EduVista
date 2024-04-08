@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SubjectListCreateView, StandardListCreateView,  TopicListCreateView, ChapterListCreateView, QuestionListCreateView, OptionListCreateView, SubjectDeleteView, StandardDeleteView, TopicDeleteView, ChapterDeleteView
+from .views import SubjectListCreateView, StandardListCreateView,  TopicListCreateView, ChapterListCreateView, QuestionListCreateView, OptionListCreateView, SubjectDeleteView, StandardDeleteView, TopicDeleteView, ChapterDeleteView, QuestionDeleteView
 
 urlpatterns = [
     path('subjects/', SubjectListCreateView.as_view(), name='subject-list-create'),
@@ -17,6 +17,9 @@ urlpatterns = [
         path('topics/<int:pk>/delete/', TopicDeleteView.as_view(), name='delete_topic'),
 
         path('chapters/<int:pk>/delete/', ChapterDeleteView.as_view(), name='delete_chapter'),
+
+        path('questions/<int:pk>/delete/', QuestionDeleteView.as_view(), name='delete_question'),
+
 
 
 ]

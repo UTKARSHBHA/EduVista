@@ -78,5 +78,7 @@
  <!-- <li *ngFor="let question of questions">{{ question.question_text }} - {{ question.chapter }}</li> -->
  @for(question of questions; track question.id){
    <li>{{question.question_text}}</li>
+   <button (click)="deleteQuestion(question.id)">Delete</button>
+
  }
 </ul>
