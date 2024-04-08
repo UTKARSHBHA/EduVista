@@ -36,3 +36,7 @@ class SubjectDeleteView(generics.DestroyAPIView):
 class StandardDeleteView(generics.DestroyAPIView):
     queryset = Standard.objects.all()
     serializer_class = StandardSerializer
+
+class TopicDeleteView(generics.DestroyAPIView):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
