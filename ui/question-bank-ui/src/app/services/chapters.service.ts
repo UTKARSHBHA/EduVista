@@ -8,10 +8,13 @@ import { Observable } from 'rxjs';
 export class ChaptersService {
   private url = 'http://localhost:8000/api/chapters/';
   constructor(private httpClient: HttpClient) { }
-  getChapters(){
+  getChapters(): Observable<any> {
     return this.httpClient.get(this.url);
-  }
+ }
   addChapter(chapter: any): Observable<any> {
     return this.httpClient.post(this.url, chapter);
  }
+ deleteChapter(chapterId: number): Observable<any> {
+  return this.httpClient.delete(`${this.url}${chapterId}/delete/`);
+}
 }

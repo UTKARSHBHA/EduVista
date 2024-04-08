@@ -51,4 +51,19 @@ onSubmit(): void {
     });
   }
 }
+
+deleteChapter(chapterId: number): void {
+  if (confirm('Are you sure you want to delete this chapter?')) {
+      this.chaptersService.deleteChapter(chapterId).subscribe({
+          next: response => {
+              console.log(response);
+              // Reload the chapters list to ensure it's up-to-date
+              this.loadChapters();
+          },
+          error: error => {
+              console.error(error);
+          }
+      });
+  }
+}
 }
