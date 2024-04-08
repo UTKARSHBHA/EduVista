@@ -17,5 +17,7 @@
  <!-- <li *ngFor="let subject of subjects">{{ subject.name }}</li> -->
  @for(subject of subjects; track subject.id){
    <li>{{subject.name}}</li>
+   <button (click)="deleteSubject(subject.id)">Delete</button>
+
 }
 </ul>

@@ -15,5 +15,8 @@ export class StandardsService {
   addStandard(standard: any): Observable<any> {
     return this.httpClient.post(this.url, standard);
  }
+ deleteStandard(standardId: number): Observable<any> {
+  return this.httpClient.delete(`${this.url}${standardId}/delete/`);
+}
 
 }

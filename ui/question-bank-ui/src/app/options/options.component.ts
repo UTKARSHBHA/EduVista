@@ -47,4 +47,20 @@ export class OptionsComponent implements OnInit {
        });
      }
   }
+
+  deleteOption(optionId: number): void {
+    if (confirm('Are you sure you want to delete this option?')) {
+        this.optionsService.deleteOption(optionId).subscribe({
+            next: response => {
+                console.log(response);
+                // Reload the options list to ensure it's up-to-date
+                this.loadOptions();
+            },
+            error: error => {
+                console.error(error);
+            }
+        });
+    }
+ }
+
  }

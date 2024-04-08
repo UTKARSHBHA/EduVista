@@ -16,5 +16,7 @@
  <!-- <li *ngFor="let question of questions">{{ question.question_text }}</li> -->
  @for(standard of standards; track standard.id){
     <li>{{standard.name}}</li>
+    <button (click)="deleteStandard(standard.id)">Delete</button>
+
  }
 </ul>

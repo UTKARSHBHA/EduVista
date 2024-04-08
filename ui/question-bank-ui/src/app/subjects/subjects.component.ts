@@ -15,26 +15,44 @@ export class SubjectsComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: SubjectsService
+    private subjectsService: SubjectsService
  ) {
     this.subjectForm = this.formBuilder.group({
       name: ['', Validators.required]
     });
  }
  ngOnInit(): void {
-    this.service.getSubjects().subscribe(data => {
-      this.subjects = data;
-      console.log(this.subjects);
-    });
+    this.loadSubjects();
  }
 
  onSubmit(): void {
   if (this.subjectForm.valid) {
-    this.service.createSubject(this.subjectForm.value).subscribe(data => {
+    this.subjectsService.createSubject(this.subjectForm.value).subscribe(data => {
       console.log('Subject created:', data);
       this.subjects.push(data);
       this.subjectForm.reset();
     });
   }
 }
+loadSubjects(): void {
+  this.subjectsService.getSubjects().subscribe(data => {
+    this.subjects = data;
+  });
+}
+
+deleteSubject(subjectId: number): void {
+  if (confirm('Are you sure you want to delete this subject?')) {
+      this.subjectsService.deleteSubject(subjectId).subscribe({
+          next: response => {
+              console.log(response);
+              // Reload the subjects list to ensure it's up-to-date
+              this.loadSubjects();
+          },
+          error: error => {
+              console.error(error);
+          }
+      });
+  }
+}
+
 }

@@ -56,4 +56,18 @@ onSubmit(): void {
     });
   }
 }
+deleteTopic(topicId: number): void {
+  if (confirm('Are you sure you want to delete this topic?')) {
+      this.topicsService.deleteTopic(topicId).subscribe({
+          next: response => {
+              console.log(response);
+              // Reload the topics list to ensure it's up-to-date
+              this.loadTopics();
+          },
+          error: error => {
+              console.error(error);
+          }
+      });
+  }
+}
 }
