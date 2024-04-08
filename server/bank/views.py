@@ -48,3 +48,7 @@ class ChapterDeleteView(generics.DestroyAPIView):
 class QuestionDeleteView(generics.DestroyAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
+class OptionDeleteView(generics.DestroyAPIView):
+    queryset = Option.objects.all()
+    serializer_class = OptionSerializer

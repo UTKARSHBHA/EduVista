@@ -8,13 +8,16 @@ import { Observable } from 'rxjs';
 export class OptionsService {
  private apiUrl = 'http://localhost:8000/api/options/';
 
- constructor(private http: HttpClient) { }
+ constructor(private httpClient: HttpClient) { }
 
  getOptions(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.httpClient.get<any>(this.apiUrl);
  }
 
  addOption(option: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, option);
+    return this.httpClient.post<any>(this.apiUrl, option);
  }
+ deleteOption(optionId: number): Observable<any> {
+   return this.httpClient.delete(`${this.apiUrl}${optionId}/delete/`);
+}
 }

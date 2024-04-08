@@ -119,19 +119,19 @@ onFileSelected(event: any) {
 }
 
 
-deleteQuestion(questionId: number): void {
-  if (confirm('Are you sure you want to delete this question?')) {
-      this.questionsService.deleteQuestion(questionId).subscribe({
-          next: response => {
-              console.log(response);
-              // Reload the questions list to ensure it's up-to-date
-              this.loadQuestions();
-          },
-          error: error => {
-              console.error(error);
-          }
-      });
-  }
-}
+// deleteQuestion(questionId: number): void {
+//   if (confirm('Are you sure you want to delete this question?')) {
+//       this.questionsService.deleteQuestion(questionId).subscribe({
+//           next: response => {
+//               console.log(response);
+//               // Reload the questions list to ensure it's up-to-date
+//               this.loadQuestions();
+//           },
+//           error: error => {
+//               console.error(error);
+//           }
+//       });
+//   }
+// }
 
  }
