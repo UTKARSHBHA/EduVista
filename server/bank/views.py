@@ -25,3 +25,10 @@ class QuestionListCreateView(generics.ListCreateAPIView):
 class OptionListCreateView(generics.ListCreateAPIView):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
+
+
+# delete 
+
+class SubjectDeleteView(generics.DestroyAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
