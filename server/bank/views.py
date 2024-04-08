@@ -32,3 +32,7 @@ class OptionListCreateView(generics.ListCreateAPIView):
 class SubjectDeleteView(generics.DestroyAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
+class StandardDeleteView(generics.DestroyAPIView):
+    queryset = Standard.objects.all()
+    serializer_class = StandardSerializer
