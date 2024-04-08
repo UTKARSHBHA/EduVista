@@ -40,13 +40,17 @@ export class OptionsComponent implements OnInit {
   }
  
   onSubmit(): void {
-     if (this.optionForm.valid) {
-       this.optionsService.addOption(this.optionForm.value).subscribe(data => {
+    if (this.optionForm.valid) {
+       // Explicitly set is_correct to false if the checkbox is not checked
+       const optionData = this.optionForm.value;
+       optionData.is_correct = optionData.is_correct || false;
+   
+       this.optionsService.addOption(optionData).subscribe(data => {
          this.options.push(data);
          this.optionForm.reset();
        });
-     }
-  }
+    }
+   }
 
   deleteOption(optionId: number): void {
     if (confirm('Are you sure you want to delete this option?')) {
