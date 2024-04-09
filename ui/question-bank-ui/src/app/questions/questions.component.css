@@ -1,83 +1,93 @@
-/* styles.css */
+/* questions.component.css */
+*{
+  box-sizing: border-box;
+}
 
-/* Apply general styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-  
-  h2 {
-    color: #333;
-  }
-  
-  form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  textarea,
-  select,
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  button[type="submit"],
-  button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  button[type="submit"]:hover,
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  button[type="submit"] {
-    width: auto;
-  }
-  
-  /* Additional styling for delete buttons */
-  button.delete-btn {
-    background-color: #dc3545;
-  }
-  
-  button.delete-btn:hover {
-    background-color: #c82333;
-  }
 
-  .questions-list{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    
-  }
-  
+.questions-container {
+  max-width: 800px; /* Adjust this value as needed */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px; /* Optional: Add some horizontal padding */
+}
+
+.questions-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Increase gap for better spacing */
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  width: 100%; /* Ensure the form takes up the full width of the container */
+}
+
+.questions-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.questions-form input,
+.questions-form select,
+.questions-form textarea {
+  /* padding: 10px; */
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  /* margin: 10px; */
+
+  /* border-color: red; */
+}
+
+.questions-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin:20px 0 ; /* Increase margin-top for better spacing */
+}
+
+.questions-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Ensure consistent spacing for all form elements */
+.questions-form div {
+  margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+/* Specific styling for the image input */
+.questions-form .image-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the image input */
+}
+
+/* questions.component.css */
+
+/* Existing styles */
+
+/* Adjustments for input fields */
+.questions-form input,
+.questions-form select,
+.questions-form textarea {
+ padding: 10px; /* Increase padding for better spacing */
+ border: 1px solid #ced4da;
+ border-radius: 4px;
+ font-size: 16px;
+ width: 100%;
+ margin: 10px 0; /* Add some space below the input fields */
+}
+
+/* Adjustments for labels */
+.questions-form label {
+ font-weight: bold;
+ margin-bottom: 10px; /* Increase spacing between the label and the input field */
+}
+
+/* Existing styles */
