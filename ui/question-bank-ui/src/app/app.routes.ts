@@ -9,6 +9,8 @@ export const routes: Routes = [
     {path: 'topics',loadComponent: () => import("./topics/topics.component").then((m) => m.TopicsComponent) },
     {path: 'questions',loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent) },
     {path: 'options',loadComponent: () => import("./options/options.component").then((m) => m.OptionsComponent) },
+
+    {path: 'questions-list',loadComponent: () => import("./questions/questions-list/questions-list.component").then((m) => m.QuestionsListComponent) },
     
     // {path: 'add-questions',loadComponent: () => import("./question-form/question-form.component").then((m) => m.QuestionFormComponent) },
 ];
