@@ -10,11 +10,11 @@
 
             <p><strong>Type:</strong> {{ question.type }}</p>
             <p><strong>Difficulty Level:</strong> {{ question.difficulty_level }}</p>
-            <p><strong>Standard:</strong> {{ question.standard }}</p>
-            <p><strong>Subject:</strong> {{ question.subject }}</p>
+            <p><strong>Standard:</strong> {{ question.standard_name }}</p>
+            <p><strong>Subject:</strong> {{ question.subject_name }}</p>
             <p><strong>Marks:</strong> {{ question.marks }}</p>
-            <p><strong>Topic:</strong> {{ question.topic }}</p>
-            <p><strong>Chapter:</strong> {{ question.chapter }}</p>
+            <p><strong>Topic:</strong> {{ question.topic_name }}</p>
+            <p><strong>Chapter:</strong> {{ question.chapter_name }}</p>
         </div>
         <img *ngIf="question.image" [src]="question.image" alt="Question Image">
         <div *ngIf="question.options && question.options.length > 0" class="options-list">

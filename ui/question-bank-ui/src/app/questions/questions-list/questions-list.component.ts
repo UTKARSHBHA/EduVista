@@ -20,11 +20,11 @@ export class QuestionsListComponent implements OnInit {
      { field: "question_text" },
      { field: "type" },
      { field: "difficulty_level" },
-     { field: "standard" },
-     { field: "subject" },
+     { field: "standard_name" },
+     { field: "subject_name" },
      { field: "marks" },
-     { field: "topic" },
-     { field: "chapter" },
+     { field: "topic_name" },
+     { field: "chapter_name" },
     //  { field: "image" },
   ];
  
