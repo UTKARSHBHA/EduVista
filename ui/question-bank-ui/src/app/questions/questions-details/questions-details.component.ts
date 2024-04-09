@@ -22,6 +22,7 @@ export class QuestionDetailsComponent implements OnInit {
   loadQuestions(): void {
      this.questionsService.getQuestions().subscribe(data => {
        this.questions = data;
+       console.log(this.questions);
        this.questions.forEach(question => {
          this.optionsService.getOptionsByQuestionId(question.id).subscribe((options:any) => {
            question.options = options;
