@@ -1,15 +1,18 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { QuestionsService } from '../services/questions.service';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChaptersService } from '../services/chapters.service';
 import { TopicsService } from '../services/topics.service';
 import { SubjectsService } from '../services/subjects.service';
 import { StandardsService } from '../services/standards.service';
+import { CommonModule } from '@angular/common';
+import { QuestionDetailsComponent } from './questions-details/questions-details.component';
+// import { QuestionsGridComponent } from './questions-grid/questions-grid.component';
 // import { ApiService } from '../api.service';
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule,CommonModule ,QuestionDetailsComponent],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })

@@ -1,83 +1,78 @@
-<!-- In questions.component.html -->
-<h2>Questions</h2>
-<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
- <div>
-    <label for="question_text">Question:</label>
-    <textarea id="question_text" formControlName="question_text"></textarea>
- </div>
- <div>
-    <label for="type">Type:</label>
-    <select id="type" formControlName="type">
-      <option value="mcq">Multiple Choice</option>
-      <option value="tf">True or False</option>
-      <option value="descriptive">Descriptive</option>
-    </select>
- </div>
- <div>
-    <label for="difficulty_level">Difficulty Level:</label>
-    <select id="difficulty_level" formControlName="difficulty_level">
-      <option value="hard">Hard</option>
-      <option value="medium">Medium</option>
-      <option value="easy">Easy</option>
-    </select>
- </div>
- <!-- <div>
-    <label for="class_level">Class Level:</label>
-    <select id="class_level" formControlName="class_level">
-    </select>
- </div> -->
- <div>
-   <label for="standard">Standard:</label>
-   <select id="standard" formControlName="standard">
-     <!-- <option *ngFor="let standard of standards" [value]="standard.id">{{ standard.name }}</option> -->
-     @for(standard of standards; track standard.id){
-      <option [value]="standard.id">{{standard.name}}</option>
-   }
-   </select>
-</div>
- <div>
-    <label for="subject">Subject:</label>
-    <select id="subject" formControlName="subject">
-      <!-- <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option> -->
-      @for(subject of subjects; track subject.id){
-         <option [value]="subject.id">{{subject.name}}</option>
-      }
-    </select>
- </div>
- <div>
-    <label for="marks">Marks:</label>
-    <input id="marks" type="number" formControlName="marks">
- </div>
- <div>
-    <label for="topic">Topic:</label>
-    <select id="topic" formControlName="topic">
-      <!-- <option *ngFor="let topic of topics" [value]="topic.id">{{ topic.name }}</option> -->
-      @for(topic of topics; track topic.id){
-         <option [value]="topic.id">{{topic.name}}</option>
-      }
-    </select>
- </div>
- <div>
-    <label for="chapter">Chapter:</label>
-    <select id="chapter" formControlName="chapter">
-      <!-- <option *ngFor="let chapter of chapters" [value]="chapter.id">{{ chapter.name }}</option> -->
-      @for(chapter of chapters; track chapter.id){
-         <option [value]="chapter.id">{{chapter.name}}</option>
-      }
-    </select>
- </div>
- <div>
-    <label for="image">Image:</label>
-    <!-- <input id="image" type="file" formControlName="image"> -->
-    <input #fileInput id="image" type="file" (change)="onFileSelected($event)">
- </div>
- <button type="submit">Add Question</button>
-</form>  
-<ul>
- <!-- <li *ngFor="let question of questions">{{ question.question_text }} - {{ question.chapter }}</li> -->
- @for(question of questions; track question.id){
-   <li>{{question.question_text}}</li>
-   <button (click)="deleteQuestion(question.id)">Delete</button>
+<!-- 
 
- }
-</ul>
+<h2>Questions</h2>
+
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+   <div>
+      <label for="question_text">Question:</label>
+      <textarea id="question_text" formControlName="question_text"></textarea>
+   </div>
+
+   <div>
+      <label for="type">Type:</label>
+      <select id="type" formControlName="type">
+         <option value="mcq">Multiple Choice</option>
+         <option value="tf">True or False</option>
+         <option value="descriptive">Descriptive</option>
+      </select>
+   </div>
+
+   <div>
+      <label for="difficulty_level">Difficulty Level:</label>
+      <select id="difficulty_level" formControlName="difficulty_level">
+         <option value="hard">Hard</option>
+         <option value="medium">Medium</option>
+         <option value="easy">Easy</option>
+      </select>
+   </div>
+
+   <div>
+      <label for="standard">Standard:</label>
+      <select id="standard" formControlName="standard">
+         <option *ngFor="let standard of standards" [value]="standard.id">{{standard.name}}</option>
+      </select>
+   </div>
+
+   <div>
+      <label for="subject">Subject:</label>
+      <select id="subject" formControlName="subject">
+         <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
+      </select>
+   </div>
+
+   <div>
+      <label for="marks">Marks:</label>
+      <input id="marks" type="number" formControlName="marks">
+   </div>
+
+   <div>
+      <label for="topic">Topic:</label>
+      <select id="topic" formControlName="topic">
+         <option *ngFor="let topic of topics" [value]="topic.id">{{topic.name}}</option>
+      </select>
+   </div>
+
+   <div>
+      <label for="chapter">Chapter:</label>
+      <select id="chapter" formControlName="chapter">
+         <option *ngFor="let chapter of chapters" [value]="chapter.id">{{chapter.name}}</option>
+      </select>
+   </div>
+
+   <div>
+      <label for="image">Image:</label>
+      <input #fileInput id="image" type="file" (change)="onFileSelected($event)">
+   </div>
+
+   <button type="submit">Add Question</button>
+</form>
+
+<ul class="questions-list">
+   <li *ngFor="let question of questions">
+      {{ question.question_text }} - {{ question.chapter }}
+      <button class="delete-btn" (click)="deleteQuestion(question.id)">Delete</button>
+   </li>
+</ul> -->
+
+
+<app-questions-details></app-questions-details>

@@ -1,0 +1,142 @@
+/* question-details.component.css */
+
+/* Existing styles */
+
+/* Styling for the options list */
+/* question-details.component.css */
+
+/* Container for each question's details */
+.question-details {
+    background-color: #f8f9fa; /* Light background for better readability */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    margin-bottom: 20px;
+    max-width: 800px; /* Limit the width for better alignment on larger screens */
+    margin-left: auto;
+    margin-right: auto;
+
+    /* text-align: center; */
+    /* display: flex; */
+   }
+   
+   /* Heading for each question */
+   .question-details h2 {
+    color: #343a40; /* Darker text for better contrast */
+    margin-bottom: 15px; /* Increase spacing between the heading and the details */
+   }
+   
+   /* Details paragraphs */
+   .question-details p {
+    color: #6c757d; /* Slightly lighter text for details */
+    margin-bottom: 10px; /* Reduce spacing between details for a cleaner look */
+   }
+   
+   /* Image styling */
+   .question-details img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px; /* Rounded corners for the image */
+    margin-top: 15px; /* Add some space above the image */
+   }
+   
+   /* Add some padding and background color to the container for better visual separation */
+   .question-details-container {
+    padding: 30px;
+    background-color: #e9ecef; /* Slightly darker background for the container */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+   }
+
+.question-details ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+   }
+   
+   .question-details li {
+    margin-bottom: 5px;
+   }
+   
+   .question-details li::before {
+    content: "• ";
+    color: #007bff; /* Bullet color */
+   }
+
+   /* question-details.component.css */
+
+/* Existing styles */
+
+/* Image styling */
+.question-details img {
+    max-width: 100%; /* Ensure the image does not exceed the container's width */
+    max-height: 300px; /* Set a maximum height to prevent the image from becoming too large */
+    height: auto; /* Maintain the aspect ratio */
+    display: block; /* Make the image a block element */
+    margin-left: auto; /* Center the image horizontally */
+    margin-right: auto;
+    margin-top: 15px; /* Add some space above the image */
+    border-radius: 4px; /* Optional: Add rounded corners for a softer look */
+   }
+
+   /* question-details.component.css */
+
+/* Options list container */
+.question-details .options-list {
+ background-color: #f8f9fa; /* Light background for better readability */
+ padding: 20px;
+ border-radius: 8px;
+ margin-top: 20px; /* Add some space above the options list */
+}
+
+/* Options list items */
+.question-details .options-list li {
+ margin-bottom: 10px; /* Increase spacing between options */
+}
+
+/* Correct answer styling */
+.question-details .options-list .correct-answer {
+ color: #28a745; /* Green text for correct answers */
+ font-weight: bold; /* Make correct answers stand out */
+}
+
+/* Incorrect answer styling */
+.question-details .options-list .incorrect-answer {
+ color: #dc3545; /* Red text for incorrect answers */
+}
+
+.question-fields{
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 1rem; */
+    justify-content: center;
+    align-items: center;
+    /* flex-grow: 3; */
+    border: 1px solid grey;
+}
+.question-fields > p{
+    flex-basis: 30%;
+    /* flex: 4; */
+    text-align: center;
+
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red background for the delete button */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px; /* Adjust font size as needed */
+   }
+   
+   .delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+   }
+   
+   .delete-btn i {
+    margin-right: auto; /* Adds space between the icon and the text */
+   }
+
+   
