@@ -11,6 +11,7 @@ export const routes: Routes = [
     {path: 'options',loadComponent: () => import("./options/options.component").then((m) => m.OptionsComponent) },
 
     {path: 'questions-list',loadComponent: () => import("./questions/questions-list/questions-list.component").then((m) => m.QuestionsListComponent) },
+    {path: 'questions-details',loadComponent: () => import("./questions/questions-details/questions-details.component").then((m) => m.QuestionDetailsComponent) },
     
     // {path: 'add-questions',loadComponent: () => import("./question-form/question-form.component").then((m) => m.QuestionFormComponent) },
 ];

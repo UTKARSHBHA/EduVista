@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { QuestionsService } from '../../services/questions.service';
+import { Router } from '@angular/router';
 // import { RouterModule } from '@angular/router';
 // import { Router } from 'express';
 
@@ -13,6 +14,7 @@ import { QuestionsService } from '../../services/questions.service';
   styleUrl: './questions-list.component.css'
 })
 export class QuestionsListComponent implements OnInit {
+
   rowData: any[] = [];
   colDefs: ColDef[] = [
      { field: "question_text" },
@@ -22,10 +24,11 @@ export class QuestionsListComponent implements OnInit {
      { field: "subject" },
      { field: "marks" },
      { field: "topic" },
-     { field: "chapter" }
+     { field: "chapter" },
+    //  { field: "image" },
   ];
  
-  constructor(private questionsService: QuestionsService) { }
+  constructor(private questionsService: QuestionsService, private router:Router) { }
  
   ngOnInit(): void {
      this.loadQuestions();
@@ -39,4 +42,7 @@ export class QuestionsListComponent implements OnInit {
 //   openAddForm(): void {
 //     this.router.navigate(['/questions']); // Redirect to /questions
 //  }
+routTo(route: string) {
+  this.router.navigate(['/'+route]);
+  }
  }
