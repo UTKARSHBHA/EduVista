@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
+import { AgGridAngular , ICellRendererAngularComp} from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
@@ -26,6 +26,12 @@ export class QuestionsListComponent implements OnInit {
      { field: "topic_name" },
      { field: "chapter_name" },
     //  { field: "image" },
+    {
+      headerName: "Delete",
+      cellRenderer: (params:any) => {
+        return `<button class="delete-btn" (click)="deleteQuestion(${params.data.id})">Delete</button>`;
+      }
+    }
   ];
  
   constructor(private questionsService: QuestionsService, private router:Router) { }
@@ -45,4 +51,19 @@ export class QuestionsListComponent implements OnInit {
 routTo(route: string) {
   this.router.navigate(['/'+route]);
   }
+
+  deleteQuestion(questionId: number): void {
+    console.log("button clicked");``
+    if (confirm('Are you sure you want to delete this question?')) {
+      this.questionsService.deleteQuestion(questionId).subscribe({
+        next: response => {
+          console.log('Question deleted:', response);
+          this.loadQuestions(); // Reload the questions list
+        },
+        error: error => {
+          console.error('Error deleting question', error);
+        }
+      });
+    }
+ }
  }

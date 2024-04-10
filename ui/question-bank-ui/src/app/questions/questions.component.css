@@ -91,3 +91,14 @@
 }
 
 /* Existing styles */
+
+.question-fields{
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 10px; */
+  
+}
+.question-fields>div{
+  flex-basis: calc(50% - 20px); /* Adjust the width to account for margins */
+  margin: 10px;
+}
