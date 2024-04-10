@@ -62,14 +62,10 @@
                 <div *ngFor="let option of optionsArray.controls; let i = index" [formGroupName]="i">
                     <div class="optionList">
                         <input formControlName="text" placeholder="Option Text">
-                        <!-- <div class="isCorrectInput"> -->
-                            <!-- <label for="isOptionCorrect"> -->
-                                <!-- Correct -->
-
-                            <!-- </label> -->
+                       
                             <input id="isOptionCorrect" type="checkbox" formControlName="is_correct"> 
                         <!-- </div> -->
-                        <button (click)="removeOption(i)" class="remove-option">Remove</button>
+                        <button *ngIf="optionsArray.length>2" (click)="removeOption(i)" class="remove-option">Remove</button>
                     </div>
                 </div>
             </div>
