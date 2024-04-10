@@ -22,6 +22,8 @@ export class QuestionsComponent implements OnInit {
   subjects: any[] = [];
   standards: any[] = []; 
 
+  
+
  
   constructor(private formBuilder: FormBuilder, private questionsService: QuestionsService, private chaptersService: ChaptersService, private topicsService: TopicsService, private subjectsService: SubjectsService, private standardsService: StandardsService) { 
 
@@ -34,8 +36,21 @@ export class QuestionsComponent implements OnInit {
       marks: ['', Validators.required],
       topic: ['', Validators.required],
       chapter: ['', Validators.required],
-      image: [null] 
+      image: [null] ,
+      // options: this.formBuilder.array([]),
+      options: this.formBuilder.array([
+        this.formBuilder.group({
+          text: ['', Validators.required],
+          is_correct: [false]
+        }),
+        this.formBuilder.group({
+          text: ['', Validators.required],
+          is_correct: [false]
+        })
+     ]),
      });
+
+
   }
  
   ngOnInit(): void {
@@ -136,6 +151,30 @@ onSubmit(): void {
 
  resetForm(){
   this.questionForm.reset();
+ this.optionsArray.clear();
  }
+
+
+
+
+
+ // Method to get the options form array
+ get optionsArray() {
+  return this.questionForm.get('options') as FormArray;
+}
+
+// Method to add a new option to the form array
+addOption() {
+  this.optionsArray.push(this.formBuilder.group({
+    text: ['', Validators.required],
+    is_correct: [false]
+  }));
+}
+
+// Method to remove an option from the form array
+removeOption(index: number) { 
+  this.optionsArray.removeAt(index);
+}
+
 
  }

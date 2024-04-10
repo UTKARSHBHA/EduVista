@@ -3,7 +3,7 @@
     <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="questions-form">
         <div class="question-fields">
 
-            <div>
+            <div class="fields">
                 <label for="type">Type:</label>
                 <select id="type" formControlName="type">
                     <option value="mcq">Multiple Choice</option>
@@ -11,7 +11,7 @@
                     <option value="descriptive">Descriptive</option>
                 </select>
             </div>
-            <div>
+            <div class="fields">
                 <label for="difficulty_level">Difficulty Level:</label>
                 <select id="difficulty_level" formControlName="difficulty_level">
                     <option value="hard">Hard</option>
@@ -19,35 +19,35 @@
                     <option value="easy">Easy</option>
                 </select>
             </div>
-            <div>
+            <div class="fields">
                 <label for="standard">Standard:</label>
                 <select id="standard" formControlName="standard">
                     <option *ngFor="let standard of standards" [value]="standard.id">{{standard.name}}</option>
                 </select>
             </div>
-            <div>
+            <div class="fields">
                 <label for="subject">Subject:</label>
                 <select id="subject" formControlName="subject">
                     <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
                 </select>
             </div>
-            <div>
+            <div class="fields">
                 <label for="marks">Marks:</label>
                 <input id="marks" type="number" formControlName="marks">
             </div>
-            <div>
+            <div class="fields">
                 <label for="topic">Topic:</label>
                 <select id="topic" formControlName="topic">
                     <option *ngFor="let topic of topics" [value]="topic.id">{{topic.name}}</option>
                 </select>
             </div>
-            <div>
+            <div class="fields">
                 <label for="chapter">Chapter:</label>
                 <select id="chapter" formControlName="chapter">
                     <option *ngFor="let chapter of chapters" [value]="chapter.id">{{chapter.name}}</option>
                 </select>
             </div>
-            <div>
+            <div class="fields">
                 <label for="image">Image:</label>
                 <input #fileInput id="image" type="file" (change)="onFileSelected($event)">
             </div>
@@ -55,6 +55,24 @@
         <div>
             <label for="question_text">Question:</label>
             <textarea id="question_text" formControlName="question_text"></textarea>
+        </div>
+        <div *ngIf="questionForm.get('type')?.value === 'mcq'" class="mcq-options-container">
+            <button (click)="addOption()">Add Option</button>
+            <div formArrayName="options">
+                <div *ngFor="let option of optionsArray.controls; let i = index" [formGroupName]="i">
+                    <div class="optionList">
+                        <input formControlName="text" placeholder="Option Text">
+                        <!-- <div class="isCorrectInput"> -->
+                            <!-- <label for="isOptionCorrect"> -->
+                                <!-- Correct -->
+
+                            <!-- </label> -->
+                            <input id="isOptionCorrect" type="checkbox" formControlName="is_correct"> 
+                        <!-- </div> -->
+                        <button (click)="removeOption(i)" class="remove-option">Remove</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="btnList">
             <button type="submit">Add Question</button>

@@ -20,7 +20,7 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  width: 100%; /* Ensure the form takes up the full width of the container */
+  /* width: 100%; */
 }
 
 .questions-form label {
@@ -35,7 +35,7 @@
   border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 16px;
-  width: 100%;
+  /* width: 100%; */
   /* margin: 10px; */
 
   /* border-color: red; */
@@ -51,7 +51,7 @@
   font-size: 16px;
   /* margin:auto; */
   /* max-width: 40%; */
-  
+
 
 }
 
@@ -101,7 +101,7 @@
   /* gap: 10px; */
   
 }
-.question-fields>div{
+.fields{
   flex-basis: calc(50% - 20px); /* Adjust the width to account for margins */
   margin: 10px;
 }
@@ -112,3 +112,14 @@
   /* align-items: center; */
   justify-content: center;
 }
+
+
+
+
+
+.optionList{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
