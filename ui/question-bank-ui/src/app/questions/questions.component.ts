@@ -134,4 +134,8 @@ onSubmit(): void {
   }
  }
 
+ resetForm(){
+  this.questionForm.reset();
+ }
+
  }

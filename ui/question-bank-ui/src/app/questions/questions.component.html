@@ -56,5 +56,8 @@
             <label for="question_text">Question:</label>
             <textarea id="question_text" formControlName="question_text"></textarea>
         </div>
-        <button type="submit">Add Question</button>
+        <div class="btnList">
+            <button type="submit">Add Question</button>
+            <button type="submit" (click)="resetForm()">Reset</button>
+        </div>
     </form>

@@ -5,7 +5,7 @@
 
 
 .questions-container {
-  max-width: 800px; /* Adjust this value as needed */
+  max-width: 80%; /* Adjust this value as needed */
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px; /* Optional: Add some horizontal padding */
@@ -49,7 +49,10 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  margin:20px 0 ; /* Increase margin-top for better spacing */
+  /* margin:auto; */
+  /* max-width: 40%; */
+  
+
 }
 
 .questions-form button:hover {
@@ -101,4 +104,11 @@
 .question-fields>div{
   flex-basis: calc(50% - 20px); /* Adjust the width to account for margins */
   margin: 10px;
+}
+
+.btnList{
+  display: flex;
+  gap: 25px;
+  /* align-items: center; */
+  justify-content: center;
 }

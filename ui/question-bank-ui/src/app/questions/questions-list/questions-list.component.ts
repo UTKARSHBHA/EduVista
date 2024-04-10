@@ -1,69 +1,75 @@
 import { Component, OnInit } from '@angular/core';
-import { AgGridAngular , ICellRendererAngularComp} from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
+import {
+  AgGridAngular,
+  AgGridModule,
+  ICellRendererAngularComp,
+} from 'ag-grid-angular';
+import { ColDef, FrameworkComponentWrapper } from 'ag-grid-community';
 import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
-// import { RouterModule } from '@angular/router';
-// import { Router } from 'express';
+import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
 
 @Component({
   selector: 'app-questions-list',
   standalone: true,
   imports: [AgGridAngular],
   templateUrl: './questions-list.component.html',
-  styleUrl: './questions-list.component.css'
+  styleUrl: './questions-list.component.css',
 })
 export class QuestionsListComponent implements OnInit {
-
   rowData: any[] = [];
   colDefs: ColDef[] = [
-     { field: "question_text" },
-     { field: "type" },
-     { field: "difficulty_level" },
-     { field: "standard_name" },
-     { field: "subject_name" },
-     { field: "marks" },
-     { field: "topic_name" },
-     { field: "chapter_name" },
-    //  { field: "image" },
+    { field: 'id' },
+    { field: 'question_text' },
+    { field: 'type' },
+    { field: 'difficulty_level' },
+    { field: 'standard_name' },
+    { field: 'subject_name' },
+    { field: 'marks' },
+    { field: 'topic_name' },
+    { field: 'chapter_name' },
     {
-      headerName: "Delete",
-      cellRenderer: (params:any) => {
-        return `<button class="delete-btn" (click)="deleteQuestion(${params.data.id})">Delete</button>`;
-      }
-    }
+      field: 'button',
+      cellRenderer: DeleteButtonRendererComponent,
+      onCellClicked: this.delete.bind(this),
+    },
   ];
- 
-  constructor(private questionsService: QuestionsService, private router:Router) { }
- 
+
+  constructor(
+    private questionsService: QuestionsService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-     this.loadQuestions();
+    this.loadQuestions();
   }
- 
+
   loadQuestions(): void {
-     this.questionsService.getQuestions().subscribe(data => {
-       this.rowData = data;
-     });
+    this.questionsService.getQuestions().subscribe((data) => {
+      this.rowData = data;
+    });
   }
-//   openAddForm(): void {
-//     this.router.navigate(['/questions']); // Redirect to /questions
-//  }
-routTo(route: string) {
-  this.router.navigate(['/'+route]);
+
+  routTo(route: string) {
+    this.router.navigate(['/' + route]);
+  }
+
+  delete(e: any) {
+    this.deleteQuestion(e.data.id);
   }
 
   deleteQuestion(questionId: number): void {
-    console.log("button clicked");``
     if (confirm('Are you sure you want to delete this question?')) {
       this.questionsService.deleteQuestion(questionId).subscribe({
-        next: response => {
+        next: (response) => {
           console.log('Question deleted:', response);
-          this.loadQuestions(); // Reload the questions list
+          this.loadQuestions();
         },
-        error: error => {
+        error: (error) => {
           console.error('Error deleting question', error);
-        }
+        },
       });
     }
- }
- }
+  }
+
+}
