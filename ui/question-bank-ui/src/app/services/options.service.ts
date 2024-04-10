@@ -20,4 +20,7 @@ export class OptionsService {
  deleteOption(optionId: number): Observable<any> {
    return this.httpClient.delete(`${this.apiUrl}${optionId}/delete/`);
 }
+getOptionsByQuestionId(questionId: number): Observable<any> {
+   return this.httpClient.get<any>(`${this.apiUrl}?question=${questionId}`);
+ }
 }

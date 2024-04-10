@@ -11,7 +11,6 @@ class StandardSerializer(serializers.ModelSerializer):
         model = Standard
         fields = '__all__'
 
-
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
@@ -23,6 +22,11 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class QuestionSerializer(serializers.ModelSerializer):
+    standard_name = serializers.CharField(source='standard.name', read_only=True)
+    subject_name = serializers.CharField(source='subject.name', read_only=True)
+    topic_name = serializers.CharField(source='topic.name', read_only=True)
+    chapter_name = serializers.CharField(source='chapter.name', read_only=True)
+
     class Meta:
         model = Question
         fields = '__all__'
@@ -31,6 +35,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['options'] = OptionSerializer(instance.options.all(), many=True).data
         return representation
+
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option

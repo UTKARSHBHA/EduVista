@@ -1,15 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { QuestionsService } from '../services/questions.service';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChaptersService } from '../services/chapters.service';
 import { TopicsService } from '../services/topics.service';
 import { SubjectsService } from '../services/subjects.service';
 import { StandardsService } from '../services/standards.service';
-// import { ApiService } from '../api.service';
+import { CommonModule } from '@angular/common';
+import { QuestionDetailsComponent } from './questions-details/questions-details.component';
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule,CommonModule ,QuestionDetailsComponent],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })
@@ -19,7 +20,9 @@ export class QuestionsComponent implements OnInit {
   chapters: any[] = [];
   topics: any[] = [];
   subjects: any[] = [];
-  standards: any[] = []; // Array to hold the list of standards
+  standards: any[] = []; 
+
+  
 
  
   constructor(private formBuilder: FormBuilder, private questionsService: QuestionsService, private chaptersService: ChaptersService, private topicsService: TopicsService, private subjectsService: SubjectsService, private standardsService: StandardsService) { 
@@ -28,13 +31,26 @@ export class QuestionsComponent implements OnInit {
       question_text: ['', Validators.required],
       type: ['', Validators.required],
       difficulty_level: ['', Validators.required],
-      standard: ['', Validators.required], // Use standard instead of class_level
+      standard: ['', Validators.required], 
       subject: ['', Validators.required],
       marks: ['', Validators.required],
       topic: ['', Validators.required],
       chapter: ['', Validators.required],
-      image: [null] // Optional image
+      image: [null] ,
+      // options: this.formBuilder.array([]),
+      options: this.formBuilder.array([
+        this.formBuilder.group({
+          text: ['', Validators.required],
+          is_correct: [false]
+        }),
+        this.formBuilder.group({
+          text: ['', Validators.required],
+          is_correct: [false]
+        })
+     ]),
      });
+
+
   }
  
   ngOnInit(): void {
@@ -43,7 +59,7 @@ export class QuestionsComponent implements OnInit {
      this.loadChapters();
      this.loadTopics();
      this.loadSubjects();
-     this.loadStandards(); // Load standards when the component initializes
+     this.loadStandards(); 
 
   }
   loadStandards(): void {
@@ -75,41 +91,7 @@ export class QuestionsComponent implements OnInit {
      });
   }
  
-  // onSubmit(): void {
-  //   console.log(this.questionForm);
-  //    if (this.questionForm.valid) {
-  //      this.questionsService.addQuestion(this.questionForm.value).subscribe(data => {
-  //        console.log('Question added:', data);
-  //        this.questions.push(data);
-  //        this.questionForm.reset();
-  //      });
-  //    }
-  //    else {
-  //     console.log('Form is invalid');
-  //  }
-  // }
-
-  // onSubmit(): void {
-  //   if (this.questionForm.valid) {
-  //      const formData = new FormData();
-  //      Object.keys(this.questionForm.value).forEach(key => {
-  //        formData.append(key, this.questionForm.value[key]);
-  //      });
-  //      // Append the file only if a file has been selected
-  //      if (this.selectedFile) {
-  //        formData.append('image', this.selectedFile, this.selectedFile.name);
-  //      }
-   
-  //      this.questionsService.addQuestion(formData).subscribe(data => {
-  //        console.log('Question added:', data);
-  //        this.questions.push(data);
-  //        this.questionForm.reset();
-  //      }, error => {
-  //        console.error('Error adding question', error);
-  //      });
-  //   }
-  //  }
-
+  
 
 
   selectedFile: File | null = null;
@@ -122,17 +104,12 @@ onFileSelected(event: any): void {
  }
 }
 
-// onFileSelected(event: any) {
-//  this.selectedFile = <File>event.target.files[0];
-// }
-
 
 deleteQuestion(questionId: number): void {
   if (confirm('Are you sure you want to delete this question?')) {
       this.questionsService.deleteQuestion(questionId).subscribe({
           next: response => {
               console.log(response);
-              // Reload the questions list to ensure it's up-to-date
               this.loadQuestions();
           },
           error: error => {
@@ -147,33 +124,57 @@ deleteQuestion(questionId: number): void {
 onSubmit(): void {
   if (this.questionForm.valid) {
      const formData = new FormData();
-     // Append each form field to the FormData object
      Object.keys(this.questionForm.value).forEach(key => {
-       if (key !== 'image') { // Exclude the 'image' field from this loop
+       if (key !== 'image') { 
          formData.append(key, this.questionForm.value[key]);
        }
      });
  
-     // Check if a file is selected for the image
      if (this.selectedFile) {
-       // Append the selected file to the FormData object
        formData.append('image', this.selectedFile, this.selectedFile.name);
      }
-     // No need to explicitly append a null value for the image field if no file is selected
- 
-     // Send the FormData object to the server
-     this.questionsService.addQuestion(formData).subscribe(data => {
-       console.log('Question added:', data);
-       this.questions.push(data);
-       this.questionForm.reset();
-       // Optionally, reset the selectedFile to null after successful submission
-       this.selectedFile = null;
-       this.fileInput.nativeElement.value = '';
 
-     }, error => {
-       console.error('Error adding question', error);
-     });
+     this.questionsService.addQuestion(formData).subscribe({
+      next: data => {
+        console.log('Question added:', data);
+        this.questions.push(data);
+        this.questionForm.reset();
+        this.selectedFile = null;
+        this.fileInput.nativeElement.value = '';
+      },
+      error: error => {
+        console.error('Error adding question', error);
+      }
+    });
   }
  }
+
+ resetForm(){
+  this.questionForm.reset();
+ this.optionsArray.clear();
+ }
+
+
+
+
+
+ // Method to get the options form array
+ get optionsArray() {
+  return this.questionForm.get('options') as FormArray;
+}
+
+// Method to add a new option to the form array
+addOption() {
+  this.optionsArray.push(this.formBuilder.group({
+    text: ['', Validators.required],
+    is_correct: [false]
+  }));
+}
+
+// Method to remove an option from the form array
+removeOption(index: number) { 
+  this.optionsArray.removeAt(index);
+}
+
 
  }

@@ -26,6 +26,17 @@ class OptionListCreateView(generics.ListCreateAPIView):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
 
+    def get_queryset(self):
+        """
+        Optionally restricts the returned options to a given question,
+        by filtering against a `question` query parameter in the URL.
+        """
+        queryset = Option.objects.all()
+        question_id = self.request.query_params.get('question', None)
+        if question_id is not None:
+            queryset = queryset.filter(question_id=question_id)
+        return queryset
+
 
 # delete 
 
