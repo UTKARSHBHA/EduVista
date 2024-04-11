@@ -8,6 +8,8 @@ import { ColDef, FrameworkComponentWrapper } from 'ag-grid-community';
 import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
 import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
+import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
+
 
 @Component({
   selector: 'app-questions-list',
@@ -29,11 +31,19 @@ export class QuestionsListComponent implements OnInit {
     { field: 'topic_name' },
     { field: 'chapter_name' },
     {
-      field: 'button',
+      field: 'delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
     },
+    {
+        field: 'view',
+        cellRenderer: ViewButtonRendererComponent,
+      onCellClicked: this.view.bind(this),
+    },
+    
   ];
+
+
 
   constructor(
     private questionsService: QuestionsService,
@@ -56,6 +66,12 @@ export class QuestionsListComponent implements OnInit {
 
   delete(e: any) {
     this.deleteQuestion(e.data.id);
+  }
+
+  view(e: any){
+    console.log("veiw clicked");
+    this.router.navigate(['/question-view', e.data.id]);
+
   }
 
   deleteQuestion(questionId: number): void {

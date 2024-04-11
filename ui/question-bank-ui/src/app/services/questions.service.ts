@@ -22,5 +22,9 @@ export class QuestionsService {
    return this.http.delete(`${this.apiUrl}${questionId}/delete/`);
 }
 
+getQuestionById(id: number): Observable<any> {
+   return this.http.get(`${this.apiUrl}${id}/`);
+}
+
  // Add other methods as needed (e.g., updateQuestion, deleteQuestion)
 }

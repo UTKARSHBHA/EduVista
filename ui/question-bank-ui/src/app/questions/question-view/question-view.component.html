@@ -1,0 +1,37 @@
+<!-- In question-view.component.html -->
+
+<div class="questionContainer">
+    <!-- <div class="delete-btn-container">
+        <button class="delete-btn" (click)="deleteQuestion()">Delete Question</button>
+    </div> -->
+    <div *ngIf="question" class="question-details">
+        <div class="delete-btn-container">
+            <button class="delete-btn" (click)="deleteQuestion()">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+
+        <h2>{{ question.question_text }}</h2>
+        <p><strong>Type:</strong> {{ question.type }}</p>
+        <p><strong>Difficulty Level:</strong> {{ question.difficulty_level }}</p>
+        <p><strong>Standard:</strong> {{ question.standard_name }}</p>
+        <p><strong>Subject:</strong> {{ question.subject_name }}</p>
+        <p><strong>Marks:</strong> {{ question.marks }}</p>
+        <p><strong>Topic:</strong> {{ question.topic_name }}</p>
+        <p><strong>Chapter:</strong> {{ question.chapter_name }}</p>
+        <div *ngIf="question.options && question.options.length > 0" class="options-list">
+            <h3>Options:</h3>
+            <ul>
+                <li *ngFor="let option of question.options" [class.correct-answer]="option.is_correct"
+                    [class.incorrect-answer]="!option.is_correct">
+                    {{ option.text }} - {{ option.is_correct ? 'Correct' : 'Incorrect' }}
+                </li>
+            </ul>
+        </div>
+        <img *ngIf="question.image" [src]="question.image" alt="Question Image">
+        <!-- <div *ngIf="question" class="question-details">
+            <button class="delete-btn" (click)="deleteQuestion()">Delete Question</button>
+        </div> -->
+    </div>
+</div>

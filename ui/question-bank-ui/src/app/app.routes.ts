@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { QuestionViewComponent } from './questions/question-view/question-view.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -12,6 +13,7 @@ export const routes: Routes = [
 
     {path: 'questions-list',loadComponent: () => import("./questions/questions-list/questions-list.component").then((m) => m.QuestionsListComponent) },
     {path: 'questions-details',loadComponent: () => import("./questions/questions-details/questions-details.component").then((m) => m.QuestionDetailsComponent) },
-    
+    {path: 'question-view/:id',loadComponent: () => import("./questions/question-view/question-view.component").then((m) => m.QuestionViewComponent) },
+    // { path: 'question-view/:id', component: QuestionViewComponent },
     // {path: 'add-questions',loadComponent: () => import("./question-form/question-form.component").then((m) => m.QuestionFormComponent) },
 ];
