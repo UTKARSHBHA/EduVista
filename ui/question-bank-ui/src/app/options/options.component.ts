@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { OptionsService } from '../services/options.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { QuestionsService } from '../services/questions.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-options',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './options.component.html',
   styleUrl: './options.component.css'
 })

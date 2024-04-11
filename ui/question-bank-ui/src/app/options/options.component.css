@@ -1,0 +1,130 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.options-component__form{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.input-field{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.input-field textarea, .input-field select{
+    width: 100%;
+    height: 30px;
+}
+.input-field label{
+    width: 10rem;
+}
+
+.options-component__form button{
+    width: 12rem;
+    /* height: 30px; */
+}
+
+.options-component__option-list{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.options-component__option-list li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* options.component.css */
+
+/* Container for the entire form */
+.options-component__form {
+    /* width: 40%; */
+    /* margin: 0 auto;  */
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+}
+
+/* Style for input fields and textarea */
+.options-component__form input,
+.options-component__form textarea,
+.options-component__form select {
+    /* width: 100%; */
+    /* padding: 10px; */
+    /* margin-bottom: 15px; */
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Style for labels */
+.options-component__form label {
+    /* display: block; */
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Style for the submit button */
+.options-component__form button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.options-component__form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Style for the option list */
+.options-component__option-list {
+    /* width: 40%; */
+    /* margin: 0 auto; Center the list */
+    padding: 20px;
+    background-color: #e9ecef; /* Slightly darker background for the container */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+}
+
+/* Style for list items */
+.options-component__option-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #f8f9fa; /* Light background for each item */
+    list-style-type: none; /* Remove default list styling */
+}
+
+/* Style for the delete button within list items */
+
+.delete-btn {
+    background-color: #dc3545; /* Red background for the delete button */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px; /* Adjust font size as needed */
+   }
+   
+   .delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+   }
+   
+   .delete-btn i {
+    margin-right: auto; /* Adds space between the icon and the text */
+   }

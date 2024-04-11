@@ -1,29 +1,29 @@
-<form [formGroup]="optionForm" (ngSubmit)="onSubmit()">
-   <div>
-      <label for="text">Option Text:</label>
-      <textarea id="text" formControlName="text"></textarea>
+<!-- options.component.html -->
+<div class="container">
+<h1>Options</h1>
+    <form [formGroup]="optionForm" (ngSubmit)="onSubmit()" class="options-component__form">
+        <div class="input-field">
+       <label for="text">Option Text:</label>
+       <textarea id="text" formControlName="text"></textarea>
    </div>
-   <div>
-      <label for="is_correct">Is Correct:</label>
-      <input type="checkbox" id="is_correct" formControlName="is_correct">
+   <div class=" .checkbox-container input-field">
+       <label for="is_correct">Is Correct:</label>
+       <input type="checkbox" id="is_correct" formControlName="is_correct">
    </div>
-   <div>
-      <label for="question">Question:</label>
-      <select id="question" formControlName="question">
-        <!-- <option *ngFor="let question of questions" [value]="question.id">{{question.question_text}}</option> -->
-        @for(question of questions; track question.id){
-         <option [value]="question.id">{{question.question_text}}</option>
-        }
-      </select>
+   <div class="input-field">
+       <label for="question">Question:</label>
+       <select id="question" formControlName="question">
+           <!-- Assuming you have a method to fetch questions and populate this dropdown -->
+           <option *ngFor="let question of questions" [value]="question.id">{{question.question_text}}</option>
+       </select>
    </div>
    <button type="submit">Add Option</button>
-  </form>
-  
-<ul>
- <!-- <li *ngFor="let question of questions">{{ question.question_text }}</li> -->
- @for(option of options; track option.id){
-    <li>{{option.text}}</li>
-    <button (click)="deleteOption(option.id)">Delete</button>
+</form>
 
- }
+<ul class="options-component__option-list">
+   <li *ngFor="let option of options">
+       {{option.text}} - {{ option.is_correct ? 'Correct' : 'Incorrect' }}
+       <button class="delete-btn" (click)="deleteOption(option.id)"> <i class="fas fa-trash"></i></button>
+   </li>
 </ul>
+</div>
