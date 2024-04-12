@@ -55,8 +55,14 @@
 .standard-form button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+.standardList{
+    width: 60%;
+
+}
 
 .standardList ul {
+    /* width: 60%; */
+
     display: flex;
     flex-direction: column;
     gap: 2rem;

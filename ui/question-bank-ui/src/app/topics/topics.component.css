@@ -56,6 +56,10 @@
 .topic-form button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+.topicList{
+    width: 60%;
+
+}
 
 .topicList ul {
     display: flex;
