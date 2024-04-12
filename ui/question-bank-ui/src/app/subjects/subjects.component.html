@@ -5,19 +5,27 @@
  }
 </ul> -->
 
-<h2>Subjects</h2>
-<form [formGroup]="subjectForm" (ngSubmit)="onSubmit()">
- <div>
-    <label for="name">Name:</label>
-    <input id="name" type="text" formControlName="name">
- </div>
- <button type="submit">Add Subject</button>
-</form>
-<ul>
- <!-- <li *ngFor="let subject of subjects">{{ subject.name }}</li> -->
- @for(subject of subjects; track subject.id){
-   <li>{{subject.name}}</li>
-   <button (click)="deleteSubject(subject.id)">Delete</button>
+<div class="container">
 
-}
-</ul>
+   <h2>Subjects</h2>
+   <form class="subject-form" [formGroup]="subjectForm" (ngSubmit)="onSubmit()">
+      <div class="inputFields">
+         <label for="name">Name:</label>
+         <input id="name" type="text" formControlName="name">
+      </div>
+      <button type="submit">Add Subject</button>
+   </form>
+   <ul class="subjectList">
+      <!-- <li *ngFor="let subject of subjects">{{ subject.name }}</li> -->
+      @for(subject of subjects; track subject.id){
+         <div class="subject">
+
+            <li>{{subject.name}}</li>
+            <!-- <button (click)="deleteSubject(subject.id)">Delete</button> -->
+            <button class="delete-btn" (click)="deleteSubject(subject.id)"> <i class="fas fa-trash"></i></button>
+
+            
+         </div>
+      }
+   </ul>
+</div>
