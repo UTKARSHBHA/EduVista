@@ -68,11 +68,11 @@ class OptionDeleteView(generics.DestroyAPIView):
 
 
 
-class QuestionDetailView(UpdateAPIView):
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
+# class QuestionDetailView(UpdateAPIView):
+#     queryset = Question.objects.all()
+#     serializer_class = QuestionSerializer
 
 # which ever class is below, works. other doesn't
-class QuestionDetailView(RetrieveAPIView):
+class QuestionDetailView(RetrieveAPIView , UpdateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
