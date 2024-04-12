@@ -16,4 +16,7 @@ export const routes: Routes = [
     {path: 'question-view/:id',loadComponent: () => import("./questions/question-view/question-view.component").then((m) => m.QuestionViewComponent) },
     // { path: 'question-view/:id', component: QuestionViewComponent },
     // {path: 'add-questions',loadComponent: () => import("./question-form/question-form.component").then((m) => m.QuestionFormComponent) },
+
+    { path: 'questions/:id', loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent) }, // For updating an existing question
+
 ];

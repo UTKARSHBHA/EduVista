@@ -5,9 +5,12 @@
         <button class="delete-btn" (click)="deleteQuestion()">Delete Question</button>
     </div> -->
     <div *ngIf="question" class="question-details">
-        <div class="delete-btn-container">
+        <div class="btn-container">
             <button class="delete-btn" (click)="deleteQuestion()">
                 <i class="fas fa-trash"></i>
+            </button>
+            <button class="update-btn" (click)="updateQuestion()">
+                <i class="fas fa-edit"></i>
             </button>
         </div>
 

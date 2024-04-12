@@ -71,7 +71,13 @@
             </div>
         </div>
         <div class="btnList">
-            <button type="submit">Add Question</button>
+            @if(questionId){
+                <button type="submit">Update Question</button>
+            }
+            @else{
+
+                <button type="submit">Add Question</button>
+            }
             <button type="submit" (click)="resetForm()">Reset</button>
         </div>
     </form>

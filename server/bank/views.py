@@ -1,7 +1,7 @@
 from rest_framework import generics
 from .models import Subject, Standard, Topic, Chapter, Question, Option
 from .serializers import SubjectSerializer, StandardSerializer,  TopicSerializer, ChapterSerializer, QuestionSerializer, OptionSerializer
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, UpdateAPIView
 
 
 class SubjectListCreateView(generics.ListCreateAPIView):
@@ -68,8 +68,11 @@ class OptionDeleteView(generics.DestroyAPIView):
 
 
 
+class QuestionDetailView(UpdateAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
 
-
+# which ever class is below, works. other doesn't
 class QuestionDetailView(RetrieveAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer

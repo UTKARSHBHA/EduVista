@@ -25,6 +25,10 @@ export class QuestionsService {
 getQuestionById(id: number): Observable<any> {
    return this.http.get(`${this.apiUrl}${id}/`);
 }
+// questions.service.ts
 
+updateQuestion(questionId: number, questionData: FormData): Observable<any> {
+   return this.http.put(`${this.apiUrl}${questionId}/`, questionData);
+}
  // Add other methods as needed (e.g., updateQuestion, deleteQuestion)
 }

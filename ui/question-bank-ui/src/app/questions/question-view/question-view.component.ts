@@ -47,4 +47,8 @@ export class QuestionViewComponent implements OnInit {
         });
     }
 }
+
+updateQuestion(): void {
+  this.router.navigate(['/questions', this.question.id]);
+}
  }
