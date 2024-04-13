@@ -10,13 +10,11 @@ export const routes: Routes = [
     {path: 'topics',loadComponent: () => import("./topics/topics.component").then((m) => m.TopicsComponent) },
     {path: 'questions',loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent) },
     {path: 'options',loadComponent: () => import("./options/options.component").then((m) => m.OptionsComponent) },
+    {path: 'question-generator',loadComponent: () => import("./question-paper-generator/question-paper-generator.component").then((m) => m.QuestionPaperGeneratorComponent) },
 
     {path: 'questions-list',loadComponent: () => import("./questions/questions-list/questions-list.component").then((m) => m.QuestionsListComponent) },
     {path: 'questions-details',loadComponent: () => import("./questions/questions-details/questions-details.component").then((m) => m.QuestionDetailsComponent) },
     {path: 'question-view/:id',loadComponent: () => import("./questions/question-view/question-view.component").then((m) => m.QuestionViewComponent) },
-    // { path: 'question-view/:id', component: QuestionViewComponent },
-    // {path: 'add-questions',loadComponent: () => import("./question-form/question-form.component").then((m) => m.QuestionFormComponent) },
 
-    { path: 'questions/:id', loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent) }, // For updating an existing question
-
+    { path: 'questions/:id', loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent) },
 ];

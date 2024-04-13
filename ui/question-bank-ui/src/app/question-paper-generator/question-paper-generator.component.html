@@ -1,0 +1,46 @@
+<!-- question-paper-generator.component.html -->
+<form [formGroup]="questionPaperForm" (ngSubmit)="generateQuestionPaper()">
+    <!-- Standard -->
+    <div>
+        <label for="standard">Standard:</label>
+        <select id="standard" formControlName="standard">
+            <!-- Options populated dynamically based on available standards -->
+        </select>
+    </div>
+    <!-- Subject -->
+    <div>
+        <label for="subject">Subject:</label>
+        <select id="subject" formControlName="subject">
+            <!-- Options populated dynamically based on available subjects -->
+        </select>
+    </div>
+    <!-- Topic -->
+    <div>
+        <label for="topic">Topic:</label>
+        <select id="topic" formControlName="topic">
+            <!-- Options populated dynamically based on available topics -->
+        </select>
+    </div>
+    <!-- Chapter -->
+    <div>
+        <label for="chapter">Chapter:</label>
+        <select id="chapter" formControlName="chapter">
+            <!-- Options populated dynamically based on available chapters -->
+        </select>
+    </div>
+    <!-- Difficulty Level -->
+    <div>
+        <label for="difficultyLevel">Difficulty Level:</label>
+        <select id="difficultyLevel" formControlName="difficultyLevel">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
+    <!-- Marks -->
+    <div>
+        <label for="marks">Marks:</label>
+        <input id="marks" type="number" formControlName="marks">
+    </div>
+    <button type="submit">Generate Question Paper</button>
+</form>
