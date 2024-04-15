@@ -23,12 +23,106 @@ class ChapterSerializer(serializers.ModelSerializer):
         model = Chapter
         fields = '__all__'
         
-class QuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = '__all__'
-        
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
-        fields = '__all__'
+        fields = ['id', 'text', 'is_correct']
+class QuestionSerializer(serializers.ModelSerializer):
+    standard_name = serializers.StringRelatedField(source='standard.name')
+    subject_name = serializers.StringRelatedField(source='subject.name')
+    topic_name = serializers.StringRelatedField(source='topic.name')
+    chapter_name = serializers.StringRelatedField(source='chapter.name')
+
+    options = OptionSerializer(many=True)
+    class Meta:
+        model = Question
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter', 'options' , 'standard_name' , 'subject_name' , 'topic_name' , 'chapter_name']
+
+    def create(self, validated_data):
+        options_data = validated_data.pop('options')
+        question = Question.objects.create(**validated_data)
+        for option_data in options_data:
+            Option.objects.create(question=question, **option_data)
+        return question
+
+    def update(self, instance, validated_data):
+        options_data = validated_data.pop('options')
+        # Update question fields
+        instance.question_text = validated_data.get('question_text', instance.question_text)
+        instance.type = validated_data.get('type', instance.type)
+        instance.difficulty_level = validated_data.get('difficulty_level', instance.difficulty_level)
+        instance.standard = validated_data.get('standard', instance.standard)
+        instance.subject = validated_data.get('subject', instance.subject)
+        instance.marks = validated_data.get('marks', instance.marks)
+        instance.topic = validated_data.get('topic', instance.topic)
+        instance.chapter = validated_data.get('chapter', instance.chapter)
+        instance.save()
+
+        # Get the current set of options
+        options = {option.id: option for option in instance.options.all()}
+        option_ids = []
+
+        for option_data in options_data:
+            option_id = option_data.get('id', None)
+            if option_id:
+                # Update existing option
+                if option_id in options:
+                    option = options.get(option_id)
+                    option.text = option_data.get('text', option.text)
+                    option.is_correct = option_data.get('is_correct', option.is_correct)
+                    option.save()
+                    option_ids.append(option_id)
+                else:
+                    # If the option is not found in the current options, it might have been deleted
+                    Option.objects.filter(id=option_id).delete()
+            else:
+                # Create new option
+                Option.objects.create(question=instance, **option_data)
+
+        # Delete options that are not in the updated list
+        for option in options.values():
+            if option.id not in option_ids:
+                option.delete()
+
+        return instance
+        options_data = validated_data.pop('options')
+        options = (instance.options).all()
+        options = list(options)
+        instance_options = instance.options.all()
+        instance_options_ids = [option.id for option in instance_options]
+
+        for option_data in options_data:
+            option_id = option_data.get('id', None)
+            if option_id:
+                # Update existing option
+                option = next((option for option in options if option.id == option_id), None)
+                if option:
+                    option.text = option_data.get('text', option.text)
+                    option.is_correct = option_data.get('is_correct', option.is_correct)
+                    option.save()
+                else:
+                    # If the option is not found in the current options, it might have been deleted
+                    Option.objects.filter(id=option_id).delete()
+            else:
+                # Create new option
+                Option.objects.create(question=instance, **option_data)
+
+        # Delete options that are not in the updated list
+        for option in options:
+            if option.id not in instance_options_ids:
+                option.delete()
+
+        # Update question fields
+        instance.question_text = validated_data.get('question_text', instance.question_text)
+        instance.type = validated_data.get('type', instance.type)
+        instance.difficulty_level = validated_data.get('difficulty_level', instance.difficulty_level)
+        instance.standard = validated_data.get('standard', instance.standard)
+        instance.subject = validated_data.get('subject', instance.subject)
+        instance.marks = validated_data.get('marks', instance.marks)
+        instance.topic = validated_data.get('topic', instance.topic)
+        instance.chapter = validated_data.get('chapter', instance.chapter)
+        instance.save()
+
+        return instance
+
+    

@@ -36,7 +36,8 @@ export class OptionsComponent implements OnInit {
   }
   loadQuestions(): void {
      this.questionsService.getQuestions().subscribe(data => {
-       this.questions = data;
+      //  this.questions = data;
+       this.questions = data.filter((question:any) => question.type === 'mcq');
      });
   }
  

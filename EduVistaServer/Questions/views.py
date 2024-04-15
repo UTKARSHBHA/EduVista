@@ -1,155 +1,44 @@
-from django.http import HttpResponse
-from .models import Question, Chapter, Subject, Standard, Topic, Option
-from django.contrib.auth.models import Group, User
-from rest_framework import permissions, viewsets
-from rest_framework import generics
+from rest_framework import viewsets, status
 
+# Import your serializers
 from .serializers import QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
 
+# Import your models
+from .models import Question, Chapter, Subject, Standard, Topic, Option
 
-# for OptionsS
-class OptionListCreate(generics.ListCreateAPIView):
-    queryset = Option.objects.all()
-    serializer_class = OptionSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
-class OptionUpdateAPI(generics.UpdateAPIView):
-    queryset = Option.objects.all()
-    serializer_class = OptionSerializer
-    lookup_url_kwarg = 'id'
-    
-class OptionDeleteAPI(generics.DestroyAPIView):
-    queryset = Option.objects.all()
-    serializer_class = OptionSerializer
-    lookup_url_kwarg = 'id'
+import json
+import logging
 
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=204)
-class OptionListCreateById(generics.RetrieveAPIView):
-    queryset = Option.objects.all()
-    serializer_class = OptionSerializer
-    lookup_url_kwarg = 'id'
+# Create a logger instance
+logger = logging.getLogger(__name__)
 
 
-# for TopicS
-class TopicListCreate(generics.ListCreateAPIView):
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
 
-class TopicUpdateAPI(generics.UpdateAPIView):
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
-    lookup_url_kwarg = 'id'
-    
-class TopicDeleteAPI(generics.DestroyAPIView):
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
-    lookup_url_kwarg = 'id'
-
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=204)
-class TopicListCreateById(generics.RetrieveAPIView):
-    queryset = Topic.objects.all()
-    serializer_class = TopicSerializer
-    lookup_url_kwarg = 'id'
-
-
-# for STANDARDS
-class StandardListCreate(generics.ListCreateAPIView):
-    queryset = Standard.objects.all()
-    serializer_class = StandardSerializer
-
-class StandardUpdateAPI(generics.UpdateAPIView):
-    queryset = Standard.objects.all()
-    serializer_class = StandardSerializer
-    lookup_url_kwarg = 'id'
-    
-class StandardDeleteAPI(generics.DestroyAPIView):
-    queryset = Standard.objects.all()
-    serializer_class = StandardSerializer
-    lookup_url_kwarg = 'id'
-
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=204)
-class StandardListCreateById(generics.RetrieveAPIView):
-    queryset = Standard.objects.all()
-    serializer_class = StandardSerializer
-    lookup_url_kwarg = 'id'
-
-
-# for Subjects
-class SubjectListCreate(generics.ListCreateAPIView):
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-
-class SubjectUpdateAPI(generics.UpdateAPIView):
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-    lookup_url_kwarg = 'id'
-    
-class SubjectDeleteAPI(generics.DestroyAPIView):
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-    lookup_url_kwarg = 'id'
-
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=204)
-class SubjectListCreateById(generics.RetrieveAPIView):
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-    lookup_url_kwarg = 'id'
-
-class QuestionListCreate(generics.ListCreateAPIView):
+class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    # parser_classes = [MultiPartParser, FormParser]
 
-class QuestionUpdateAPI(generics.UpdateAPIView):
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
-    lookup_url_kwarg = 'id'
     
-class QuestionDeleteAPI(generics.DestroyAPIView):
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
-    lookup_url_kwarg = 'id'
 
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=204)
-class QuestionListCreateById(generics.RetrieveAPIView):
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
-    lookup_url_kwarg = 'id'
-
-
-# for CHAPTERS
-class ChapterListCreate(generics.ListCreateAPIView):
+class ChapterViewSet(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
 
-class ChapterUpdateAPI(generics.UpdateAPIView):
-    queryset = Chapter.objects.all()
-    serializer_class = ChapterSerializer
-    lookup_url_kwarg = 'id'
-    
-class ChapterDeleteAPI(generics.DestroyAPIView):
-    queryset = Chapter.objects.all()
-    serializer_class = ChapterSerializer
-    lookup_url_kwarg = 'id'
+class StandardViewSet(viewsets.ModelViewSet):
+    queryset = Standard.objects.all()
+    serializer_class = StandardSerializer
 
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=204)
-class ChapterListCreateById(generics.RetrieveAPIView):
-    queryset = Chapter.objects.all()
-    serializer_class = ChapterSerializer
-    lookup_url_kwarg = 'id'
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+
+class SubjectViewSet(viewsets.ModelViewSet):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+
+class OptionViewSet(viewsets.ModelViewSet):
+    queryset = Option.objects.all()
+    serializer_class = OptionSerializer
