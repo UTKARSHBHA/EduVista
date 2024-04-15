@@ -90,8 +90,6 @@ export class QuestionsComponent implements OnInit {
           this.setOptionsFormArray(question.options);
         });
     } else {
-      // this.addOption();
-      // this.addOption();
       
       this.questionForm.get('type')?.valueChanges.subscribe(selectedType => {
         if (selectedType === 'mcq') {
