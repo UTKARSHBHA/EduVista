@@ -24,6 +24,10 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class QuestionSerializer(serializers.ModelSerializer):
+    standard_name = serializers.StringRelatedField(source='standard.name', read_only=True)
+    subject_name = serializers.StringRelatedField(source='subject.name', read_only=True)
+    topic_name = serializers.StringRelatedField(source='topic.name', read_only=True)
+    chapter_name = serializers.StringRelatedField(source='chapter.name', read_only=True)
     class Meta:
         model = Question
         fields = '__all__'

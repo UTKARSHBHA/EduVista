@@ -46,7 +46,7 @@ class Question(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     question_text = models.TextField()
-    image = models.ImageField(upload_to='questions/', blank=True, null=True)
+    image = models.ImageField(upload_to='questions-images/', blank=True, null=True)
 
     def __str__(self):
         return self.question_text

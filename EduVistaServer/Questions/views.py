@@ -11,7 +11,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
-    print(queryset)
+    # print(queryset)
     serializer_class = QuestionSerializer
     parser_classes = [MultiPartParser, FormParser]
 

@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChaptersService {
-  private url = 'http://localhost:8000/questions/chapters/';
+  // private url = 'http://localhost:8000/api/chapters/';
+  private url = environment.apiUrl+'chapters/';
+
   constructor(private httpClient: HttpClient) { }
   getChapters(): Observable<any> {
     return this.httpClient.get(this.url);
