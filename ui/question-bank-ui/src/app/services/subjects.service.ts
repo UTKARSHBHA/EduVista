@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
  providedIn: 'root'
 })
 export class SubjectsService {
- private url = 'http://localhost:8000/api/subjects/';
+ private url = 'http://localhost:8000/questions/subjects/';
 
  constructor(private httpClient: HttpClient) { }
 
@@ -20,6 +20,6 @@ export class SubjectsService {
  }
 
  deleteSubject(subjectId: number): Observable<any> {
-    return this.httpClient.delete(`${this.url}${subjectId}/delete/`);
+    return this.httpClient.delete(`${this.url}${subjectId}`);
  }
 }

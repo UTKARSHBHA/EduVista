@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TopicsService {
-  private url = 'http://localhost:8000/api/topics/';
+  private url = 'http://localhost:8000/questions/topics/';
   constructor(private httpClient: HttpClient) { }
   getTopics(): Observable<any> {
     return this.httpClient.get(this.url);
@@ -15,6 +15,6 @@ export class TopicsService {
     return this.httpClient.post(this.url, topic);
  }
  deleteTopic(topicId: number): Observable<any> {
-  return this.httpClient.delete(`${this.url}${topicId}/delete/`);
+  return this.httpClient.delete(`${this.url}${topicId}`);
 }
 }

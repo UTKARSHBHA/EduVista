@@ -176,6 +176,7 @@ export class QuestionsComponent implements OnInit {
     console.log(this.questionId);
     console.log(this.questionForm.value);
     console.log(this.questionForm.errors);
+    console.log(this.questionForm.valid);
     if (this.questionForm.valid) {
       const formData = new FormData();
       Object.keys(this.questionForm.value).forEach((key) => {

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class StandardsService {
-  private url = 'http://localhost:8000/api/standards/';
+  private url = 'http://localhost:8000/questions/standards/';
   constructor(private httpClient: HttpClient) { }
   getStandards(){
     return this.httpClient.get(this.url);
@@ -16,7 +16,7 @@ export class StandardsService {
     return this.httpClient.post(this.url, standard);
  }
  deleteStandard(standardId: number): Observable<any> {
-  return this.httpClient.delete(`${this.url}${standardId}/delete/`);
+  return this.httpClient.delete(`${this.url}${standardId}`);
 }
 
 }
