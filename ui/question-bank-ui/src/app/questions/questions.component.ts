@@ -56,7 +56,7 @@ export class QuestionsComponent implements OnInit {
       marks: ['', Validators.required],
       topic: ['', Validators.required],
       chapter: ['', Validators.required],
-      image: [null],
+      // image: [null],
       options: this.formBuilder.array([]),
       // options: this.formBuilder.array([
       //   this.formBuilder.group({
@@ -101,6 +101,11 @@ export class QuestionsComponent implements OnInit {
             this.addOption();
             this.addOption();
         }
+        else{
+            this.optionsArray.clear();
+
+        }
+
     });
     }
   }
@@ -178,21 +183,11 @@ export class QuestionsComponent implements OnInit {
     console.log(this.questionForm.errors);
     console.log(this.questionForm.valid);
     if (this.questionForm.valid) {
-      const formData = new FormData();
-      Object.keys(this.questionForm.value).forEach((key) => {
-        if (key !== 'image') {
-          formData.append(key, this.questionForm.value[key]);
-        }
-      });
-
-      if (this.selectedFile) {
-        formData.append('image', this.selectedFile, this.selectedFile.name);
-      }
-
+      
       if (this.questionId) {
-        console.log(formData);
+        // console.log(formData);
         this.questionsService
-          .updateQuestion(this.questionId, formData)
+          .updateQuestion(this.questionId, this.questionForm.value)
           .subscribe({
             next: (data) => {
               console.log('Question updated:', data);
@@ -206,9 +201,10 @@ export class QuestionsComponent implements OnInit {
             },
           });
       } else {
-        console.log(formData);
+        console.log(this.questionForm.value);
+       
 
-        this.questionsService.addQuestion(formData).subscribe({
+        this.questionsService.addQuestion(this.questionForm.value).subscribe({
           next: (data) => {
             console.log('Question added:', data);
             this.questions.push(data);

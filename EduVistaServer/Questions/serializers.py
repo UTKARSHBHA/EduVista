@@ -23,16 +23,26 @@ class ChapterSerializer(serializers.ModelSerializer):
         model = Chapter
         fields = '__all__'
         
-class QuestionSerializer(serializers.ModelSerializer):
-    standard_name = serializers.StringRelatedField(source='standard.name', read_only=True)
-    subject_name = serializers.StringRelatedField(source='subject.name', read_only=True)
-    topic_name = serializers.StringRelatedField(source='topic.name', read_only=True)
-    chapter_name = serializers.StringRelatedField(source='chapter.name', read_only=True)
-    class Meta:
-        model = Question
-        fields = '__all__'
-        
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
-        fields = '__all__'
+        fields = ['text', 'is_correct']
+class QuestionSerializer(serializers.ModelSerializer):
+    standard_name = serializers.StringRelatedField(source='standard.name')
+    subject_name = serializers.StringRelatedField(source='subject.name')
+    topic_name = serializers.StringRelatedField(source='topic.name')
+    chapter_name = serializers.StringRelatedField(source='chapter.name')
+
+    options = OptionSerializer(many=True)
+    class Meta:
+        model = Question
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter', 'options' , 'standard_name' , 'subject_name' , 'topic_name' , 'chapter_name']
+
+    def create(self, validated_data):
+        options_data = validated_data.pop('options')
+        question = Question.objects.create(**validated_data)
+        for option_data in options_data:
+            Option.objects.create(question=question, **option_data)
+        return question
+
+    

@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 
 # Import your serializers
 from .serializers import QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
@@ -8,12 +8,20 @@ from .models import Question, Chapter, Subject, Standard, Topic, Option
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
+import json
+import logging
+
+# Create a logger instance
+logger = logging.getLogger(__name__)
+
+
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
-    # print(queryset)
     serializer_class = QuestionSerializer
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
+
+    
 
 class ChapterViewSet(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
