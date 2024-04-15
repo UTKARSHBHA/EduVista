@@ -26,6 +26,7 @@ export class QuestionViewComponent implements OnInit {
      if (questionId) {
       this.questionsService.getQuestionById(+questionId).subscribe(question => {
         this.question = question;
+        console.log(question);
       });
    } else {
       // Handle the case where questionId is null, e.g., by setting a default value or logging an error
