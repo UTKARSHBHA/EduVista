@@ -33,10 +33,18 @@ class QuestionSerializer(serializers.ModelSerializer):
     topic_name = serializers.StringRelatedField(source='topic.name')
     chapter_name = serializers.StringRelatedField(source='chapter.name')
 
-    options = OptionSerializer(many=True)
+    options = OptionSerializer( many=True)
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter', 'options' , 'standard_name' , 'subject_name' , 'topic_name' , 'chapter_name']
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter' , 'options','standard_name' , 'subject_name' , 'topic_name' , 'chapter_name']
+
+    # def to_representation(self, instance):
+    #     # Call the base implementation first to get a dictionary
+    #     ret = super().to_representation(instance)
+    #     # Remove the 'options' field from the representation
+    #     ret.pop('options', None)
+    #     return ret
+
 
     def create(self, validated_data):
         options_data = validated_data.pop('options')
@@ -85,44 +93,4 @@ class QuestionSerializer(serializers.ModelSerializer):
                 option.delete()
 
         return instance
-        options_data = validated_data.pop('options')
-        options = (instance.options).all()
-        options = list(options)
-        instance_options = instance.options.all()
-        instance_options_ids = [option.id for option in instance_options]
-
-        for option_data in options_data:
-            option_id = option_data.get('id', None)
-            if option_id:
-                # Update existing option
-                option = next((option for option in options if option.id == option_id), None)
-                if option:
-                    option.text = option_data.get('text', option.text)
-                    option.is_correct = option_data.get('is_correct', option.is_correct)
-                    option.save()
-                else:
-                    # If the option is not found in the current options, it might have been deleted
-                    Option.objects.filter(id=option_id).delete()
-            else:
-                # Create new option
-                Option.objects.create(question=instance, **option_data)
-
-        # Delete options that are not in the updated list
-        for option in options:
-            if option.id not in instance_options_ids:
-                option.delete()
-
-        # Update question fields
-        instance.question_text = validated_data.get('question_text', instance.question_text)
-        instance.type = validated_data.get('type', instance.type)
-        instance.difficulty_level = validated_data.get('difficulty_level', instance.difficulty_level)
-        instance.standard = validated_data.get('standard', instance.standard)
-        instance.subject = validated_data.get('subject', instance.subject)
-        instance.marks = validated_data.get('marks', instance.marks)
-        instance.topic = validated_data.get('topic', instance.topic)
-        instance.chapter = validated_data.get('chapter', instance.chapter)
-        instance.save()
-
-        return instance
-
-    
+        
