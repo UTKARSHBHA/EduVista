@@ -5,6 +5,9 @@ from .views import QuestionViewSet, ChapterViewSet, StandardViewSet, TopicViewSe
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views import SignupView
+
+
 router = DefaultRouter()
 router.register(r'questions', QuestionViewSet)
 router.register(r'chapters', ChapterViewSet)
@@ -16,4 +19,7 @@ router.register(r'options', OptionViewSet)
 urlpatterns = [
     
     path('', include(router.urls)),
+    
+    path('signup/', SignupView.as_view(), name='signup'),
+
 ]

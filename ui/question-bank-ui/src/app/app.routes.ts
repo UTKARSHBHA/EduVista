@@ -18,4 +18,5 @@ export const routes: Routes = [
     {path: 'question-view/:id', loadComponent: () => import("./questions/question-view/question-view.component").then((m) => m.QuestionViewComponent), canActivate: [AuthGuard]},
     {path: 'questions/:id', loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent), canActivate: [AuthGuard]},
     {path: 'login', loadComponent: () => import("./login/login.component").then((m) => m.LoginComponent)},
+    {path: 'signup', loadComponent: () => import("./signup/signup.component").then((m) => m.SignupComponent)},
 ];

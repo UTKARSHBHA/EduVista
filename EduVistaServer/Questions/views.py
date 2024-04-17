@@ -8,8 +8,16 @@ from .models import Question, Chapter, Subject, Standard, Topic, Option
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
-import json
 import logging
+
+from rest_framework.views import APIView
+from .serializers import SignupSerializer
+from rest_framework.response import Response
+
+from rest_framework.permissions import AllowAny
+
+
+
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -42,3 +50,16 @@ class SubjectViewSet(viewsets.ModelViewSet):
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
+
+
+
+
+class SignupView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
