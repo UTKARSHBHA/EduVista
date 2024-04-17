@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -35,25 +36,24 @@ export class AuthService {
    
    refreshToken(): Observable<any> {
     const refreshToken = localStorage.getItem('refresh_token');
+    console.log(refreshToken)
     if (refreshToken) {
+      console.log("inside if of refresh token");
+      
        return this.http.post<any>('http://localhost:8000/api/token/refresh/', { refresh: refreshToken }).pipe(
          tap(newToken => {
            // Save the new access token to localStorage
+           console.log("refesh token request done");
            localStorage.setItem('access_token', newToken.access);
-           // Optionally, log the new token or perform other actions
            console.log('Access token refreshed:', newToken.access);
          }),
          catchError(error => {
-           // Handle errors, such as when the refresh token is also invalid or expired
            console.error('Error refreshing token:', error);
-           // Optionally, navigate the user to the login page or show an error message
            return throwError('Error refreshing token');
          })
        );
     } else {
-       // Handle the case where there is no refresh token available
        console.error('No refresh token available.');
-       // Optionally, navigate the user to the login page or show an error message
        return throwError('No refresh token available.');
     }
    }
