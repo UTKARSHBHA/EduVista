@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { QuestionViewComponent } from './questions/question-view/question-view.component';
+import { AuthGuard } from './auth.guard';
+import { QuestionsComponent } from './questions/questions.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -17,4 +19,9 @@ export const routes: Routes = [
     {path: 'question-view/:id',loadComponent: () => import("./questions/question-view/question-view.component").then((m) => m.QuestionViewComponent) },
 
     { path: 'questions/:id', loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent) },
+    { path: 'login', loadComponent: () => import("./login/login.component").then((m) => m.LoginComponent) },
+
+
+    // { path: 'protected', component: QuestionsComponent, canActivate: [AuthGuard] },
+
 ];
