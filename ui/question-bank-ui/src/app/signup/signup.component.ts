@@ -26,31 +26,26 @@ export class SignupComponent {
  
   signupUser() {
     if (this.signupForm.valid) {
-      const userData = this.signupForm.value;
-      this.authService.signup(userData).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.authService.saveToken(res);
-          this.router.navigate(['/login']); // Navigate to home route
-        },
-        error: (err) => {
-          console.error(err);
-          // Handle signup errors, e.g., show an error message to the user
-          if (err.error && err.error.username) {
-            this.errorMessage = err.error.username[0]; // Assuming the error message is the first item in the array
-          } else {
-            this.errorMessage = 'An error occurred. Please try again.';
-          }
-          this.signupForm.reset();
-        
-
-        }
-      });
+       const userData = this.signupForm.value;
+       this.authService.signup(userData).subscribe({
+         next: (res) => {
+           console.log(res);
+           this.router.navigate(['/login']); // Navigate to login route
+         },
+         error: (err) => {
+           console.error(err);
+           if (err.error && err.error.username) {
+             this.errorMessage = err.error.username[0]; // Assuming the error message is the first item in the array
+           } else {
+             this.errorMessage = 'An error occurred. Please try again.';
+           }
+           this.signupForm.reset();
+         }
+       });
     } else {
-      // Optionally, handle form validation errors
-      console.error('Form is invalid');
+       console.error('Form is invalid');
     }
- }
+   }
  
  checkPasswords(group: FormGroup) {
   let pass = group.controls['password'].value;
