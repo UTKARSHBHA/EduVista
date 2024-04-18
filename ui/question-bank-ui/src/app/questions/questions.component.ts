@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { QuestionDetailsComponent } from './questions-details/questions-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { log } from 'console';
+import { text } from 'stream/consumers';
 
 @Component({
   selector: 'app-questions',
@@ -58,16 +59,6 @@ export class QuestionsComponent implements OnInit {
       chapter: ['', Validators.required],
       // image: [null],
       options: this.formBuilder.array([]),
-      // options: this.formBuilder.array([
-      //   this.formBuilder.group({
-      //     text: ['', Validators.required],
-      //     is_correct: [false],
-      //   }),
-      //   this.formBuilder.group({
-      //     text: ['', Validators.required],
-      //     is_correct: [false],
-      //   }),
-      // ]),
     });
   }
 
@@ -90,21 +81,35 @@ export class QuestionsComponent implements OnInit {
           this.setOptionsFormArray(question.options);
         });
     } else {
-      
-      this.questionForm.get('type')?.valueChanges.subscribe(selectedType => {
+      this.questionForm.get('type')?.valueChanges.subscribe((selectedType) => {
         if (selectedType === 'mcq') {
-            // Clear any existing options
-            this.optionsArray.clear();
-            // Add two pre-built options
-            this.addOption();
-            this.addOption();
+          // Clear any existing options
+          this.optionsArray.clear();
+          // Add two pre-built options
+          this.addOption();
+          this.addOption();
+        } else if (selectedType === 'tf') {
+          // Clear any existing options
+          this.optionsArray.clear();
+          // Add two pre-built options
+          // this.addOption();
+          // this.addOption();
+          this.optionsArray.push(
+            this.formBuilder.group({
+              text: ['True', Validators.required],
+              is_correct: [false],
+            })
+          );
+          this.optionsArray.push(
+            this.formBuilder.group({
+              text: ['False', Validators.required],
+              is_correct: [false],
+            })
+          );
+        } else {
+          this.optionsArray.clear();
         }
-        else{
-            this.optionsArray.clear();
-
-        }
-
-    });
+      });
     }
   }
 
@@ -181,7 +186,6 @@ export class QuestionsComponent implements OnInit {
     console.log(this.questionForm.errors);
     console.log(this.questionForm.valid);
     if (this.questionForm.valid) {
-      
       if (this.questionId) {
         // console.log(formData);
         this.questionsService
@@ -200,7 +204,6 @@ export class QuestionsComponent implements OnInit {
           });
       } else {
         console.log(this.questionForm.value);
-       
 
         this.questionsService.addQuestion(this.questionForm.value).subscribe({
           next: (data) => {

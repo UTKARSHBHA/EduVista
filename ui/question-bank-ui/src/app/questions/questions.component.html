@@ -56,20 +56,28 @@
             <label for="question_text">Question:</label>
             <textarea id="question_text" formControlName="question_text"></textarea>
         </div>
-        <div *ngIf="questionForm.get('type')?.value === 'mcq'" class="mcq-options-container">
-            <button (click)="addOption()">Add Option</button>
-            <div formArrayName="options">
-                <div *ngFor="let option of optionsArray.controls; let i = index" [formGroupName]="i">
-                    <div class="optionList">
-                        <input formControlName="text" placeholder="Option Text">
-                       
-                            <input id="isOptionCorrect" type="checkbox" formControlName="is_correct"> 
-                        <!-- </div> -->
-                        <button *ngIf="optionsArray.length>2" (click)="removeOption(i)" class="remove-option">Remove</button>
+        <!-- <div *ngIf="questionForm.get('type')?.value === 'mcq'" class="mcq-options-container"> -->
+        @if(questionForm.get('type')?.value === 'mcq' || questionForm.get('type')?.value === 'tf' ){
+            <div class="mcq-options-container">
+                @if(questionForm.get('type')?.value === 'mcq'){
+
+                    <button (click)="addOption()">Add Option</button>
+                }
+                <div formArrayName="options">
+                    <div *ngFor="let option of optionsArray.controls; let i = index" [formGroupName]="i">
+                        <div class="optionList">
+                            <input formControlName="text" placeholder="Option Text">
+                           
+                                <input id="isOptionCorrect" type="checkbox" formControlName="is_correct"> 
+                            <!-- </div> -->
+                            <button *ngIf="optionsArray.length>2" (click)="removeOption(i)" class="remove-option">Remove</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+        }
+        <!-- </div> -->
         <div class="btnList">
             @if(questionId){
                 <button type="submit">Update Question</button>
