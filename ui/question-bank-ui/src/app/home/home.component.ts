@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -9,5 +10,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  constructor(public authService: AuthService ) {}
 
 }
