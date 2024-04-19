@@ -24,18 +24,18 @@ export class LoginComponent {
  
   loginUser() {
     if (this.loginForm.valid) {
-       const userData = this.loginForm.value;
-       this.authService.login(userData).subscribe({
-         next: (res) => {
-           console.log(res);
-           this.router.navigate(['/']); // Navigate to home route
-         },
-         error: (err) => {
-           console.error(err);
-           this.errorMessage = 'Invalid username or password. Please try again.';
-           this.loginForm.reset();
-         }
-       });
+      //  const userData = this.loginForm.value;
+      //  this.authService.login(userData).subscribe({
+      //    next: (res) => {
+      //      console.log(res);
+      //      this.router.navigate(['/']); // Navigate to home route
+      //    },
+      //    error: (err) => {
+      //      console.error(err);
+      //      this.errorMessage = 'Invalid username or password. Please try again.';
+      //      this.loginForm.reset();
+      //    }
+      //  });
     } else {
        console.error('Form is invalid');
     }

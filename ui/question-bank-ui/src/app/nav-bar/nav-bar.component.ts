@@ -26,7 +26,7 @@ export class NavBarComponent {
  
   logout() {
      // Implement your logout logic here
-     this.authService.logout();
+   //   this.authService.logout();
      this.router.navigate(['/']);
 
   }

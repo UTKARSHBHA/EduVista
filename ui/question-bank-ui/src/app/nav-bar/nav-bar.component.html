@@ -12,10 +12,10 @@
        <li><a routerLink="/options">Options</a></li>
     </ul>
     <div class="navbar-actions">
-       <button *ngIf="authService.isTokenExpired()" (click)="login()">Login</button>
-       <div *ngIf="!authService.isTokenExpired()" class="user-profile">
+       <!-- <button *ngIf="authService.isTokenExpired()" (click)="login()">Login</button>
+       <div *ngIf="!authService.isTokenExpired()" class="user-profile"> -->
          <span>Welcome, User!</span> <!-- Replace 'User' with the actual user's name -->
          <button (click)="logout()">Logout</button>
        </div>
-    </div>
+    <!-- </div> -->
    </nav>
