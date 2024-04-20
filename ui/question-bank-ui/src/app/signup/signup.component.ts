@@ -17,11 +17,12 @@ export class SignupComponent {
 
  
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
-     this.signupForm = this.formBuilder.group({
-       username: ['', [Validators.required, this.uniqueUsernameValidator()]],
-       password: ['', Validators.required],
-       confirmPassword: ['', Validators.required]
-     }, { validator: this.checkPasswords });
+    this.signupForm = this.formBuilder.group({
+      username: ['', [Validators.required, this.uniqueUsernameValidator()]],
+      email: ['', [Validators.required, Validators.email]], // Add this line
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+  }, { validator: this.checkPasswords });
   }
  
   signupUser() {
