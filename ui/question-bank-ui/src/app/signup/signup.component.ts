@@ -37,6 +37,8 @@ export class SignupComponent {
            console.error(err);
            if (err.error && err.error.username) {
              this.errorMessage = err.error.username[0]; // Assuming the error message is the first item in the array
+           } else if (err.error && err.error.email) {
+             this.errorMessage = err.error.email[0]; // Assuming the error message is the first item in the array
            } else {
              this.errorMessage = 'An error occurred. Please try again.';
            }
