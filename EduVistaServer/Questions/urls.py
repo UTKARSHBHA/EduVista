@@ -6,7 +6,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from .views import SignupView
+# from django.contrib.auth.views
 
+from .views import get_csrf_token, LoginView
 
 router = DefaultRouter()
 router.register(r'questions', QuestionViewSet)
@@ -21,5 +23,8 @@ urlpatterns = [
     path('', include(router.urls)),
     
     path('signup/', SignupView.as_view(), name='signup'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('csrf/', get_csrf_token, name='get_csrf_token'),
+
 
 ]

@@ -16,8 +16,18 @@ from rest_framework.response import Response
 
 from rest_framework.permissions import AllowAny
 
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import View
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
+from braces.views import CsrfExemptMixin
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -63,3 +73,32 @@ class SignupView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class LoginView(CsrfExemptMixin, View):
+    authentication_classes = []
+    # permission_classes = [AllowAny]
+
+    
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page.
+            request.session['username'] =username
+            request.session.save()
+            return JsonResponse({'status': 'success', 'message': 'Logged in successfully.'})
+        else:
+            # Return an error response.
+            return JsonResponse({'status': 'error', 'message': 'Invalid login credentials.'}, status=400)
+
+
+
+@csrf_exempt
+def get_csrf_token(request):
+    """
+    View to return the CSRF token.
+    """
+    return JsonResponse({'csrfToken': request.META['csrftoken']})

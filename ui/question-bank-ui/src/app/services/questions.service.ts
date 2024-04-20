@@ -15,7 +15,9 @@ private url = environment.apiUrl+'questions/';
  constructor(private http: HttpClient) { }
 
  getQuestions(): Observable<any> {
-    return this.http.get(this.url);
+    return this.http.get(this.url, {
+      withCredentials: true // Include credentials in the request
+    });
  }
 
  addQuestion(question: any): Observable<any> {

@@ -42,9 +42,14 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Add this line
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,6 +67,8 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -150,3 +157,35 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Ensure you have the following settings for session cookies
+SESSION_COOKIE_SECURE = False # Set to True in production
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+
+
+CSRF_TRUSTED_ORIGINS = 'http://localhost:4200',
+
+ALLOWED_HOSTS = 'localhost',
+
+CORS_ORIGIN_WHITELIST = 'http://localhost:4200',
+
+CSRF_COOKIE_SECURE = True # Ensure this is True if your site is served over HTTPS
+CSRF_COOKIE_HTTPONLY = True # Set to False to allow JavaScript to access the cookie
+CSRF_COOKIE_SAMESITE = 'None' # Ensure this is set to 'None' for cross-site requests
+SESSION_COOKIE_SECURE = True # Ensure this is True if your site is served over HTTPS
+SESSION_COOKIE_SAMESITE = 'None' # Ensure this is set to 'None' for cross-site requests
+
+CORS_EXPOSE_HEADERS = [
+    'Authorization',
+    'Content-Type',
+    'X-My-Custom-Header',
+]
+CORS_ALLOW_CREDENTIALS = True
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
