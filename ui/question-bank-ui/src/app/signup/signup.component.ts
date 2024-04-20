@@ -20,7 +20,7 @@ export class SignupComponent {
     this.signupForm = this.formBuilder.group({
       username: ['', [Validators.required, this.uniqueUsernameValidator()]],
       email: ['', [Validators.required, Validators.email]], // Add this line
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]], // Add minimum length validator
       confirmPassword: ['', Validators.required]
   }, { validator: this.checkPasswords });
   }

@@ -26,6 +26,9 @@
             <input type="password" id="password" formControlName="password" class="form-control">
             <div *ngIf="signupForm.controls['password'].errors?.['required'] && signupForm.controls['password'].touched"
                 class="error">Password is required</div>
+            <div *ngIf="signupForm.controls['password'].errors?.['minlength'] && signupForm.controls['password'].touched"
+                class="error">Password must be at least 8 characters long</div>
+
         </div>
         <div class="form-group">
             <label for="confirmPassword">Confirm Password:</label>
