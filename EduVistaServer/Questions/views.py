@@ -17,7 +17,19 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.urls import reverse
+from django.contrib.auth import get_user_model
+from .models import PasswordResetToken
 
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+
+from django.http import JsonResponse
+from django.contrib.auth.hashers import make_password
+from .models import PasswordResetToken
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -63,3 +75,71 @@ class SignupView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+User = get_user_model()
+
+
+@csrf_exempt
+def password_reset(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+        print(f"Searching for user with email: {email}") # Debugging line
+        if not email:
+            return JsonResponse({'error': 'Email is required.'}, status=400)
+        try:
+            user = User.objects.get(email=email)
+            print(f"Found user: {user}") # Debugging line
+        except User.DoesNotExist:
+            print(f"User with email {email} does not exist.") # Debugging line
+            return JsonResponse({'error': 'User with this email does not exist.'}, status=400)
+
+        # Create a new password reset token
+        token = PasswordResetToken.objects.create(user=user)
+
+        # Construct the password reset URL
+        reset_url = request.build_absolute_uri(reverse('password_reset_confirm', kwargs={'token': token.token}))
+        reset_url = reset_url.replace(':8000', ':4200') # Replace the Django server port with the Angular app port
+
+
+        # Send the email
+        send_mail(
+            'Password Reset',
+            f'Please click the following link to reset your password: {reset_url}',
+            'from@example.com',
+            [user.email],
+            fail_silently=False,
+        )
+
+        return JsonResponse({'message': 'Password reset email sent.'})
+
+    return JsonResponse({'error': 'Invalid request.'}, status=400)
+
+
+
+@csrf_exempt
+def password_reset_confirm(request, token):
+    try:
+        reset_token = PasswordResetToken.objects.get(token=token)
+    except PasswordResetToken.DoesNotExist:
+        return JsonResponse({'error': 'Invalid or expired password reset token.'}, status=400)
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_password = data.get('new_password')
+        # new_password = request.POST.get('new_password')
+        if not new_password:
+            return JsonResponse({'error': 'New password is required.'}, status=400)
+
+        # Update the user's password
+        reset_token.user.password = make_password(new_password)
+        reset_token.user.save()
+
+        # Optionally, delete the used token
+        reset_token.delete()
+
+        return JsonResponse({'message': 'Password has been reset.'})
+
+    # For GET requests, you might want to return a form or instructions
+    return JsonResponse({'message': 'Please submit your new password.'})

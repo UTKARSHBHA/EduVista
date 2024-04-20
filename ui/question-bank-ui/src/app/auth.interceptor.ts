@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Define the endpoints that should not include the Authorization header
-    const excludedEndpoints = ['/api/token', '/api/signup'];
+    const excludedEndpoints = ['/api/token', '/api/signup', '/api/password_reset_confirm', '/api/password_reset'];
 
     // Check if the request is for an excluded endpoint
     if (!excludedEndpoints.some(endpoint => req.url.includes(endpoint))) {

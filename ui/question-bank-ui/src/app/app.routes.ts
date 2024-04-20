@@ -19,4 +19,8 @@ export const routes: Routes = [
     {path: 'questions/:id', loadComponent: () => import("./questions/questions.component").then((m) => m.QuestionsComponent), canActivate: [AuthGuard]},
     {path: 'login', loadComponent: () => import("./login/login.component").then((m) => m.LoginComponent)},
     {path: 'signup', loadComponent: () => import("./signup/signup.component").then((m) => m.SignupComponent)},
+    {path: 'password-reset', loadComponent: () => import("./password-reset/password-reset.component").then((m) => m.PasswordResetComponent)},
+    {path: 'api/password_reset_confirm/:token', loadComponent: () => import("./password-reset-confirm/password-reset-confirm.component").then((m) => m.PasswordResetConfirmComponent)},
+    
+
 ];
