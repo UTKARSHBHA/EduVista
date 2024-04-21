@@ -75,6 +75,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         instance.marks = validated_data.get('marks', instance.marks)
         instance.topic = validated_data.get('topic', instance.topic)
         instance.chapter = validated_data.get('chapter', instance.chapter)
+        instance.image = validated_data.get('image', instance.image)
         instance.save()
 
         # Get the current set of options
