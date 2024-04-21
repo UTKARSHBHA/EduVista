@@ -1,7 +1,13 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 from .models import Question, Chapter, Subject, Standard, Topic, Option
+import base64
+from django.core.files.base import ContentFile
+import logging
+import uuid
+from datetime import datetime
 
+logger = logging.getLogger(__name__)
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,17 +42,22 @@ class QuestionSerializer(serializers.ModelSerializer):
     options = OptionSerializer( many=True)
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter' , 'options','standard_name' , 'subject_name' , 'topic_name' , 'chapter_name']
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter' , 'options','standard_name' , 'subject_name' , 'topic_name' , 'chapter_name', 'image']
 
-    # def to_representation(self, instance):
-    #     # Call the base implementation first to get a dictionary
-    #     ret = super().to_representation(instance)
-    #     # Remove the 'options' field from the representation
-    #     ret.pop('options', None)
-    #     return ret
+    def to_internal_value(self, data):
+        # Handle the image field manually
+        image_data = data.get('image')
+        if image_data and ';base64,' in image_data:
+            format, imgstr = image_data.split(';base64,')
+            ext = format.split('/')[-1]
+            image_name = f"{uuid.uuid4()}_{datetime.now().strftime('%Y%m%d%H%M%S')}.{ext}"
+            data['image'] = ContentFile(base64.b64decode(imgstr), name=image_name)
+        return super().to_internal_value(data)
 
 
     def create(self, validated_data):
+        
+
         options_data = validated_data.pop('options')
         question = Question.objects.create(**validated_data)
         for option_data in options_data:
@@ -93,8 +104,9 @@ class QuestionSerializer(serializers.ModelSerializer):
                 option.delete()
 
         return instance
-        
+    
 
+    
 
 
 

@@ -51,6 +51,7 @@
                 <label for="image">Image:</label>
                 <input #fileInput id="image" type="file" (change)="onFileSelected($event)">
             </div>
+            <input type="hidden" formControlName="image">
         </div>
         <div>
             <label for="question_text">Question:</label>

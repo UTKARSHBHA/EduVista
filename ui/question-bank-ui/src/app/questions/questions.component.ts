@@ -57,7 +57,7 @@ export class QuestionsComponent implements OnInit {
       marks: ['', Validators.required],
       topic: ['', Validators.required],
       chapter: ['', Validators.required],
-      // image: [null],
+      image: [null],
       options: this.formBuilder.array([]),
     });
   }
@@ -91,9 +91,7 @@ export class QuestionsComponent implements OnInit {
         } else if (selectedType === 'tf') {
           // Clear any existing options
           this.optionsArray.clear();
-          // Add two pre-built options
-          // this.addOption();
-          // this.addOption();
+        
           this.optionsArray.push(
             this.formBuilder.group({
               text: ['True', Validators.required],
@@ -158,11 +156,16 @@ export class QuestionsComponent implements OnInit {
 
   onFileSelected(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
+       const file = event.target.files[0];
+       const reader = new FileReader();
+       reader.readAsDataURL(file);
+       reader.onload = () => {
+         this.questionForm.get('image')?.setValue(reader.result);
+       };
     } else {
-      this.selectedFile = null;
+       this.questionForm.get('image')?.setValue(null);
     }
-  }
+   }
 
   deleteQuestion(questionId: number): void {
     if (confirm('Are you sure you want to delete this question?')) {
