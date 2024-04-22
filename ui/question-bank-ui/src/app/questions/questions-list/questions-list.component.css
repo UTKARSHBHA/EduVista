@@ -23,3 +23,14 @@ header{
     background-color: #0056b3; /* Darker blue on hover */
 }
 
+/* Assuming there's a parent container for the ag-grid */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+
+.ag-theme-quartz {
+    flex-grow: 1; /* Allow the ag-grid to take up the remaining space */
+    /* Add any other styles you need */
+}

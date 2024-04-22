@@ -1,11 +1,12 @@
+<div class="container">
 
-<header>
-    <button class="add-btn" (click)="routTo('questions')">Add</button>
-</header>
-
-<ag-grid-angular class="ag-theme-quartz"
-style="height: 100vh;"
-[rowData]="rowData"
-[columnDefs]="colDefs">
-
-</ag-grid-angular>
+    <header>
+        <button class="add-btn" (click)="routTo('questions')">Add</button>
+    </header>
+    
+    <ag-grid-angular class="ag-theme-quartz"
+    [rowData]="rowData"
+    [columnDefs]="colDefs">
+    
+    </ag-grid-angular>
+</div>
