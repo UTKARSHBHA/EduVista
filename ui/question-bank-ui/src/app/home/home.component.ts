@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -10,6 +10,6 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  constructor(public authService: AuthService ) {}
+  constructor(public authService: AuthService) {}
 
 }

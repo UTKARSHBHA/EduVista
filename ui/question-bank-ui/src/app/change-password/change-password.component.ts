@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
@@ -14,7 +15,7 @@ export class ChangePasswordComponent {
   changePasswordForm: FormGroup;
   errorMessage: string = '';
  
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
      this.changePasswordForm = this.formBuilder.group({
        oldPassword: ['', Validators.required],
        newPassword: ['', Validators.required],
@@ -29,6 +30,9 @@ export class ChangePasswordComponent {
             next: (response) => {
                 console.log(response);
                 this.errorMessage = 'Password has been changed.';
+                alert("Password has been changed.")
+                this.router.navigate(['/']);
+
             },
             error: (error) => {
                 console.error(error);
