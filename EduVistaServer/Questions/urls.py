@@ -9,6 +9,8 @@ from .views import SignupView
 from django.contrib.auth import views as auth_views
 
 from . import views
+from .views import change_password
+
 
 router = DefaultRouter()
 router.register(r'questions', QuestionViewSet)
@@ -27,5 +29,8 @@ urlpatterns = [
     path('password_reset/', views.password_reset, name='password_reset'),
     
     path('password_reset_confirm/<str:token>/', views.password_reset_confirm, name='password_reset_confirm'),
+
+    path('change_password/', change_password, name='change_password'),
+
 
 ]

@@ -108,4 +108,9 @@ export class AuthService {
     const url = `http://localhost:8000/api/password_reset_confirm/${token}/`;
     return this.http.post(url, { new_password: newPassword });
   }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    const url = 'http://localhost:8000/api/change_password/';
+    return this.http.post(url, { old_password: oldPassword, new_password: newPassword });
+   }
 }

@@ -31,6 +31,12 @@ from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 from .models import PasswordResetToken
 
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password, check_password
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 # Create a logger instance
 logger = logging.getLogger(__name__)
 
@@ -143,3 +149,19 @@ def password_reset_confirm(request, token):
 
     # For GET requests, you might want to return a form or instructions
     return JsonResponse({'message': 'Please submit your new password.'})
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    user = request.user
+    old_password = request.data.get('old_password')
+    new_password = request.data.get('new_password')
+    if not old_password or not new_password:
+        return Response({'error': 'Old password and new password are required.'}, status=400)
+    if not check_password(old_password, user.password):
+        return Response({'error': 'Old password is incorrect.'}, status=400)
+    user.password = make_password(new_password)
+    user.save()
+    return Response({'message': 'Password has been changed.'})
