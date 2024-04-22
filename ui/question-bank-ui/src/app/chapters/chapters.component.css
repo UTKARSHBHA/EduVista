@@ -7,6 +7,8 @@
     background-color: #f8f9fa; /* Light background for better readability */
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    min-height: 90vh;
+
 }
 
 .chapter-form {

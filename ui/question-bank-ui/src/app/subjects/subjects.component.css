@@ -5,6 +5,7 @@
     /* background-color: red; */
     align-items: center;
     gap: 5rem;
+    min-height: 90vh;
 }
 
 .subject-form{
