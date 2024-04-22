@@ -23,22 +23,27 @@ export class ChangePasswordComponent {
   }
  
   onSubmit() {
-     if (this.changePasswordForm.valid) {
-       const { oldPassword, newPassword } = this.changePasswordForm.value;
-       this.authService.changePassword(oldPassword, newPassword).subscribe({
-         next: (response:any) => {
-           console.log(response);
-           this.errorMessage = 'Password has been changed.';
-         },
-         error: (error:any) => {
-           console.error(error);
-           this.errorMessage = 'An error occurred. Please try again.';
-         }
-       });
-     } else {
-       console.error('Form is invalid');
-     }
-  }
+    if (this.changePasswordForm.valid) {
+        const { oldPassword, newPassword } = this.changePasswordForm.value;
+        this.authService.changePassword(oldPassword, newPassword).subscribe({
+            next: (response) => {
+                console.log(response);
+                this.errorMessage = 'Password has been changed.';
+            },
+            error: (error) => {
+                console.error(error);
+                // Extract the error message from the server response
+                if (error.error && error.error.error) {
+                    this.errorMessage = error.error.error;
+                } else {
+                    this.errorMessage = 'An error occurred. Please try again.';
+                }
+            }
+        });
+    } else {
+        console.error('Form is invalid');
+    }
+}
  
   checkPasswords(group: FormGroup) {
     let pass = group.controls['newPassword'].value;
