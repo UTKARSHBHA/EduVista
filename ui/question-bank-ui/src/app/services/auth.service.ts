@@ -95,10 +95,10 @@ export class AuthService {
     return this.cookieService.get('csrftoken');
   }
 
-  resetPassword(email: string) {
+  resetPassword(username: string) {
     const url = 'http://localhost:8000/api/password_reset/';
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const body = JSON.stringify({ email: email });
+    const body = JSON.stringify({ username: username });
 
     return this.http.post(url, body, { headers: headers });
   }

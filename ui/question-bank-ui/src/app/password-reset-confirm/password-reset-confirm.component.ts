@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterConfigOptions } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ export class PasswordResetConfirmComponent implements OnInit {
   errorMessage: string = '';
   token: any = '';
  
-  constructor(private route: ActivatedRoute, private authService: AuthService) {}
+  constructor(private route: ActivatedRoute, private authService: AuthService ,private router: Router) {}
  
   ngOnInit(): void {
      this.token = this.route.snapshot.paramMap.get('token');
@@ -26,6 +26,9 @@ export class PasswordResetConfirmComponent implements OnInit {
      this.authService.confirmPasswordReset(this.token, this.newPassword).subscribe(
        response => {
          console.log(response);
+         alert("Password reset successfully!");
+         this.router.navigate(['/login']);
+
          // Handle successful submission (e.g., show a success message)
        },
        error => {

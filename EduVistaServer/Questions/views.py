@@ -90,16 +90,15 @@ User = get_user_model()
 def password_reset(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        email = data.get('email')
-        print(f"Searching for user with email: {email}") # Debugging line
-        if not email:
-            return JsonResponse({'error': 'Email is required.'}, status=400)
+        username = data.get('username') # Change this line
+        print(f"Searching for user with username: {username}") # Debugging line
+        if not username:
+            return JsonResponse({'error': 'Username is required.'}, status=400)
         try:
-            user = User.objects.get(email=email)
-            print(f"Found user: {user}") # Debugging line
+            user = User.objects.get(username=username) # Change this line
         except User.DoesNotExist:
-            print(f"User with email {email} does not exist.") # Debugging line
-            return JsonResponse({'error': 'User with this email does not exist.'}, status=400)
+            return JsonResponse({'error': 'User with this username does not exist.'}, status=400)
+
 
         # Create a new password reset token
         token = PasswordResetToken.objects.create(user=user)
@@ -114,11 +113,11 @@ def password_reset(request):
             'Password Reset',
             f'Please click the following link to reset your password: {reset_url}',
             'from@example.com',
-            [user.email],
+            [user.username],
             fail_silently=False,
         )
 
-        return JsonResponse({'message': 'Password reset email sent.'})
+        return JsonResponse({'message': 'Password reset username sent.'})
 
     return JsonResponse({'error': 'Invalid request.'}, status=400)
 
