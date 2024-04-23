@@ -534,8 +534,8 @@ class Command(BaseCommand):
 
             # Create remaining related objects using get_or_create
             subject, _ = Subject.objects.get_or_create(name=question_data['subject'])
-            topic, _ = Topic.objects.get_or_create(name=question_data['topic'], subject=subject)
-            chapter, _ = Chapter.objects.get_or_create(name=question_data['chapter'], topic=topic)
+            chapter, _ = Chapter.objects.get_or_create(name=question_data['chapter'], subject=subject)
+            topic, _ = Topic.objects.get_or_create(name=question_data['topic'], chapter=chapter)
 
             # Create question object
             question = Question.objects.create(

@@ -16,16 +16,16 @@ class Standard(models.Model):
         return self.name
 
 
-class Topic(models.Model):
+class Chapter(models.Model):
     name = models.CharField(max_length=100)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
-class Chapter(models.Model):
+class Topic(models.Model):
     name = models.CharField(max_length=100)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
