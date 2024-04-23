@@ -50,20 +50,42 @@ class QuestionViewSet(viewsets.ModelViewSet):
     
 
 class ChapterViewSet(viewsets.ModelViewSet):
-    queryset = Chapter.objects.all()
+    # queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
+
+    def get_queryset(self):
+        queryset = Chapter.objects.all()
+        subject = self.request.query_params.get('subject', None)
+        if subject is not None:
+            queryset = queryset.filter(subject=subject)
+        return queryset
 
 class StandardViewSet(viewsets.ModelViewSet):
     queryset = Standard.objects.all()
     serializer_class = StandardSerializer
 
 class TopicViewSet(viewsets.ModelViewSet):
-    queryset = Topic.objects.all()
+    # queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+
+    def get_queryset(self):
+        queryset = Topic.objects.all()
+        chapter = self.request.query_params.get('chapter', None)
+        if chapter is not None:
+            queryset = queryset.filter(chapter=chapter)
+        return queryset
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+
+    # def get_queryset(self):
+    #     queryset = Subject.objects.all()
+    #     standard = self.request.query_params.get('standard', None)
+    #     if standard is not None:
+    #         queryset = queryset.filter(standard=standard)
+    #     return queryset
+
 
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()

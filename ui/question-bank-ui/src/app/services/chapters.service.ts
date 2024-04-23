@@ -4,20 +4,24 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChaptersService {
   // private url = 'http://localhost:8000/api/chapters/';
-  private url = environment.apiUrl+'chapters/';
+  private url = environment.apiUrl + 'chapters/';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
   getChapters(): Observable<any> {
     return this.httpClient.get(this.url);
- }
+  }
   addChapter(chapter: any): Observable<any> {
     return this.httpClient.post(this.url, chapter);
- }
- deleteChapter(chapterId: number): Observable<any> {
-  return this.httpClient.delete(`${this.url}${chapterId}`);
-}
+  }
+  deleteChapter(chapterId: number): Observable<any> {
+    return this.httpClient.delete(`${this.url}${chapterId}`);
+  }
+
+  getChaptersBySubject(subjectId: number): Observable<any> {
+    return this.httpClient.get(`${this.url}?subject=${subjectId}`);
+  }
 }

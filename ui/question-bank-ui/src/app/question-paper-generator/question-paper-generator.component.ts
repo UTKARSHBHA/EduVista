@@ -17,128 +17,97 @@ import { ChaptersService } from '../services/chapters.service';
 })
 export class QuestionPaperGeneratorComponent {
   questionPaperForm: FormGroup;
-  questionPaper: any[] = [];
- 
-  
   standards: any[] = [];
   subjects: any[] = [];
   topics: any[] = [];
   chapters: any[] = [];
-  selectedStandard: any = null;
-  selectedSubject: any = null;
   selectedTopics: any[] = [];
   selectedChapters: any[] = [];
 
- 
-  constructor(
+ constructor(
     private formBuilder: FormBuilder,
-  ) {
-     this.questionPaperForm = this.formBuilder.group({
-       standard: ['', Validators.required],
-       subject: ['', Validators.required],
-       chapters: this.formBuilder.array([]),
-       topics: this.formBuilder.array([]),
-       easy: [0],
-       medium: [0],
-       hard: [0]
-     });
-     this.loadStandards();
-  }
-  
-  ngOnInit() {
-    // Initialize chapters and topics FormArrays
-    this.initChaptersFormArray();
-    this.initTopicsFormArray();
- }
-
- initChaptersFormArray() {
-    const chaptersArray = this.questionPaperForm.get('chapters') as FormArray;
-    this.chapters.forEach(chapter => {
-      chaptersArray.push(new FormControl(false)); // Initialize each chapter checkbox as unchecked
+    private standardsService: StandardsService,
+    private subjectsService: SubjectsService,
+    private topicsService: TopicsService,
+    private chaptersService: ChaptersService
+ ) {
+    this.questionPaperForm = this.formBuilder.group({
+      standard: ['', Validators.required],
+      subject: ['', Validators.required],
+      chapters: this.formBuilder.array([]),
+      topics: this.formBuilder.array([]),
+      easy: [0],
+      medium: [0],
+      hard: [0]
     });
  }
 
- initTopicsFormArray() {
-    const topicsArray = this.questionPaperForm.get('topics') as FormArray;
-    this.topics.forEach(topic => {
-      topicsArray.push(new FormControl(false)); // Initialize each topic checkbox as unchecked
+ ngOnInit(): void {
+    this.loadStandards();
+    this.loadSubjects();
+ }
+
+ loadStandards(): void {
+    this.standardsService.getStandards().subscribe((data:any) => {
+      this.standards = data;
+    });
+ }
+ loadSubjects(): void {
+    this.subjectsService.getSubjects().subscribe((data:any) => {
+      this.subjects = data;
     });
  }
 
-  loadStandards(): void {
-    // this.standardsService.getStandards().subscribe(data => {
-    //   this.standards = data;
-    // });
-    this.standards = [
-      { id: 1, name: 'Standard 1' },
-    { id: 2, name: 'Standard 2' },
-    ];
- }
-
- onStandardSelected(e: any): void {
-    // this.subjectsService.getSubjectsByStandard(standardId).subscribe(data => {
-    //   this.subjects = data;
-    //   this.selectedStandard = standardId;
-    // });
-    console.log(e.target.value);
-    this.selectedStandard = e.target.value;
-    this.subjects = [
-      { id: 1, name: 'Subject 1' },
-    { id: 2, name: 'Subject 2' },
-    ];
-
-  }
+//  onStandardSelected(e: any): void {
+//     const standardId = e.target.value;
+//     this.selectedStandard = standardId;
+//     this.subjectsService.getSubjectsByStandard(standardId).subscribe(data => {
+//       this.subjects = data;
+//       this.selectedSubject = null; // Reset selected subject
+//       this.topics = []; // Reset topics
+//       this.chapters = []; // Reset chapters
+//     });
+//  }
 
  onSubjectSelected(e: any): void {
-    // this.topicsService.getTopicsBySubject(subjectId).subscribe(data => {
-    //   this.topics = data;
-    //   this.selectedSubject = subjectId;
-    // });
-    console.log(e.target.value);
-    this.selectedSubject   = e.target.value;
-    this.chapters = [
-      { id: 1, name: 'Chapter 1' },
-      { id: 2, name: 'Chapter 2' },
-    ];
-   }
-   onChapterSelected(event: any, topicId: number): void {
+    const chapterId = e.target.value;
+    // this.selectedSubject = chapterId;
+    this.chaptersService.getChaptersBySubject(chapterId).subscribe(data => {
+      this.chapters = data;
+      console.log(this.chapters);
+      this.topics = []; // Reset chapters based on the new subject
+    });
+ }
+
+ onChapterSelected(event: any, chapterId: number): void {
     if (event.target.checked) {
-        // If the checkbox is checked, add the topic ID to the selectedTopics array
-        this.selectedChapters.push(topicId);
-        console.log(this.selectedChapters);
-        this.topics = [
-          { id: 1, name: 'Topic 1' },
-          { id: 2, name: 'Topic 2' },
-        ];
+      this.selectedChapters.push(chapterId);
     } else {
-        // If the checkbox is unchecked, remove the topic ID from the selectedChapters array
-        const index = this.selectedChapters.indexOf(topicId);
-        if (index > -1) {
-            this.selectedChapters.splice(index, 1);
-        }
+      const index = this.selectedChapters.indexOf(chapterId);
+      if (index > -1) {
+        this.selectedChapters.splice(index, 1);
+      }
     }
-    // Optionally, you can update a form control with the selected topics here
-  }
+    console.log(this.selectedChapters);
+    
+ }
 
  onTopicSelected(event: any, topicId: number): void {
-  if (event.target.checked) {
-      // If the checkbox is checked, add the topic ID to the selectedTopics array
+    if (event.target.checked) {
       this.selectedTopics.push(topicId);
-  } else {
-      // If the checkbox is unchecked, remove the topic ID from the selectedTopics array
+    } else {
       const index = this.selectedTopics.indexOf(topicId);
       if (index > -1) {
-          this.selectedTopics.splice(index, 1);
+        this.selectedTopics.splice(index, 1);
       }
-  }
-  // Optionally, you can update a form control with the selected topics here
-}
- 
-  generateQuestionPaper(): void {
-    //  if (this.questionPaperForm.valid) {
-       const selectedCriteria = this.questionPaperForm.value;
-       console.log(selectedCriteria);
-      
-    //  }
-  }
+    }
  }
+
+ generateQuestionPaper(): void {
+    if (this.questionPaperForm.valid) {
+      const selectedCriteria = this.questionPaperForm.value;
+      console.log(selectedCriteria);
+      // Implement the logic to generate the question paper based on the selected criteria
+    }
+ }
+}

@@ -20,4 +20,8 @@ export class TopicsService {
  deleteTopic(topicId: number): Observable<any> {
   return this.httpClient.delete(`${this.url}${topicId}`);
 }
+
+getTopicsBySubject(chapterId: number): Observable<any> {
+  return this.httpClient.get(`${this.url}?chapter=${chapterId}`);
+}
 }

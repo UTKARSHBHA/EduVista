@@ -14,11 +14,11 @@ from .views import change_password
 
 router = DefaultRouter()
 router.register(r'questions', QuestionViewSet)
-router.register(r'chapters', ChapterViewSet)
 router.register(r'standards', StandardViewSet)
-router.register(r'topics', TopicViewSet)
-router.register(r'subjects', SubjectViewSet)
 router.register(r'options', OptionViewSet)
+router.register(r'subjects', SubjectViewSet, basename='subjects')
+router.register(r'topics', TopicViewSet, basename='topics')
+router.register(r'chapters', ChapterViewSet, basename='chapters')
 
 urlpatterns = [
     
