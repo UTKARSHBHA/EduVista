@@ -13,6 +13,7 @@ import { StandardsService } from '../services/standards.service';
 import { SubjectsService } from '../services/subjects.service';
 import { TopicsService } from '../services/topics.service';
 import { ChaptersService } from '../services/chapters.service';
+import { QuestionPaperService } from '../service/question-paper.service';
 
 @Component({
   selector: 'app-question-paper-generator',
@@ -38,19 +39,20 @@ export class QuestionPaperGeneratorComponent {
     private standardsService: StandardsService,
     private subjectsService: SubjectsService,
     private topicsService: TopicsService,
-    private chaptersService: ChaptersService
+    private chaptersService: ChaptersService,
+    private questionPaperService: QuestionPaperService
   ) {
     this.questionPaperForm = this.formBuilder.group({
       standard: ['', Validators.required],
       subject: ['', Validators.required],
       chapters: [[]],
       topics: [[]],
-      easy: [0],
-      medium: [0],
-      hard: [0],
-      mcq: [0], // MCQ Count
-      tf: [0], // True/False Count
-      descriptive: [0], // Descriptive Count
+      easy: [0, [Validators.required, Validators.min(0)]],
+      medium: [0, [Validators.required, Validators.min(0)]],
+      hard: [0, [Validators.required, Validators.min(0)]],
+      mcq: [0, [Validators.required, Validators.min(0)]],
+      tf: [0, [Validators.required, Validators.min(0)]],
+      descriptive: [0, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -122,13 +124,27 @@ export class QuestionPaperGeneratorComponent {
   }
 
   generateQuestionPaper(): void {
-    if (this.questionPaperForm.valid && this.validateQuestionCounts()) {
-      const selectedCriteria = this.questionPaperForm.value;
-      console.log(selectedCriteria);
-      // Implement the logic to generate the question paper based on the selected criteria
+    if (this.questionPaperForm.valid) {
+      if(this.validateQuestionCounts()){
+
+        const formValue = this.questionPaperForm.value;
+        console.log(formValue);
+        this.questionPaperService.generateQuestionPaper(formValue).subscribe(
+          (response) => {
+            console.log(response); // Handle the response from the backend
+          },
+          (error) => {
+            console.error('Error:', error);
+            this.errorMessage = error.error.error;
+            
+          }
+        );
+      }
+    }
+    else{
+      this.errorMessage = 'Please fill out all required fields correctly.';
     }
   }
-
   validateQuestionCounts(): boolean {
     const form = this.questionPaperForm;
     const easyCount = form.get('easy')?.value;
