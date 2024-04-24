@@ -80,3 +80,9 @@
 .btn:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+
+.error {
+    color: red;
+    font-size: 0.9em; /* Slightly smaller font size for errors */
+    margin-top: 5px; /* Add some spacing above the error message */
+}

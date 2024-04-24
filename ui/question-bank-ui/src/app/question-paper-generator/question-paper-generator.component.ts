@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { QuestionsService } from '../services/questions.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -13,7 +19,7 @@ import { ChaptersService } from '../services/chapters.service';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './question-paper-generator.component.html',
-  styleUrl: './question-paper-generator.component.css'
+  styleUrl: './question-paper-generator.component.css',
 })
 export class QuestionPaperGeneratorComponent {
   questionPaperForm: FormGroup;
@@ -24,13 +30,16 @@ export class QuestionPaperGeneratorComponent {
   selectedTopics: any[] = [];
   selectedChapters: any[] = [];
 
- constructor(
+  // Inside your component class
+  errorMessage: string = '';
+
+  constructor(
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
     private subjectsService: SubjectsService,
     private topicsService: TopicsService,
     private chaptersService: ChaptersService
- ) {
+  ) {
     this.questionPaperForm = this.formBuilder.group({
       standard: ['', Validators.required],
       subject: ['', Validators.required],
@@ -41,39 +50,38 @@ export class QuestionPaperGeneratorComponent {
       hard: [0],
       mcq: [0], // MCQ Count
       tf: [0], // True/False Count
-      descriptive: [0] // Descriptive Count
+      descriptive: [0], // Descriptive Count
     });
- }
+  }
 
- ngOnInit(): void {
+  ngOnInit(): void {
     this.loadStandards();
     this.loadSubjects();
- }
+  }
 
- loadStandards(): void {
-    this.standardsService.getStandards().subscribe((data:any) => {
+  loadStandards(): void {
+    this.standardsService.getStandards().subscribe((data: any) => {
       this.standards = data;
     });
- }
- loadSubjects(): void {
-    this.subjectsService.getSubjects().subscribe((data:any) => {
+  }
+  loadSubjects(): void {
+    this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
     });
- }
+  }
 
-
- onSubjectSelected(e: any): void {
+  onSubjectSelected(e: any): void {
     const chapterId = e.target.value;
     // this.selectedSubject = chapterId;
-    this.chaptersService.getChaptersBySubject(chapterId).subscribe(data => {
+    this.chaptersService.getChaptersBySubject(chapterId).subscribe((data) => {
       this.chapters = data;
       console.log(this.chapters);
-      this.topics = []; 
+      this.topics = [];
       this.selectedChapters = [];
     });
- }
+  }
 
- onChapterSelected(event: any, chapterId: number): void {
+  onChapterSelected(event: any, chapterId: number): void {
     if (event.target.checked) {
       this.selectedChapters.push(chapterId);
     } else {
@@ -82,22 +90,22 @@ export class QuestionPaperGeneratorComponent {
         this.selectedChapters.splice(index, 1);
       }
     }
-    console.log("chapters", this.selectedChapters);
+    console.log('chapters', this.selectedChapters);
     this.questionPaperForm.get('chapters')?.setValue(this.selectedChapters);
     this.topics = []; // Reset chapters based on the new subject
 
     console.log(this.questionPaperForm.value);
-    if(this.selectedChapters.length){
-
-      this.topicsService.getTopicsByChapters(this.selectedChapters).subscribe(data =>{
-        this.topics = data;
-        console.log(this.topics);
-      });
+    if (this.selectedChapters.length) {
+      this.topicsService
+        .getTopicsByChapters(this.selectedChapters)
+        .subscribe((data) => {
+          this.topics = data;
+          console.log(this.topics);
+        });
     }
+  }
 
- }
-
- onTopicSelected(event: any, topicId: number): void {
+  onTopicSelected(event: any, topicId: number): void {
     if (event.target.checked) {
       this.selectedTopics.push(topicId);
     } else {
@@ -107,18 +115,41 @@ export class QuestionPaperGeneratorComponent {
       }
     }
 
-    console.log("topics", this.selectedTopics);
+    console.log('topics', this.selectedTopics);
     this.questionPaperForm.get('topics')?.setValue(this.selectedTopics);
 
     console.log(this.questionPaperForm.value);
-    
- }
+  }
 
- generateQuestionPaper(): void {
-    if (this.questionPaperForm.valid) {
+  generateQuestionPaper(): void {
+    if (this.questionPaperForm.valid && this.validateQuestionCounts()) {
       const selectedCriteria = this.questionPaperForm.value;
       console.log(selectedCriteria);
       // Implement the logic to generate the question paper based on the selected criteria
     }
- }
+  }
+
+  validateQuestionCounts(): boolean {
+    const form = this.questionPaperForm;
+    const easyCount = form.get('easy')?.value;
+    const mediumCount = form.get('medium')?.value;
+    const hardCount = form.get('hard')?.value;
+    const mcqCount = form.get('mcq')?.value;
+    const tfCount = form.get('tf')?.value;
+    const descriptiveCount = form.get('descriptive')?.value;
+
+    // Calculate the total counts for difficulty levels and question types
+    const totalDifficultyCount = easyCount + mediumCount + hardCount;
+    const totalQuestionTypeCount = mcqCount + tfCount + descriptiveCount;
+
+    // Check if the sums match
+    if (totalDifficultyCount !== totalQuestionTypeCount) {
+      // Set the error message if the sums do not match
+      this.errorMessage =
+        'The sum of different question types and difficulty levels must be the same.';
+      return false;
+    }
+    this.errorMessage = ''; // Clear the error message if the sums match
+    return true;
+  }
 }

@@ -80,6 +80,8 @@
      </div>
   </div>
  </div>
+ <!-- Inside your form or at an appropriate place -->
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
     <button type="submit" [disabled]="!selectedChapters" class="btn">Generate Question Paper</button>
   </form>
 </div>
