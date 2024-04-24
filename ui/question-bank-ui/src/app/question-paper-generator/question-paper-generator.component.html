@@ -43,17 +43,17 @@
   <div class="difficulty-levels">
      <!-- Easy Count -->
      <div class="difficulty-level">
-       <label>Easy Count:</label>
+       <label>Easy:</label>
        <input type="number" formControlName="easy">
      </div>
-     <!-- Medium Count -->
+     <!-- Medium -->
      <div class="difficulty-level">
-       <label>Medium Count:</label>
+       <label>Medium:</label>
        <input type="number" formControlName="medium">
      </div>
-     <!-- Hard Count -->
+     <!-- Hard -->
      <div class="difficulty-level">
-       <label>Hard Count:</label>
+       <label>Hard:</label>
        <input type="number" formControlName="hard">
      </div>
   </div>
@@ -65,21 +65,21 @@
   <div class="question-types">
      <!-- MCQ Count -->
      <div class="question-type">
-       <label>MCQ Count:</label>
+       <label>MCQ:</label>
        <input type="number" formControlName="mcq">
      </div>
-     <!-- TF Count -->
+     <!-- TF -->
      <div class="question-type">
-       <label>True/False Count:</label>
+       <label>True/False:</label>
        <input type="number" formControlName="tf">
      </div>
-     <!-- Descriptive Count -->
+     <!-- Descriptive -->
      <div class="question-type">
-       <label>Descriptive Count:</label>
+       <label>Descriptive:</label>
        <input type="number" formControlName="descriptive">
      </div>
   </div>
  </div>
-    <button type="submit" [disabled]="!selectedChapters">Generate Question Paper</button>
+    <button type="submit" [disabled]="!selectedChapters" class="btn">Generate Question Paper</button>
   </form>
 </div>
