@@ -25,4 +25,27 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    justify-content: flex-end;
+    
+}
+
+.qCounts{
+    display: flex;
+    flex-direction: column;
+}
+
+.difficulty-levels, .question-types{
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.difficulty-level, .question-type{
+    display: flex;
+    width: 33%;
+    justify-content: space-between;
+}
+
+.difficulty-levels input, .question-types input{
+    width: 4rem;
+    margin: 0 1rem;
 }

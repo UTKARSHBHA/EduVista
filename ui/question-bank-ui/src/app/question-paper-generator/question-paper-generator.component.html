@@ -38,24 +38,48 @@
       </div>
     </div>
     <!-- Difficulty Levels and Question Counts -->
-    <div *ngIf="selectedTopics.length" class="formField">
-      <label>Difficulty Levels and Question Counts:</label>
-      <div class="difficulty-levels">
-        <div *ngFor="let difficulty of ['easy', 'medium', 'hard']">
-          <label>{{ difficulty | titlecase }} Questions:</label>
-          <input type="number" [formControlName]="difficulty">
-        </div>
-      </div>
-    </div>
-    <div *ngIf="selectedTopics.length" class="formField">
-      <label>Questions Types and Question Counts:</label>
-      <div class="question-types">
-        <div *ngFor="let qType of ['mcq', 'tf', 'descriptive']">
-          <label>{{ qType | titlecase }} Questions:</label>
-          <input type="number" [formControlName]="qType">
-        </div>
-      </div>
-    </div>
+<div *ngIf="selectedTopics.length" class="formField qCounts">
+  <label>Difficulty Levels and Question Counts:</label>
+  <div class="difficulty-levels">
+     <!-- Easy Count -->
+     <div class="difficulty-level">
+       <label>Easy Count:</label>
+       <input type="number" formControlName="easy">
+     </div>
+     <!-- Medium Count -->
+     <div class="difficulty-level">
+       <label>Medium Count:</label>
+       <input type="number" formControlName="medium">
+     </div>
+     <!-- Hard Count -->
+     <div class="difficulty-level">
+       <label>Hard Count:</label>
+       <input type="number" formControlName="hard">
+     </div>
+  </div>
+ </div>
+ 
+ <!-- Question Types and Question Counts -->
+ <div *ngIf="selectedTopics.length" class="formField qCounts">
+  <label>Questions Types and Question Counts:</label>
+  <div class="question-types">
+     <!-- MCQ Count -->
+     <div class="question-type">
+       <label>MCQ Count:</label>
+       <input type="number" formControlName="mcq">
+     </div>
+     <!-- TF Count -->
+     <div class="question-type">
+       <label>True/False Count:</label>
+       <input type="number" formControlName="tf">
+     </div>
+     <!-- Descriptive Count -->
+     <div class="question-type">
+       <label>Descriptive Count:</label>
+       <input type="number" formControlName="descriptive">
+     </div>
+  </div>
+ </div>
     <button type="submit" [disabled]="!selectedChapters">Generate Question Paper</button>
   </form>
 </div>

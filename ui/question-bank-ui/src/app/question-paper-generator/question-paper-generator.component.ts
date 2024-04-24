@@ -39,7 +39,9 @@ export class QuestionPaperGeneratorComponent {
       easy: [0],
       medium: [0],
       hard: [0],
-
+      mcq: [0], // MCQ Count
+      tf: [0], // True/False Count
+      descriptive: [0] // Descriptive Count
     });
  }
 
@@ -104,6 +106,12 @@ export class QuestionPaperGeneratorComponent {
         this.selectedTopics.splice(index, 1);
       }
     }
+
+    console.log("topics", this.selectedTopics);
+    this.questionPaperForm.get('topics')?.setValue(this.selectedTopics);
+
+    console.log(this.questionPaperForm.value);
+    
  }
 
  generateQuestionPaper(): void {
