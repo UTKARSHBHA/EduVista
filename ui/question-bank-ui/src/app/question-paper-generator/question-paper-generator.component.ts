@@ -34,11 +34,12 @@ export class QuestionPaperGeneratorComponent {
     this.questionPaperForm = this.formBuilder.group({
       standard: ['', Validators.required],
       subject: ['', Validators.required],
-      chapters: this.formBuilder.array([]),
-      topics: this.formBuilder.array([]),
+      chapters: [[]],
+      topics: [[]],
       easy: [0],
       medium: [0],
-      hard: [0]
+      hard: [0],
+
     });
  }
 
@@ -58,16 +59,6 @@ export class QuestionPaperGeneratorComponent {
     });
  }
 
-//  onStandardSelected(e: any): void {
-//     const standardId = e.target.value;
-//     this.selectedStandard = standardId;
-//     this.subjectsService.getSubjectsByStandard(standardId).subscribe(data => {
-//       this.subjects = data;
-//       this.selectedSubject = null; // Reset selected subject
-//       this.topics = []; // Reset topics
-//       this.chapters = []; // Reset chapters
-//     });
-//  }
 
  onSubjectSelected(e: any): void {
     const chapterId = e.target.value;
@@ -75,7 +66,8 @@ export class QuestionPaperGeneratorComponent {
     this.chaptersService.getChaptersBySubject(chapterId).subscribe(data => {
       this.chapters = data;
       console.log(this.chapters);
-      this.topics = []; // Reset chapters based on the new subject
+      this.topics = []; 
+      this.selectedChapters = [];
     });
  }
 
@@ -88,8 +80,19 @@ export class QuestionPaperGeneratorComponent {
         this.selectedChapters.splice(index, 1);
       }
     }
-    console.log(this.selectedChapters);
-    
+    console.log("chapters", this.selectedChapters);
+    this.questionPaperForm.get('chapters')?.setValue(this.selectedChapters);
+    this.topics = []; // Reset chapters based on the new subject
+
+    console.log(this.questionPaperForm.value);
+    if(this.selectedChapters.length){
+
+      this.topicsService.getTopicsByChapters(this.selectedChapters).subscribe(data =>{
+        this.topics = data;
+        console.log(this.topics);
+      });
+    }
+
  }
 
  onTopicSelected(event: any, topicId: number): void {

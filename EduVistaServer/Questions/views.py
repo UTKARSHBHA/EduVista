@@ -65,15 +65,21 @@ class StandardViewSet(viewsets.ModelViewSet):
     serializer_class = StandardSerializer
 
 class TopicViewSet(viewsets.ModelViewSet):
-    # queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
     def get_queryset(self):
+        """
+        Optionally restricts the returned topics to a given chapter,
+        by filtering against a `chapter` query parameter in the URL.
+        """
         queryset = Topic.objects.all()
-        chapter = self.request.query_params.get('chapter', None)
-        if chapter is not None:
-            queryset = queryset.filter(chapter=chapter)
+        chapter_ids = self.request.query_params.get('chapters', None)
+        if chapter_ids is not None:
+            # Ensure chapter_ids is a list of integers
+            chapter_ids = [int(id) for id in chapter_ids.split(',')]
+            queryset = queryset.filter(chapter__in=chapter_ids)
         return queryset
+    
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()

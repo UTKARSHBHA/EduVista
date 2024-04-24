@@ -21,7 +21,10 @@ export class TopicsService {
   return this.httpClient.delete(`${this.url}${topicId}`);
 }
 
-getTopicsBySubject(chapterId: number): Observable<any> {
-  return this.httpClient.get(`${this.url}?chapter=${chapterId}`);
+getTopicsByChapters(chapterIds: number[]): Observable<any> {
+  // Assuming your backend supports querying topics by multiple chapters
+  // You might need to adjust the query parameter based on your backend implementation
+  const chapterIdsParam = chapterIds.join(',');
+  return this.httpClient.get(`${this.url}?chapters=${chapterIdsParam}`);
 }
 }
