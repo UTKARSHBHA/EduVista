@@ -202,6 +202,7 @@ def generate_question_paper(request):
     if request.method == 'POST':
         # Extract JSON data from the request with default values
         data = request.data
+        standard = data.get('standard', None)
         topics = data.get('topics', [])
         chapters = data.get('chapters', [])
         easy_count = data.get('easy', 0)
@@ -213,6 +214,7 @@ def generate_question_paper(request):
 
         # Fetch all relevant questions and shuffle them
         questions = list(Question.objects.filter(
+            standard=standard,
             topic__in=topics,
             chapter__in=chapters
         ))
@@ -246,7 +248,7 @@ def generate_question_paper(request):
                 counts[question_type] -= 1
 
         # Check if all criteria are met
-            
+
             
             
         if any(int(value) > 0 for value in counts.values()):
