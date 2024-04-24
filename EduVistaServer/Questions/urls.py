@@ -10,6 +10,7 @@ from django.contrib.auth import views as auth_views
 
 from . import views
 from .views import change_password
+from .views import generate_question_paper
 
 
 router = DefaultRouter()
@@ -32,5 +33,6 @@ urlpatterns = [
 
     path('change_password/', change_password, name='change_password'),
 
+    path('generate-question-paper/', generate_question_paper, name='generate_question_paper'),
 
 ]

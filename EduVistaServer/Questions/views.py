@@ -37,6 +37,9 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
+from random import shuffle
+
 # Create a logger instance
 logger = logging.getLogger(__name__)
 
@@ -192,3 +195,68 @@ def change_password(request):
     user.password = make_password(new_password)
     user.save()
     return Response({'message': 'Password has been changed.'})
+
+
+@api_view(['POST'])
+def generate_question_paper(request):
+    if request.method == 'POST':
+        # Extract JSON data from the request with default values
+        data = request.data
+        topics = data.get('topics', [])
+        chapters = data.get('chapters', [])
+        easy_count = data.get('easy', 0)
+        medium_count = data.get('medium', 0)
+        hard_count = data.get('hard', 0)
+        mcq_count = data.get('mcq', 0)
+        tf_count = data.get('tf', 0)
+        descriptive_count = data.get('descriptive', 0)
+
+        # Fetch all relevant questions and shuffle them
+        questions = list(Question.objects.filter(
+            topic__in=topics,
+            chapter__in=chapters
+        ))
+        shuffle(questions)
+
+        # Initialize counters with default values
+        counts = {
+            'easy': easy_count,
+            'medium': medium_count,
+            'hard': hard_count,
+            'mcq': mcq_count,
+            'tf': tf_count,
+            'descriptive': descriptive_count
+        }
+
+        # Initialize an empty list to hold the selected questions
+        selected_questions = []
+
+        # Loop through the shuffled questions list
+        for question in questions:
+            # Ensure difficulty_level and type are not None and convert to string for comparison
+            difficulty_level = str(question.difficulty_level) if question.difficulty_level else ''
+            question_type = str(question.type) if question.type else ''
+
+            # Check if the question matches the criteria
+            if counts.get(difficulty_level, 0) > 0 and counts.get(question_type, 0) > 0:
+                # Include the question in the question paper
+                selected_questions.append(question)
+                # Decrement the counts
+                counts[difficulty_level] -= 1
+                counts[question_type] -= 1
+
+        # Check if all criteria are met
+            
+            
+            
+        if any(int(value) > 0 for value in counts.values()):
+            return Response({'error': 'Unable to generate a question paper with the specified criteria.'}, status=400)
+
+        # Organize selected questions into a question paper structure
+        question_paper = {
+            'questions': [{'id': question.id, 'question_text': question.question_text, 'type': question.type, 'difficulty_level': question.difficulty_level} for question in selected_questions]
+        }
+
+        return Response(question_paper)
+    else:
+        return Response({'error': 'Invalid request method.'}, status=400)
