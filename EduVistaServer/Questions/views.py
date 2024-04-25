@@ -203,62 +203,54 @@ def generate_question_paper(request):
         # Extract JSON data from the request with default values
         data = request.data
         standard = data.get('standard', None)
+        subject = data.get('subject', None)
         topics = data.get('topics', [])
         chapters = data.get('chapters', [])
-        easy_count = data.get('easy', 0)
-        medium_count = data.get('medium', 0)
-        hard_count = data.get('hard', 0)
-        mcq_count = data.get('mcq', 0)
-        tf_count = data.get('tf', 0)
-        descriptive_count = data.get('descriptive', 0)
+        total_marks = data.get('total_marks', 0)
+        mcq = data.get('mcq', False)
+        tf = data.get('tf', False)
+        descriptive = data.get('descriptive', False)
 
         # Fetch all relevant questions and shuffle them
         questions = list(Question.objects.filter(
-            standard=standard,
+            # standard=standard,
+            subject=subject,
             topic__in=topics,
             chapter__in=chapters
         ))
-        shuffle(questions)
+        shuffle(questions)  # Use random.shuffle for better randomness
+        # print(questions)
+        # Create a list of types based on user selections
+        types = []
+        if mcq:
+            types.append('mcq')
+        if tf:
+            types.append('tf')
+        if descriptive:
+            types.append('descriptive')
 
-        # Initialize counters with default values
-        counts = {
-            'easy': easy_count,
-            'medium': medium_count,
-            'hard': hard_count,
-            'mcq': mcq_count,
-            'tf': tf_count,
-            'descriptive': descriptive_count
-        }
+        # Initialize an iterator
+        i = 0
+        # Initialize a list to store selected questions
+        question_paper = []
+        while total_marks > 0:
+            # print(total_marks)
+            # Get the current topic and type
+            current_topic = topics[i % len(topics)]
+            current_type = types[i % len(types)]
 
-        # Initialize an empty list to hold the selected questions
-        selected_questions = []
+            # print(current_topic , current_type)
+            # Iterate through questions and check if they fit the criteria
+            for q in questions:
+                print(q.type, q.topic, q.marks, q not in question_paper)
+                if q.topic == current_topic and q.type == current_type and q.marks <= total_marks and q not in question_paper:
+                    question_paper.append(q)
+                    total_marks -= q.marks
+                    break  # Exit the inner loop after a question is selected
 
-        # Loop through the shuffled questions list
-        for question in questions:
-            # Ensure difficulty_level and type are not None and convert to string for comparison
-            difficulty_level = str(question.difficulty_level) if question.difficulty_level else ''
-            question_type = str(question.type) if question.type else ''
-
-            # Check if the question matches the criteria
-            if counts.get(difficulty_level, 0) > 0 and counts.get(question_type, 0) > 0:
-                # Include the question in the question paper
-                selected_questions.append(question)
-                # Decrement the counts
-                counts[difficulty_level] -= 1
-                counts[question_type] -= 1
-
-        # Check if all criteria are met
-
-            
-            
-        if any(int(value) > 0 for value in counts.values()):
-            return Response({'error': 'Unable to generate a question paper with the specified criteria.'}, status=400)
-
-        # Organize selected questions into a question paper structure
-        question_paper = {
-            'questions': [{'id': question.id, 'question_text': question.question_text, 'type': question.type, 'difficulty_level': question.difficulty_level} for question in selected_questions]
-        }
-
-        return Response(question_paper)
-    else:
-        return Response({'error': 'Invalid request method.'}, status=400)
+            # If no question fits the criteria, move to the next type/topic combination
+            i+=1
+            if i > 100:
+                return Response({'error': 'Invalid request method.'}, status=400)
+        # Return the list of selected questions as the question paper
+        return JsonResponse({'question_paper': question_paper})

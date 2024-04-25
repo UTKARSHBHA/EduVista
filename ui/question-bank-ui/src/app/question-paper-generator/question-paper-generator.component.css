@@ -50,18 +50,18 @@
     flex-direction: column;
 }
 
-.difficulty-levels, .question-types{
+.question-types{
     display: flex;
     /* justify-content: space-between; */
 }
 
-.difficulty-level, .question-type{
+.question-type{
     display: flex;
     width: 33%;
     justify-content: space-between;
 }
 
-.difficulty-levels input, .question-types input{
+.question-types input{
     width: 4rem;
     margin: 0 1rem;
 }

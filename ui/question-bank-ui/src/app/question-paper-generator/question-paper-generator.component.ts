@@ -47,12 +47,10 @@ export class QuestionPaperGeneratorComponent {
       subject: ['', Validators.required],
       chapters: [[]],
       topics: [[]],
-      easy: [0, [Validators.required, Validators.min(0)]],
-      medium: [0, [Validators.required, Validators.min(0)]],
-      hard: [0, [Validators.required, Validators.min(0)]],
-      mcq: [0, [Validators.required, Validators.min(0)]],
-      tf: [0, [Validators.required, Validators.min(0)]],
-      descriptive: [0, [Validators.required, Validators.min(0)]],
+      total_marks: [0, [Validators.required, Validators.min(0)]],
+      mcq: [false],
+      tf: [false],
+      descriptive: [false],
     });
   }
 
@@ -125,47 +123,24 @@ export class QuestionPaperGeneratorComponent {
 
   generateQuestionPaper(): void {
     if (this.questionPaperForm.valid) {
-      if(this.validateQuestionCounts()){
 
-        const formValue = this.questionPaperForm.value;
-        console.log(formValue);
-        this.questionPaperService.generateQuestionPaper(formValue).subscribe(
-          (response) => {
-            console.log(response); // Handle the response from the backend
-          },
-          (error) => {
-            console.error('Error:', error);
-            this.errorMessage = error.error.error;
-            
-          }
-        );
-      }
+      const formValue = this.questionPaperForm.value;
+      console.log(formValue);
+      this.questionPaperService.generateQuestionPaper(formValue).subscribe(
+        (response) => {
+          console.log(response); // Handle the response from the backend
+        },
+        (error) => {
+          console.error('Error:', error);
+          this.errorMessage = error.error.error;
+          
+        }
+      );
+      
     }
     else{
       this.errorMessage = 'Please fill out all required fields correctly.';
     }
   }
-  validateQuestionCounts(): boolean {
-    const form = this.questionPaperForm;
-    const easyCount = form.get('easy')?.value;
-    const mediumCount = form.get('medium')?.value;
-    const hardCount = form.get('hard')?.value;
-    const mcqCount = form.get('mcq')?.value;
-    const tfCount = form.get('tf')?.value;
-    const descriptiveCount = form.get('descriptive')?.value;
-
-    // Calculate the total counts for difficulty levels and question types
-    const totalDifficultyCount = easyCount + mediumCount + hardCount;
-    const totalQuestionTypeCount = mcqCount + tfCount + descriptiveCount;
-
-    // Check if the sums match
-    if (totalDifficultyCount !== totalQuestionTypeCount) {
-      // Set the error message if the sums do not match
-      this.errorMessage =
-        'The sum of different question types and difficulty levels must be the same.';
-      return false;
-    }
-    this.errorMessage = ''; // Clear the error message if the sums match
-    return true;
-  }
+  
 }
