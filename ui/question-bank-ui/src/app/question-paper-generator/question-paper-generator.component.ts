@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   Validators,
 } from '@angular/forms';
 import { QuestionsService } from '../services/questions.service';
@@ -14,158 +15,109 @@ import { SubjectsService } from '../services/subjects.service';
 import { TopicsService } from '../services/topics.service';
 import { ChaptersService } from '../services/chapters.service';
 import { QuestionPaperService } from '../service/question-paper.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-question-paper-generator',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, FormsModule],
   templateUrl: './question-paper-generator.component.html',
   styleUrl: './question-paper-generator.component.css',
 })
 export class QuestionPaperGeneratorComponent {
   questionPaperForm: FormGroup;
-  standards: any[] = [];
-  subjects: any[] = [];
-  topics: any[] = [];
-  chapters: any[] = [];
-  selectedTopics: any[] = [];
-  selectedChapters: any[] = [];
+ standards: any[] = [];
+ subjects: any[] = [];
+ topics: any[] = [];
+ chapters: any[] = [];
 
-  // Inside your component class
-  errorMessage: string = '';
-
-  constructor(
+ constructor(
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
     private subjectsService: SubjectsService,
     private topicsService: TopicsService,
     private chaptersService: ChaptersService,
     private questionPaperService: QuestionPaperService
-  ) {
+ ) {
     this.questionPaperForm = this.formBuilder.group({
       standard: ['', Validators.required],
       subject: ['', Validators.required],
       chapters: [[]],
       topics: [[]],
-      easy: [0, [Validators.required, Validators.min(0)]],
-      medium: [0, [Validators.required, Validators.min(0)]],
-      hard: [0, [Validators.required, Validators.min(0)]],
-      mcq: [0, [Validators.required, Validators.min(0)]],
-      tf: [0, [Validators.required, Validators.min(0)]],
-      descriptive: [0, [Validators.required, Validators.min(0)]],
-    });
-  }
+      questionsGrid: this.formBuilder.array([this.createQuestionRow()])
 
-  ngOnInit(): void {
+    });
+ }
+
+ ngOnInit(): void {
     this.loadStandards();
     this.loadSubjects();
-  }
+ }
 
-  loadStandards(): void {
+ createQuestionRow(): FormGroup {
+  return this.formBuilder.group({
+    type: ['', Validators.required],
+    marks: [0, [Validators.required, Validators.min(0)]],
+    count: [0, [Validators.required, Validators.min(0)]]
+  });
+}
+get questionsGrid(): FormArray {
+  return this.questionPaperForm.get('questionsGrid') as FormArray;
+}
+addQuestionRow(): void {
+  this.questionsGrid.push(this.createQuestionRow());
+}
+
+// Method to remove a row from the grid
+removeQuestionRow(index: number): void {
+  this.questionsGrid.removeAt(index);
+}
+
+ loadStandards(): void {
     this.standardsService.getStandards().subscribe((data: any) => {
       this.standards = data;
     });
-  }
-  loadSubjects(): void {
+ }
+
+ loadSubjects(): void {
     this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
     });
-  }
+ }
 
-  onSubjectSelected(e: any): void {
-    const chapterId = e.target.value;
-    // this.selectedSubject = chapterId;
-    this.chaptersService.getChaptersBySubject(chapterId).subscribe((data) => {
-      this.chapters = data;
-      console.log(this.chapters);
-      this.topics = [];
-      this.selectedChapters = [];
-    });
-  }
+ onSubjectSelected(event: any): void {
+  const subjectId = event.id;
+  this.chaptersService.getChaptersBySubject(subjectId).subscribe((data) => {
+    this.chapters = data;
+    this.topics = []; // Reset topics when subject changes
+  });
+}
 
-  onChapterSelected(event: any, chapterId: number): void {
-    if (event.target.checked) {
-      this.selectedChapters.push(chapterId);
-    } else {
-      const index = this.selectedChapters.indexOf(chapterId);
-      if (index > -1) {
-        this.selectedChapters.splice(index, 1);
-      }
-    }
-    console.log('chapters', this.selectedChapters);
-    this.questionPaperForm.get('chapters')?.setValue(this.selectedChapters);
-    this.topics = []; // Reset chapters based on the new subject
+onChapterSelected(event: any): void {
+  const chapterIds = event.map((chapter:any) => chapter.id);
+  this.topicsService.getTopicsByChapters(chapterIds).subscribe((data) => {
+    this.topics = data;
+  });
+}
 
-    console.log(this.questionPaperForm.value);
-    if (this.selectedChapters.length) {
-      this.topicsService
-        .getTopicsByChapters(this.selectedChapters)
-        .subscribe((data) => {
-          this.topics = data;
-          console.log(this.topics);
-        });
-    }
-  }
 
-  onTopicSelected(event: any, topicId: number): void {
-    if (event.target.checked) {
-      this.selectedTopics.push(topicId);
-    } else {
-      const index = this.selectedTopics.indexOf(topicId);
-      if (index > -1) {
-        this.selectedTopics.splice(index, 1);
-      }
-    }
-
-    console.log('topics', this.selectedTopics);
-    this.questionPaperForm.get('topics')?.setValue(this.selectedTopics);
-
-    console.log(this.questionPaperForm.value);
-  }
-
-  generateQuestionPaper(): void {
+ generateQuestionPaper(): void {
     if (this.questionPaperForm.valid) {
-      if(this.validateQuestionCounts()){
-
-        const formValue = this.questionPaperForm.value;
-        console.log(formValue);
-        this.questionPaperService.generateQuestionPaper(formValue).subscribe(
-          (response) => {
-            console.log(response); // Handle the response from the backend
-          },
-          (error) => {
-            console.error('Error:', error);
-            this.errorMessage = error.error.error;
-            
-          }
-        );
-      }
+      const formValue = this.questionPaperForm.value;
+      console.log(formValue);
+      this.questionPaperService.generateQuestionPaper(formValue).subscribe(
+        (response) => {
+          console.log(response); // Handle the response from the backend
+          // Additional logic for handling a successful response
+        },
+        (error) => {
+          console.error('Error:', error);
+          // Handle the error, e.g., by setting an error message
+        }
+      );
+    } else {
+      // Optionally, handle the case where the form is invalid
+      console.error('Form is invalid');
     }
-    else{
-      this.errorMessage = 'Please fill out all required fields correctly.';
-    }
-  }
-  validateQuestionCounts(): boolean {
-    const form = this.questionPaperForm;
-    const easyCount = form.get('easy')?.value;
-    const mediumCount = form.get('medium')?.value;
-    const hardCount = form.get('hard')?.value;
-    const mcqCount = form.get('mcq')?.value;
-    const tfCount = form.get('tf')?.value;
-    const descriptiveCount = form.get('descriptive')?.value;
-
-    // Calculate the total counts for difficulty levels and question types
-    const totalDifficultyCount = easyCount + mediumCount + hardCount;
-    const totalQuestionTypeCount = mcqCount + tfCount + descriptiveCount;
-
-    // Check if the sums match
-    if (totalDifficultyCount !== totalQuestionTypeCount) {
-      // Set the error message if the sums do not match
-      this.errorMessage =
-        'The sum of different question types and difficulty levels must be the same.';
-      return false;
-    }
-    this.errorMessage = ''; // Clear the error message if the sums match
-    return true;
-  }
+ }
 }

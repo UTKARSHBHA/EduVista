@@ -17,54 +17,8 @@
     margin: 5rem;
 }
 
-.form-container form label{
-    font-weight: bold;
-}
 
 
-.formField{
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-}
-
-.formField select{
-    width: 30rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 16px;
-    color: #495057;
-}
-
-.chapterContainer, .topicContainer{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: flex-end;
-    
-}
-
-.qCounts{
-    display: flex;
-    flex-direction: column;
-}
-
-.difficulty-levels, .question-types{
-    display: flex;
-    /* justify-content: space-between; */
-}
-
-.difficulty-level, .question-type{
-    display: flex;
-    width: 33%;
-    justify-content: space-between;
-}
-
-.difficulty-levels input, .question-types input{
-    width: 4rem;
-    margin: 0 1rem;
-}
 
 .btn {
     background-color: #007bff;
@@ -85,4 +39,31 @@
     color: red;
     font-size: 0.9em; /* Slightly smaller font size for errors */
     margin-top: 5px; /* Add some spacing above the error message */
+}
+
+.question-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.question-row select,
+.question-row input {
+    margin-right: 10px;
+}
+
+.question-row, .gridLabel{
+    display: flex;
+    margin: 2rem 0;
+    justify-content: space-between;
+}
+
+.question-row ng-select{
+    width: 25%;
+}
+
+.question-row input{
+    width: 25%;
+    height: 36px;
 }

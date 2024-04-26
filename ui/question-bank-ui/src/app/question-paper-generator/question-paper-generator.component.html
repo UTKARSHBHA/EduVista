@@ -1,87 +1,83 @@
 <div class="form-container">
-  <form [formGroup]="questionPaperForm" (ngSubmit)='generateQuestionPaper()'>
-    <!-- Standard -->
-    <div class="formField">
-      <label for="standard">Standard:</label>
-      <select id="standard" formControlName="standard">
-        <option *ngFor="let standard of standards" [value]="standard.id">{{standard.name}}</option>
-      </select>
-    </div>
-    <!-- Subject -->
-    <div class="formField">
+  <form [formGroup]="questionPaperForm" (ngSubmit)="generateQuestionPaper()">
+      <!-- Standard -->
+      <div class="formField">
+          <!-- <label for="standard">Standard:</label> -->
+          <ng-select [items]="standards"
+                      bindLabel="name"
+                      bindValue="id"
+                      formControlName="standard"
+                      placeholder="Select Standard">
+          </ng-select>
+      </div>
+      <!-- Subject -->
+      <div class="formField">
+          <!-- <label for="subject">Subject:</label> -->
+          <ng-select [items]="subjects"
+                      bindLabel="name"
+                      bindValue="id"
+                      formControlName="subject"
+                      (change)="onSubjectSelected($event)"
+                      placeholder="Select Subject">
+          </ng-select>
+      </div>
+      <!-- Chapter -->
+      <div *ngIf="chapters.length" class="formField">
+          <!-- <label for="chapter">Chapter:</label> -->
+          <ng-select [items]="chapters"
+                      bindLabel="name"
+                      bindValue="id"
+                      formControlName="chapters"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [clearable]="false"
+                      (change)="onChapterSelected($event)"
+                      placeholder="Select Chapters">
+          </ng-select>
+      </div>
+      <!-- Topic -->
+      <div *ngIf="topics.length" class="formField">
+          <!-- <label for="topic">Topic:</label> -->
+          <ng-select [items]="topics"
+                      bindLabel="name"
+                      bindValue="id"
+                      formControlName="topics"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [clearable]="false"
+                      placeholder="Select Topics">
+          </ng-select>
+      </div>
 
-      <label for="subject">Subject:</label>
-      <select id="subject" (change)="onSubjectSelected($event)" formControlName="subject">
-        <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
-      </select>
-    </div>
-    <!-- Chapter -->
-    <div *ngIf="chapters.length" class="formField">
-      <label for="chapter">Chapter:</label>
-      <div class="chapterContainer">
-        <div class="checkbox" *ngFor="let chapter of chapters">
-          <input type="checkbox" id="{{'chapter' + chapter.id}}" [value]="chapter.id"
-            (change)="onChapterSelected($event, chapter.id)">
-          <label for="{{'chapter' + chapter.id}}">{{chapter.name}}</label>
+      <div class="formField">
+        <div class="gridLabel">
+          <p>Type</p>
+          <p>Marks</p>
+          <p>Count</p>
+          <p></p>
         </div>
-      </div>
-    </div>
-    <!-- Topic -->
-    <div *ngIf="topics.length" class="formField">
-      <label for="topic">Topic:</label>
-      <div class="topicContainer">
-        <div class="checkbox" *ngFor="let topic of topics">
-          <input type="checkbox" id="{{'topic'+topic.id}}" [value]="topic.id"
-            (change)="onTopicSelected($event, topic.id)">
-          <label for="{{'topic'+topic.id}}">{{topic.name}}</label>
+        <div formArrayName="questionsGrid" *ngFor="let question of questionsGrid.controls; let i = index">
+            <div [formGroupName]="i" class="question-row">
+                <ng-select [items]="['mcq', 'tf', 'descriptive']"
+                            bindLabel="name"
+                            bindValue="id"
+                            formControlName="type"
+                            >
+                </ng-select>
+                <input type="number" formControlName="marks" placeholder="Marks" >
+                <input type="number" formControlName="count" placeholder="Count" >
+                <button (click)="removeQuestionRow(i)" class="btn" >
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
         </div>
-      </div>
+        <button (click)="addQuestionRow()" class="btn" >
+            <i class="fas fa-plus"></i> Add Question Type
+        </button>
     </div>
-    <!-- Difficulty Levels and Question Counts -->
-<div *ngIf="selectedTopics.length" class="formField qCounts">
-  <label>Difficulty Levels and Question Counts:</label>
-  <div class="difficulty-levels">
-     <!-- Easy Count -->
-     <div class="difficulty-level">
-       <label>Easy:</label>
-       <input type="number" formControlName="easy" min="0">
-     </div>
-     <!-- Medium -->
-     <div class="difficulty-level">
-       <label>Medium:</label>
-       <input type="number" formControlName="medium" min="0">
-     </div>
-     <!-- Hard -->
-     <div class="difficulty-level">
-       <label>Hard:</label>
-       <input type="number" formControlName="hard" min="0">
-     </div>
-  </div>
- </div>
- 
- <!-- Question Types and Question Counts -->
- <div *ngIf="selectedTopics.length" class="formField qCounts">
-  <label>Questions Types and Question Counts:</label>
-  <div class="question-types">
-     <!-- MCQ Count -->
-     <div class="question-type">
-       <label>MCQ:</label>
-       <input type="number" formControlName="mcq" min="0">
-     </div>
-     <!-- TF -->
-     <div class="question-type">
-       <label>True/False:</label>
-       <input type="number" formControlName="tf" min="0">
-     </div>
-     <!-- Descriptive -->
-     <div class="question-type">
-       <label>Descriptive:</label>
-       <input type="number" formControlName="descriptive" min="0">
-     </div>
-  </div>
- </div>
- <!-- Inside your form or at an appropriate place -->
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-    <button type="submit" [disabled]="!selectedChapters" class="btn">Generate Question Paper</button>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="!questionPaperForm.valid" class="btn" >Generate Question Paper</button>
   </form>
+  <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
 </div>
