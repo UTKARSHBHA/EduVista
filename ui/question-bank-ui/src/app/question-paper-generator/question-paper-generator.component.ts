@@ -4,6 +4,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   Validators,
 } from '@angular/forms';
 import { QuestionsService } from '../services/questions.service';
@@ -14,11 +15,12 @@ import { SubjectsService } from '../services/subjects.service';
 import { TopicsService } from '../services/topics.service';
 import { ChaptersService } from '../services/chapters.service';
 import { QuestionPaperService } from '../service/question-paper.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-question-paper-generator',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, FormsModule],
   templateUrl: './question-paper-generator.component.html',
   styleUrl: './question-paper-generator.component.css',
 })
@@ -30,6 +32,14 @@ export class QuestionPaperGeneratorComponent {
   chapters: any[] = [];
   selectedTopics: any[] = [];
   selectedChapters: any[] = [];
+  selectedCar: number = 0;
+
+    cars = [
+        { id: 1, name: 'Volvo' },
+        { id: 2, name: 'Saab' },
+        { id: 3, name: 'Opel' },
+        { id: 4, name: 'Audi' },
+    ];
 
   // Inside your component class
   errorMessage: string = '';
@@ -81,16 +91,16 @@ export class QuestionPaperGeneratorComponent {
     });
   }
 
-  onChapterSelected(event: any, chapterId: number): void {
-    if (event.target.checked) {
-      this.selectedChapters.push(chapterId);
-    } else {
-      const index = this.selectedChapters.indexOf(chapterId);
-      if (index > -1) {
-        this.selectedChapters.splice(index, 1);
-      }
+  onChapterSelected(event: []): void {
+    this.selectedChapters = [];
+    if(event?.length>0){
+      event.forEach((chapter:any) =>{
+        this.selectedChapters.push(chapter.id);
+      })
+    }else{
+      this.selectedChapters = [];
     }
-    console.log('chapters', this.selectedChapters);
+   alert(this.selectedChapters);
     this.questionPaperForm.get('chapters')?.setValue(this.selectedChapters);
     this.topics = []; // Reset chapters based on the new subject
 

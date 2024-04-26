@@ -229,26 +229,38 @@ def generate_question_paper(request):
         if descriptive:
             types.append('descriptive')
 
-        # Initialize an iterator
-        i = 0
+        # Separate questions by type and topic
+        separated_questions = defaultdict(list)
+        for q in questions:
+            key = f"{q.type}-{q.topic.id}"
+            separated_questions[key].append(q)
+
         # Initialize a list to store selected questions
         question_paper = []
         while total_marks > 0:
-            # print(total_marks)
-            # Get the current topic and type
-            current_topic = topics[i % len(topics)]
-            current_type = types[i % len(types)]
+            # Flag to track if any question was added in this iteration
+            question_added = False
 
-            print(current_topic , current_type)
-            # Iterate through questions and check if they fit the criteria
-            for q in questions:
-                print(q.type, q.topic.id, q.marks, q not in question_paper)
-                if q.topic.id == current_topic and q.type == current_type and q.marks <= total_marks and q not in question_paper:
-                    # Serialize the question before appending it
-                    serialized_question = QuestionSerializer(q).data
-                    question_paper.append(serialized_question)
-                    total_marks -= q.marks
-                    break # Exit the inner loop after a question is selected
+            # Iterate over the separated questions
+            for key in list(separated_questions.keys()):
+                if separated_questions[key]:
+                    # Get the first question from the list
+                    q = separated_questions[key][0]
+                    if q.marks <= total_marks:
+                        # Serialize the question before appending it
+                        serialized_question = QuestionSerializer(q).data
+                        question_paper.append(serialized_question)
+                        total_marks -= q.marks
+                        # Remove the question from the list to avoid duplicates
+                        separated_questions[key].pop(0)
+                        question_added = True
+                    else:
+                        # Move the question to the end of its list
+                        separated_questions[key].append(separated_questions[key].pop(0))
+
+            # If no question was added in this iteration, break the loop
+            if not question_added:
+                break
 
             # If no question fits the criteria, move to the next type/topic combination
             i+=1

@@ -19,18 +19,22 @@
     <div *ngIf="chapters.length" class="formField">
       <label for="chapter">Chapter:</label>
       <div class="chapterContainer">
-        <div class="checkbox" *ngFor="let chapter of chapters">
+        <ng-select [multiple]="true" [items]="chapters" bindLabel="name" bindValue="id" 
+        (change)="onChapterSelected($event)">
+        </ng-select>
+        {{selectedChapters}}
+        <!-- <div class="checkbox" *ngFor="let chapter of chapters">
           <input type="checkbox" id="{{'chapter' + chapter.id}}" [value]="chapter.id"
             (change)="onChapterSelected($event, chapter.id)">
           <label for="{{'chapter' + chapter.id}}">{{chapter.name}}</label>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- Topic -->
-    <div *ngIf="topics.length" class="formField">
+    <div  class="formField">
       <label for="topic">Topic:</label>
-      <div class="topicContainer">
-        <div class="checkbox" *ngFor="let topic of topics">
+      <div *ngIf="topics.length" class="topicContainer">
+        <div  class="checkbox" *ngFor="let topic of topics">
           <input type="checkbox" id="{{'topic'+topic.id}}" [value]="topic.id"
             (change)="onTopicSelected($event, topic.id)">
           <label for="{{'topic'+topic.id}}">{{topic.name}}</label>
@@ -38,34 +42,34 @@
       </div>
     </div>
     <!-- Difficulty Levels and Question Counts -->
-<div *ngIf="selectedTopics.length" class="formField qCounts">
-  <label>Total Marks</label>
-  <input type="number" formControlName="total_marks" min="0">
- </div>
- 
- <!-- Question Types and Question Counts -->
- <div *ngIf="selectedTopics.length" class="formField qCounts">
-  <label>Questions Types and Question Counts:</label>
-  <div class="question-types">
-     <!-- MCQ Count -->
-     <div class="question-type">
-       <label for="mcqCheck">MCQ:</label>
-       <input type="checkbox" name="mcq" id="mcqCheck" formControlName="mcq">
-     </div>
-     <!-- TF -->
-     <div class="question-type">
-      <label for="tfCheck">True/False:</label>
-      <input type="checkbox" name="tf" id="tfCheck" formControlName="tf">
+    <div *ngIf="selectedTopics.length" class="formField qCounts">
+      <label>Total Marks</label>
+      <input type="number" formControlName="total_marks" min="0">
     </div>
-     <!-- Descriptive -->
-     <div class="question-type">
-      <label for="descCheck">Descriptive:</label>
-      <input type="checkbox" name="descriptive" id="descCheck" formControlName="descriptive">
+
+    <!-- Question Types and Question Counts -->
+    <div *ngIf="selectedTopics.length" class="formField qCounts">
+      <label>Questions Types and Question Counts:</label>
+      <div class="question-types">
+        <!-- MCQ Count -->
+        <div class="question-type">
+          <label for="mcqCheck">MCQ:</label>
+          <input type="checkbox" name="mcq" id="mcqCheck" formControlName="mcq">
+        </div>
+        <!-- TF -->
+        <div class="question-type">
+          <label for="tfCheck">True/False:</label>
+          <input type="checkbox" name="tf" id="tfCheck" formControlName="tf">
+        </div>
+        <!-- Descriptive -->
+        <div class="question-type">
+          <label for="descCheck">Descriptive:</label>
+          <input type="checkbox" name="descriptive" id="descCheck" formControlName="descriptive">
+        </div>
+      </div>
     </div>
-  </div>
- </div>
- <!-- Inside your form or at an appropriate place -->
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <!-- Inside your form or at an appropriate place -->
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
     <button type="submit" [disabled]="!selectedChapters" class="btn">Generate Question Paper</button>
   </form>
 </div>
