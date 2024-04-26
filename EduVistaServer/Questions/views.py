@@ -219,7 +219,7 @@ def generate_question_paper(request):
             chapter__in=chapters
         ))
         shuffle(questions)  # Use random.shuffle for better randomness
-        # print(questions)
+        print(questions)
         # Create a list of types based on user selections
         types = []
         if mcq:
@@ -239,14 +239,16 @@ def generate_question_paper(request):
             current_topic = topics[i % len(topics)]
             current_type = types[i % len(types)]
 
-            # print(current_topic , current_type)
+            print(current_topic , current_type)
             # Iterate through questions and check if they fit the criteria
             for q in questions:
-                print(q.type, q.topic, q.marks, q not in question_paper)
-                if q.topic == current_topic and q.type == current_type and q.marks <= total_marks and q not in question_paper:
-                    question_paper.append(q)
+                print(q.type, q.topic.id, q.marks, q not in question_paper)
+                if q.topic.id == current_topic and q.type == current_type and q.marks <= total_marks and q not in question_paper:
+                    # Serialize the question before appending it
+                    serialized_question = QuestionSerializer(q).data
+                    question_paper.append(serialized_question)
                     total_marks -= q.marks
-                    break  # Exit the inner loop after a question is selected
+                    break # Exit the inner loop after a question is selected
 
             # If no question fits the criteria, move to the next type/topic combination
             i+=1

@@ -128,6 +128,7 @@ export class QuestionPaperGeneratorComponent {
       console.log(formValue);
       this.questionPaperService.generateQuestionPaper(formValue).subscribe(
         (response) => {
+          this.errorMessage = "";
           console.log(response); // Handle the response from the backend
         },
         (error) => {
