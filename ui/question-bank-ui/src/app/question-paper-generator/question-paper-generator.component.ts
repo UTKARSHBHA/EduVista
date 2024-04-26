@@ -83,13 +83,18 @@ removeQuestionRow(index: number): void {
     this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
     });
+    
  }
 
  onSubjectSelected(event: any): void {
+
   const subjectId = event.id;
   this.chaptersService.getChaptersBySubject(subjectId).subscribe((data) => {
     this.chapters = data;
     this.topics = []; // Reset topics when subject changes
+    this.questionPaperForm.get("topics")?.reset()
+    this.questionPaperForm.get("chapters")?.reset()
+
   });
 }
 
