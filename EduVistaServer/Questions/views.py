@@ -205,59 +205,35 @@ def generate_question_paper(request):
         standard = data.get('standard', None)
         topics = data.get('topics', [])
         chapters = data.get('chapters', [])
-        easy_count = data.get('easy', 0)
-        medium_count = data.get('medium', 0)
-        hard_count = data.get('hard', 0)
-        mcq_count = data.get('mcq', 0)
-        tf_count = data.get('tf', 0)
-        descriptive_count = data.get('descriptive', 0)
+        questions_grid = data.get('questionsGrid', [])
+
 
         # Fetch all relevant questions and shuffle them
         questions = list(Question.objects.filter(
-            standard=standard,
+            standard=standard,  
             topic__in=topics,
             chapter__in=chapters
         ))
         shuffle(questions)
 
-        # Initialize counters with default values
-        counts = {
-            'easy': easy_count,
-            'medium': medium_count,
-            'hard': hard_count,
-            'mcq': mcq_count,
-            'tf': tf_count,
-            'descriptive': descriptive_count
-        }
-
-        # Initialize an empty list to hold the selected questions
         selected_questions = []
+        for question_type in questions_grid:
+            type = question_type.get('type')
+            marks = question_type.get('marks')
+            count = question_type.get('count')
+            # Filter questions based on type and marks using a list comprehension
+            filtered_questions = [question for question in questions if question.type == type and question.marks == marks]
+            # Extend selected_questions with the first 'count' questions from the filtered list
+            selected_questions.extend(filtered_questions[:count])
 
-        # Loop through the shuffled questions list
-        for question in questions:
-            # Ensure difficulty_level and type are not None and convert to string for comparison
-            difficulty_level = str(question.difficulty_level) if question.difficulty_level else ''
-            question_type = str(question.type) if question.type else ''
-
-            # Check if the question matches the criteria
-            if counts.get(difficulty_level, 0) > 0 and counts.get(question_type, 0) > 0:
-                # Include the question in the question paper
-                selected_questions.append(question)
-                # Decrement the counts
-                counts[difficulty_level] -= 1
-                counts[question_type] -= 1
-
-        # Check if all criteria are met
-
-            
-            
-        if any(int(value) > 0 for value in counts.values()):
-            return Response({'error': 'Unable to generate a question paper with the specified criteria.'}, status=400)
-
-        # Organize selected questions into a question paper structure
+        # Generate the question paper
         question_paper = {
-            'questions': [{'id': question.id, 'question_text': question.question_text, 'type': question.type, 'difficulty_level': question.difficulty_level} for question in selected_questions]
+            'questions': [{'id': question.id, 'question_text': question.question_text, 'type': question.type, 'marks': question.marks} for question in selected_questions]
         }
+
+        if len(selected_questions) < sum(question_type.get('count', 0) for question_type in questions_grid): 
+            return Response({'error': 'Insufficient questions available to generate the question paper.'}, status=400)
+
 
         return Response(question_paper)
     else:
