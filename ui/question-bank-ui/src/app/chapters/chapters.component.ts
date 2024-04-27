@@ -27,8 +27,8 @@ export class ChaptersComponent {
   
   ngOnInit(): void {
     
-    this.loadChapters();
-    this.loadTopics(); // Load topics when the component initializes
+    // this.loadChapters();
+    this.loadTopics(); 
 
  }
  loadChapters(): void {

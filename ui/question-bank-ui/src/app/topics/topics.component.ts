@@ -33,8 +33,8 @@ export class TopicsComponent {
   //   subject: ['', Validators.required] // Assuming each topic is associated with a subject
   // });
 
-  this.loadTopics();
-  this.loadSubjects(); // Load subjects when the component initializes
+  // this.loadTopics();
+  this.loadSubjects(); 
 
 
  }

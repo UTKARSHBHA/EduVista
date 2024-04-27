@@ -23,7 +23,7 @@ export class SubjectsComponent {
     });
  }
  ngOnInit(): void {
-    this.loadSubjects();
+    // this.loadSubjects();
  }
 
  onSubmit(): void {

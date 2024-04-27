@@ -17,17 +17,5 @@
       </div>
       <button type="submit">Add Subject</button>
    </form>
-   <ul class="subjectList">
-      <!-- <li *ngFor="let subject of subjects">{{ subject.name }}</li> -->
-      @for(subject of subjects; track subject.id){
-         <div class="subject">
-
-            <li>{{subject.name}}</li>
-            <!-- <button (click)="deleteSubject(subject.id)">Delete</button> -->
-            <button class="delete-btn" (click)="deleteSubject(subject.id)"> <i class="fas fa-trash"></i></button>
-
-            
-         </div>
-      }
-   </ul>
+   
 </div>

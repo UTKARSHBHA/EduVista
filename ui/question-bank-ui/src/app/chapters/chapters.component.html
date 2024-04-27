@@ -20,18 +20,5 @@
        </div>
        <button type="submit">Add Chapter</button>
    </form>
-   <div class="chapterList">
-       <ul>
-         @for(chapter of chapters; track chapter.id){
-            <div class="chapter">
-
-               <li class="chapter">{{chapter.name}}</li>
-               <button (click)="deleteChapter(chapter.id)"  class="delete-btn">
-                  <i class="fas fa-trash"></i>
-               </button>
-            </div>
-        
-         }
-       </ul>
-   </div>
+   
 </div>

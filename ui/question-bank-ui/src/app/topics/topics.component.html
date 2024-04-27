@@ -20,19 +20,5 @@
  </div>
  <button type="submit">Add Topic</button>
 </form>
-<div class="topicList">
 
-   <ul>
-      @for(topic of topics; track topic.id){
-         <div class="topic">
-
-            <li>{{topic.name}}</li>
-            <button class="delete-btn" (click)="deleteTopic(topic.id)">
-               <i class="fas fa-trash"></i>
-            </button>
-         </div>
-         
-      }
-   </ul>
-</div>
 </div>

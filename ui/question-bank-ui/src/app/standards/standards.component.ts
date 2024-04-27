@@ -38,7 +38,7 @@ export class StandardsComponent {
     //   name: ['', Validators.required]
     // });
 
-    this.loadStandards();
+    // this.loadStandards();
  }
  loadStandards(): void {
   this.standardsService.getStandards().subscribe(data => {
