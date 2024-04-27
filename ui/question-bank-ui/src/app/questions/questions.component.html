@@ -44,12 +44,8 @@
                 </select>
             </div>
             <div class="fields">
-                <label for="marks">Marks:</label>
-                <input id="marks" type="number" formControlName="marks">
-            </div>
-            <div class="fields">
                 <div class="labelButton">
-
+                    
                     <label for="topic">Topic:</label>
                     <i style="font-size: 30px; color: green; cursor: pointer;" class="fa-solid fa-circle-plus"
                     (click)="openTopicModal()"
@@ -61,7 +57,7 @@
             </div>
             <div class="fields">
                 <div class="labelButton">
-
+                    
                     <label for="chapter">Chapter:</label>
                     <i style="font-size: 30px; color: green; cursor: pointer;" class="fa-solid fa-circle-plus"
                     (click)="openChapterModal()"
@@ -69,6 +65,10 @@
                 </div>                <select id="chapter" formControlName="chapter">
                     <option *ngFor="let chapter of chapters" [value]="chapter.id">{{chapter.name}}</option>
                 </select>
+            </div>
+            <div class="fields">
+                <label for="marks">Marks:</label>
+                <input id="marks" type="number" formControlName="marks">
             </div>
             <div class="fields">
                 <label for="image">Image:</label>
