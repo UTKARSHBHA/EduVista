@@ -64,8 +64,8 @@
                             formControlName="type"
                             >
                 </ng-select>
-                <input type="number" formControlName="marks" placeholder="Marks" >
-                <input type="number" formControlName="count" placeholder="Count" >
+                <input type="number" formControlName="marks" placeholder="Marks" (ngModelChange) = "updateTotalMarksAndCount()">
+                <input type="number" formControlName="count" placeholder="Count" (ngModelChange) = "updateTotalMarksAndCount()">
                 <button (click)="removeQuestionRow(i)" class="btn" >
                     <i class="fas fa-trash"></i>
                 </button>
@@ -74,6 +74,11 @@
         <button (click)="addQuestionRow()" class="btn" >
             <i class="fas fa-plus"></i> Add Question Type
         </button>
+    </div>
+
+    <div>
+        <p>Total Marks: {{ totalMarks }}</p>
+        <p>Question Count: {{ questionCount }}</p>
     </div>
 
     <!-- Submit Button -->

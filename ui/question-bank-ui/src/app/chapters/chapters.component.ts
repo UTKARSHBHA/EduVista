@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ChaptersService } from '../services/chapters.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TopicsService } from '../services/topics.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-chapters',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatDialogModule],
   templateUrl: './chapters.component.html',
   styleUrl: './chapters.component.css'
 })

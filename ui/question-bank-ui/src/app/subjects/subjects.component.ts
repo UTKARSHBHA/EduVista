@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { SubjectsService } from '../services/subjects.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-subjects',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatDialogModule],
   templateUrl: './subjects.component.html',
   styleUrl: './subjects.component.css'
 })

@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TopicsService } from '../services/topics.service';
 import { SubjectsService } from '../services/subjects.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @Component({
   selector: 'app-topics',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatDialogModule],
   templateUrl: './topics.component.html',
   styleUrl: './topics.component.css'
 })

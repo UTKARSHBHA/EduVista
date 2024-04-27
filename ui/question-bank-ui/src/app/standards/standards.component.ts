@@ -1,15 +1,22 @@
 import { Component } from '@angular/core';
 import { StandardsService } from '../services/standards.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 @Component({
   selector: 'app-standards',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule ,    MatDialogModule
+  ],
   templateUrl: './standards.component.html',
-  styleUrl: './standards.component.css'
+  styleUrl: './standards.component.css',
 })
 export class StandardsComponent {
+//   CloseDialog() {
+//     if (this._mdr) {
+//         this._mdr.close(false);
+//     }
+// }
   standards: any = [];
   standardForm: FormGroup;
 

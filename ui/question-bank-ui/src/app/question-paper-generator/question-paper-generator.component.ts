@@ -31,6 +31,9 @@ export class QuestionPaperGeneratorComponent {
  topics: any[] = [];
  chapters: any[] = [];
 
+ totalMarks: number = 0; // Initialize total marks
+ questionCount: number = 0;
+
  constructor(
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
@@ -40,8 +43,8 @@ export class QuestionPaperGeneratorComponent {
     private questionPaperService: QuestionPaperService
  ) {
     this.questionPaperForm = this.formBuilder.group({
-      standard: ['', Validators.required],
-      subject: ['', Validators.required],
+      standard: [null, Validators.required],
+      subject: [null, Validators.required],
       chapters: [[]],
       topics: [[]],
       questionsGrid: this.formBuilder.array([this.createQuestionRow()])
@@ -66,12 +69,30 @@ get questionsGrid(): FormArray {
 }
 addQuestionRow(): void {
   this.questionsGrid.push(this.createQuestionRow());
+  // this.updateTotalMarksAndCount();
+
 }
 
 // Method to remove a row from the grid
 removeQuestionRow(index: number): void {
+  const questionRow = this.questionsGrid.at(index);
+  const marks = questionRow.get('marks')?.value;
+  const count = questionRow.get('count')?.value;
+  this.totalMarks -= marks * count;
+  this.questionCount -= count;
   this.questionsGrid.removeAt(index);
-}
+ }
+
+ updateTotalMarksAndCount(): void {
+  this.totalMarks = 0;
+  this.questionCount = 0;
+  this.questionsGrid.controls.forEach(questionRow => {
+     const marks = questionRow.get('marks')?.value;
+     const count = questionRow.get('count')?.value;
+     this.totalMarks += marks * count;
+     this.questionCount += count;
+  });
+ }
 
  loadStandards(): void {
     this.standardsService.getStandards().subscribe((data: any) => {

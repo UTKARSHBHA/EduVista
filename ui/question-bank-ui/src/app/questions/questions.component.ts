@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { QuestionsService } from '../services/questions.service';
+import {  } from 'ngx-bootstrap';
 import {
   FormArray,
   FormBuilder,
@@ -15,8 +16,15 @@ import { StandardsService } from '../services/standards.service';
 import { CommonModule } from '@angular/common';
 import { QuestionDetailsComponent } from './questions-details/questions-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { log } from 'console';
-import { text } from 'stream/consumers';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from "@angular/material/dialog";
+import { StandardsComponent } from '../standards/standards.component';
+import { SubjectsComponent } from '../subjects/subjects.component';
+import { TopicsComponent } from '../topics/topics.component';
+import { ChaptersComponent } from '../chapters/chapters.component';
 
 @Component({
   selector: 'app-questions',
@@ -25,12 +33,16 @@ import { text } from 'stream/consumers';
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    QuestionDetailsComponent,
+    QuestionDetailsComponent, 
   ],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })
 export class QuestionsComponent implements OnInit {
+// openStandardModal() {
+//   alert("kulja standard")
+// throw new Error('Method not implemented.');
+// }
   questionForm: FormGroup;
   questions: any[] = [];
   chapters: any[] = [];
@@ -39,6 +51,12 @@ export class QuestionsComponent implements OnInit {
   standards: any[] = [];
 
   questionId: any = null;
+  StandardModal: MatDialogRef<StandardsComponent> | undefined;
+  SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
+  TopicModal: MatDialogRef<TopicsComponent> | undefined;
+  chaptersModal: MatDialogRef<ChaptersComponent>  | undefined;
+  // matDialogRef: MatDialogRef<SubjectsComponent> | undefined;
+
   constructor(
     private formBuilder: FormBuilder,
     private questionsService: QuestionsService,
@@ -46,8 +64,10 @@ export class QuestionsComponent implements OnInit {
     private topicsService: TopicsService,
     private subjectsService: SubjectsService,
     private standardsService: StandardsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private matDialog: MatDialog
   ) {
+
     this.questionForm = this.formBuilder.group({
       question_text: ['', Validators.required],
       type: ['', Validators.required],
@@ -247,5 +267,43 @@ export class QuestionsComponent implements OnInit {
   // Method to remove an option from the form array
   removeOption(index: number) {
     this.optionsArray.removeAt(index);
+  }
+
+  openStandardModal() {
+    this.StandardModal = this.matDialog.open(StandardsComponent, {
+      height: "90vh",
+      width: "90vw",
+      disableClose: true
+
+    }
+  );
+
+  }
+  openSubjectModal() {
+    this.SubjectModal = this.matDialog.open(SubjectsComponent, {
+      disableClose: true,
+      height: "90vh",
+      width: "90vw"
+
+    });
+
+  }
+  openTopicModal() {
+    this.TopicModal = this.matDialog.open(TopicsComponent, {
+      disableClose: true,
+      height: "90vh",
+      width: "90vw"
+
+    });
+
+  }
+  openChapterModal() {
+    this.chaptersModal = this.matDialog.open(ChaptersComponent, {
+      disableClose: true,
+      height: "90vh",
+      width: "90vw"
+
+    });
+
   }
 }

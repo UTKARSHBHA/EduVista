@@ -3,6 +3,8 @@
 
 <div class="container">
    <h2>Chapters</h2>
+   <i class="fa-solid fa-xmark closeModal" mat-button mat-dialog-close></i>
+
    <form [formGroup]="chapterForm" (ngSubmit)="onSubmit()" class="chapter-form">
        <div class="inputFields">
            <label for="name">Name:</label>

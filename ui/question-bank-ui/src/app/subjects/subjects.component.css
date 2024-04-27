@@ -1,6 +1,6 @@
 .container{
     display: flex;
-    width: 100vw;   
+    /* width: 100vw;    */
     flex-direction: column  ;
     /* background-color: red; */
     align-items: center;
@@ -141,3 +141,13 @@
 .delete-btn:hover {
     background-color: #c82333; /* Darker red on hover */
 }   
+
+
+.closeModal{
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
