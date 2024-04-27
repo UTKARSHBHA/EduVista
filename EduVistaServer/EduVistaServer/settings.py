@@ -111,8 +111,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'eduvista',
         'USER': 'admin',
-        'PASSWORD': 'Chiku420',
-        'HOST': 'localhost',
+        'PASSWORD': 'K6NI839Y295ebXC4rPTD5z7k',
+        'HOST': 'enormously-apparent-mite.a1.pgedge.io',
         'PORT': '5432',
     }
 }

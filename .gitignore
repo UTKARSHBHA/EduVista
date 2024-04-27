@@ -44,3 +44,7 @@ Thumbs.db
 
 # Images in database
 **/questions-images/
+
+
+#virtual environment
+**/venv/
