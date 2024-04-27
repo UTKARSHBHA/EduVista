@@ -10,7 +10,7 @@
 
 # Environment-specific files
 **/.env
-**/environments/
+# **/environments/
 
 # IDE or editor-specific files and directories
 .idea/
