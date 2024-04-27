@@ -22,14 +22,14 @@ export class QuestionsListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
     { field: 'id' },
-    { field: 'question_text' },
-    { field: 'type' },
-    { field: 'difficulty_level' },
-    { field: 'standard_name' },
-    { field: 'subject_name' },
-    { field: 'marks' },
-    { field: 'topic_name' },
-    { field: 'chapter_name' },
+    { field: 'question_text', filter: true },
+    { field: 'type' , filter: true },
+    { field: 'difficulty_level' , filter: true },
+    { field: 'standard_name' , filter: true },
+    { field: 'subject_name' , filter: true },
+    { field: 'marks' , filter: true },
+    { field: 'topic_name' , filter: true },
+    { field: 'chapter_name' , filter: true },
     {
       field: 'delete',
       cellRenderer: DeleteButtonRendererComponent,
