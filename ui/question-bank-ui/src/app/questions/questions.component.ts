@@ -14,7 +14,6 @@ import { TopicsService } from '../services/topics.service';
 import { SubjectsService } from '../services/subjects.service';
 import { StandardsService } from '../services/standards.service';
 import { CommonModule } from '@angular/common';
-import { QuestionDetailsComponent } from './questions-details/questions-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatDialog,
@@ -33,7 +32,6 @@ import { ChaptersComponent } from '../chapters/chapters.component';
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    QuestionDetailsComponent, 
   ],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
@@ -83,7 +81,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadQuestions();
+    // this.loadQuestions();
     this.loadChapters();
     this.loadTopics();
     this.loadSubjects();
@@ -148,11 +146,11 @@ export class QuestionsComponent implements OnInit {
       this.standards = data;
     });
   }
-  loadQuestions(): void {
-    this.questionsService.getQuestions().subscribe((data) => {
-      this.questions = data;
-    });
-  }
+  // loadQuestions(): void {
+  //   this.questionsService.getQuestions().subscribe((data) => {
+  //     this.questions = data;
+  //   });
+  // }
 
   loadChapters(): void {
     this.chaptersService.getChapters().subscribe((data: any) => {
@@ -187,19 +185,19 @@ export class QuestionsComponent implements OnInit {
     }
    }
 
-  deleteQuestion(questionId: number): void {
-    if (confirm('Are you sure you want to delete this question?')) {
-      this.questionsService.deleteQuestion(questionId).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.loadQuestions();
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
-    }
-  }
+  // deleteQuestion(questionId: number): void {
+  //   if (confirm('Are you sure you want to delete this question?')) {
+  //     this.questionsService.deleteQuestion(questionId).subscribe({
+  //       next: (response) => {
+  //         console.log(response);
+  //         // this.loadQuestions();
+  //       },
+  //       error: (error) => {
+  //         console.error(error);
+  //       },
+  //     });
+  //   }
+  // }
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   onSubmit(): void {
@@ -216,7 +214,7 @@ export class QuestionsComponent implements OnInit {
           .subscribe({
             next: (data) => {
               console.log('Question updated:', data);
-              this.loadQuestions(); // Refresh the list of questions
+              // this.loadQuestions(); 
               this.questionForm.reset(); // Reset the form
               this.selectedFile = null; // Clear the selected file
               this.fileInput.nativeElement.value = ''; // Clear the file input

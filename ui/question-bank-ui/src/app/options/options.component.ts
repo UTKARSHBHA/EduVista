@@ -26,7 +26,7 @@ export class OptionsComponent implements OnInit {
  
   ngOnInit(): void {
      this.loadOptions();
-     this.loadQuestions();
+    //  this.loadQuestions();
   }
  
   loadOptions(): void {
@@ -34,12 +34,12 @@ export class OptionsComponent implements OnInit {
        this.options = data;
      });
   }
-  loadQuestions(): void {
-     this.questionsService.getQuestions().subscribe(data => {
-      //  this.questions = data;
-       this.questions = data.filter((question:any) => question.type === 'mcq');
-     });
-  }
+  // loadQuestions(): void {
+  //    this.questionsService.getQuestions().subscribe(data => {
+  //     //  this.questions = data;
+  //      this.questions = data.filter((question:any) => question.type === 'mcq');
+  //    });
+  // }
  
   onSubmit(): void {
     if (this.optionForm.valid) {

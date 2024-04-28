@@ -16,4 +16,5 @@
     [columnDefs]="colDefs">
     
     </ag-grid-angular>
+    <mat-paginator [length]="totalQuestions" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)"></mat-paginator>
 </div>

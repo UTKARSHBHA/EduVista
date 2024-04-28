@@ -14,9 +14,9 @@ private url = environment.apiUrl+'questions/';
 
  constructor(private http: HttpClient) { }
 
- getQuestions(): Observable<any> {
-    return this.http.get(this.url);
- }
+ getQuestions(page: number, pageSize: number): Observable<any> {
+   return this.http.get(`http://localhost:8000/api/questions?page=${page}&page_size=${pageSize}`);
+  }
 
  addQuestion(question: any): Observable<any> {
     return this.http.post(this.url, question);

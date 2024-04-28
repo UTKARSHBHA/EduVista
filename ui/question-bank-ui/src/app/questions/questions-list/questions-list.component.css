@@ -35,3 +35,7 @@ header{
     flex-grow: 1; /* Allow the ag-grid to take up the remaining space */
     /* Add any other styles you need */
 }
+
+mat-paginator {
+    margin-top: 20px;
+   }

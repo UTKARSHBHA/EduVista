@@ -62,14 +62,7 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'questions-details',
-    loadComponent: () =>
-      import('./questions/questions-details/questions-details.component').then(
-        (m) => m.QuestionDetailsComponent
-      ),
-    canActivate: [AuthGuard],
-  },
+  
   {
     path: 'question-view/:id',
     loadComponent: () =>

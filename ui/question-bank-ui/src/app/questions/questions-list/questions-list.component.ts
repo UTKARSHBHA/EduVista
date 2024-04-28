@@ -9,12 +9,13 @@ import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
 import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
 import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-questions-list',
   standalone: true,
-  imports: [AgGridAngular],
+  imports: [AgGridAngular,     MatPaginatorModule
+  ],
   templateUrl: './questions-list.component.html',
   styleUrl: './questions-list.component.css',
 })
@@ -43,6 +44,10 @@ export class QuestionsListComponent implements OnInit {
     
   ];
 
+  pageSize = 10;
+  totalQuestions = 0;
+  currentPage = 0;
+
 
 
   constructor(
@@ -54,11 +59,18 @@ export class QuestionsListComponent implements OnInit {
     this.loadQuestions();
   }
 
-  loadQuestions(): void {
-    this.questionsService.getQuestions().subscribe((data) => {
-      this.rowData = data;
+  loadQuestions(page: number = 1): void {
+    this.questionsService.getQuestions(page, this.pageSize).subscribe((data) => {
+       this.rowData = data.results;
+       this.totalQuestions = data.count;
     });
-  }
+   }
+
+   onPageChange(event: any): void {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadQuestions(this.currentPage + 1); // Pagination is 1-indexed
+   }
 
   routTo(route: string) {
     this.router.navigate(['/' + route]);

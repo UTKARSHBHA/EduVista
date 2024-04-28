@@ -40,14 +40,22 @@ from rest_framework.response import Response
 
 from random import shuffle
 
+from rest_framework.pagination import PageNumberPagination
+
+
 # Create a logger instance
 logger = logging.getLogger(__name__)
 
 
-
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    pagination_class = CustomPageNumberPagination
+
     # parser_classes = [MultiPartParser, FormParser]
 
     
