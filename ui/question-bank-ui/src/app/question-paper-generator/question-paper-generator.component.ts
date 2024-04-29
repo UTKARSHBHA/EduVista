@@ -31,6 +31,10 @@ export class QuestionPaperGeneratorComponent {
  topics: any[] = [];
  chapters: any[] = [];
 
+ filteredSubjects:any[] = [];
+ filteredChapters:any[] = [];
+ filteredTopics:any[] = [];
+
  totalMarks: number = 0; // Initialize total marks
  questionCount: number = 0;
 
@@ -55,6 +59,8 @@ export class QuestionPaperGeneratorComponent {
  ngOnInit(): void {
     this.loadStandards();
     this.loadSubjects();
+    this.loadChapters();
+    this.loadTopics();
  }
 
  createQuestionRow(): FormGroup {
@@ -106,26 +112,57 @@ removeQuestionRow(index: number): void {
     });
     
  }
+ loadChapters(): void {
+    this.chaptersService.getChapters().subscribe((data: any) => {
+      this.chapters = data;
+    });
+    
+ }
+ loadTopics(): void {
+    this.topicsService.getTopics().subscribe((data: any) => {
+      this.topics = data;
+    });
+    
+ }
+ onStandardSelected(event: any): void {
+  const standardId = event.id;
+  // Assuming 'standards' is an array of all standards loaded on init
+  const selectedStandard = this.standards.find(standard => standard.id === standardId);
+  if (selectedStandard && selectedStandard.subjects) {
+     // Filter subjects based on the IDs stored in the selected standard's 'subjects' key
+     this.filteredSubjects = this.subjects.filter(subject => selectedStandard.subjects.includes(subject.id));
+     this.filteredChapters = []; // Reset filtered chapters when standard changes
+     this.filteredTopics = []; // Reset filtered topics when standard changes
+     this.questionPaperForm.get("subjects")?.reset();
+     this.questionPaperForm.get("chapters")?.reset();
+     this.questionPaperForm.get("topics")?.reset();
+  } else {
+     // If no standard is selected or it has no subjects, reset the filtered subjects list
+     this.filteredSubjects = [];
+  }
+
+  
+ }
 
  onSubjectSelected(event: any): void {
-
   const subjectId = event.id;
-  this.chaptersService.getChaptersBySubject(subjectId).subscribe((data) => {
-    this.chapters = data;
-    this.topics = []; // Reset topics when subject changes
-    this.questionPaperForm.get("topics")?.reset()
-    this.questionPaperForm.get("chapters")?.reset()
+  console.log(subjectId);
 
-  });
-}
+  this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subjectId);
+  
+  this.filteredTopics = []; // Reset filtered topics when subject changes
+  this.questionPaperForm.get("chapters")?.reset();
+  this.questionPaperForm.get("topics")?.reset();
 
-onChapterSelected(event: any): void {
-  const chapterIds = event.map((chapter:any) => chapter.id);
-  this.topicsService.getTopicsByChapters(chapterIds).subscribe((data) => {
-    this.topics = data;
-  });
-}
+ }
 
+ onChapterSelected(event: any): void {
+  const chapterIds = event.map((chapter: any) => chapter.id);
+  console.log(chapterIds);
+  // Filter topics based on the selected chapters
+  this.filteredTopics = this.topics.filter(topic => chapterIds.includes(topic.chapter));
+  this.questionPaperForm.get("topics")?.reset();
+ }
 
  generateQuestionPaper(): void {
     if (this.questionPaperForm.valid) {

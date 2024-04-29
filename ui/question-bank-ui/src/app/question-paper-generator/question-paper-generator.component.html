@@ -7,24 +7,29 @@
                       bindLabel="name"
                       bindValue="id"
                       formControlName="standard"
+                      (change)="onStandardSelected($event)"
+
                       placeholder="Select Standard">
           </ng-select>
       </div>
       <!-- Subject -->
       <div class="formField">
+        <div *ngIf="filteredSubjects.length" class="formField">
           <!-- <label for="subject">Subject:</label> -->
-          <ng-select [items]="subjects"
+          <ng-select [items]="filteredSubjects"
                       bindLabel="name"
                       bindValue="id"
                       formControlName="subject"
                       (change)="onSubjectSelected($event)"
                       placeholder="Select Subject">
           </ng-select>
+          
+        </div>
       </div>
       <!-- Chapter -->
-      <div *ngIf="chapters.length" class="formField">
+      <div *ngIf="filteredChapters.length" class="formField">
           <!-- <label for="chapter">Chapter:</label> -->
-          <ng-select [items]="chapters"
+          <ng-select [items]="filteredChapters"
                       bindLabel="name"
                       bindValue="id"
                       formControlName="chapters"
@@ -36,9 +41,9 @@
           </ng-select>
       </div>
       <!-- Topic -->
-      <div *ngIf="topics.length" class="formField">
+      <div *ngIf="filteredTopics.length" class="formField">
           <!-- <label for="topic">Topic:</label> -->
-          <ng-select [items]="topics"
+          <ng-select [items]="filteredTopics"
                       bindLabel="name"
                       bindValue="id"
                       formControlName="topics"
