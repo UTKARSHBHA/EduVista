@@ -1,5 +1,9 @@
 <div class="container">
    <h2>Topics</h2>
+   <i class="fa-solid fa-xmark closeModal" mat-button mat-dialog-close></i>
+
+   
+   
    <form [formGroup]="topicForm" (ngSubmit)="onSubmit()" class="topic-form">
       <div class="inputFields">
          <label for="name">Name:</label>

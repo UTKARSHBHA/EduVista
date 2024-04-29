@@ -36,20 +36,17 @@ class OptionSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     standard_name = serializers.StringRelatedField(source='standard.name')
     subject_name = serializers.StringRelatedField(source='subject.name')
-    # topic_name = serializers.StringRelatedField(source='topic.name')
     chapter_name = serializers.StringRelatedField(source='chapter.name')
-    # topics_names = serializers.SerializerMethodField()
+    topics_name = serializers.SerializerMethodField() 
 
     options = OptionSerializer( many=True)
-    topics = TopicSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', ]
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', 'topics_name']
 
-
-    def get_topics_names(self, obj):
-        # This method returns a list of topic names associated with the question
+    def get_topics_name(self, obj):
+        # Assuming 'topics' is a ManyToMany field on the Question model
         return [topic.name for topic in obj.topics.all()]
 
 
@@ -65,24 +62,35 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
-        
 
         options_data = validated_data.pop('options')
+        topics_data = validated_data.pop('topics', [])
+
         question = Question.objects.create(**validated_data)
         for option_data in options_data:
             Option.objects.create(question=question, **option_data)
+       
+        if topics_data:
+            question.topics.add(*topics_data)
+
+
         return question
 
     def update(self, instance, validated_data):
         options_data = validated_data.pop('options')
+        topics = validated_data.pop('topics', [])
+
         # Update question fields
+        instance.topics.set(topics)
+
+
         instance.question_text = validated_data.get('question_text', instance.question_text)
         instance.type = validated_data.get('type', instance.type)
         instance.difficulty_level = validated_data.get('difficulty_level', instance.difficulty_level)
         instance.standard = validated_data.get('standard', instance.standard)
         instance.subject = validated_data.get('subject', instance.subject)
         instance.marks = validated_data.get('marks', instance.marks)
-        instance.topics = validated_data.get('topic', instance.topic)
+        # instance.topics = validated_data.get('topics', instance.topics)
         instance.chapter = validated_data.get('chapter', instance.chapter)
         instance.image = validated_data.get('image', instance.image)
         instance.save()

@@ -24,6 +24,7 @@ import { StandardsComponent } from '../standards/standards.component';
 import { SubjectsComponent } from '../subjects/subjects.component';
 import { TopicsComponent } from '../topics/topics.component';
 import { ChaptersComponent } from '../chapters/chapters.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-questions',
@@ -32,15 +33,13 @@ import { ChaptersComponent } from '../chapters/chapters.component';
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
+    NgSelectModule,
   ],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })
 export class QuestionsComponent implements OnInit {
-// openStandardModal() {
-//   alert("kulja standard")
-// throw new Error('Method not implemented.');
-// }
+
   questionForm: FormGroup;
   questions: any[] = [];
   chapters: any[] = [];
@@ -53,7 +52,9 @@ export class QuestionsComponent implements OnInit {
   SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
   TopicModal: MatDialogRef<TopicsComponent> | undefined;
   chaptersModal: MatDialogRef<ChaptersComponent>  | undefined;
-  // matDialogRef: MatDialogRef<SubjectsComponent> | undefined;
+  filteredSubjects: any[] = [];
+  filteredChapters: any[] = [];
+  filteredTopics: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,7 +74,7 @@ export class QuestionsComponent implements OnInit {
       standard: ['', Validators.required],
       subject: ['', Validators.required],
       marks: ['', Validators.required],
-      topic: ['', Validators.required],
+      topics: [[]],
       chapter: ['', Validators.required],
       image: [null],
       options: this.formBuilder.array([]),
@@ -81,11 +82,14 @@ export class QuestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadQuestions();
     this.loadChapters();
     this.loadTopics();
     this.loadSubjects();
     this.loadStandards();
+
+    this.filteredSubjects = [...this.subjects];
+    this.filteredChapters = [...this.chapters];
+    this.filteredTopics = [...this.topics];
 
     this.questionId = this.route.snapshot.paramMap.get('id');
 
@@ -155,18 +159,24 @@ export class QuestionsComponent implements OnInit {
   loadChapters(): void {
     this.chaptersService.getChapters().subscribe((data: any) => {
       this.chapters = data;
+      this.filteredChapters = [...this.chapters];
+
     });
   }
 
   loadTopics(): void {
     this.topicsService.getTopics().subscribe((data: any) => {
       this.topics = data;
+      this.filteredTopics = [...this.topics];
+
     });
   }
 
   loadSubjects(): void {
     this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
+      this.filteredSubjects = [...this.subjects];
+
     });
   }
 
@@ -304,4 +314,36 @@ export class QuestionsComponent implements OnInit {
     });
 
   }
+
+  onStandardSelected(event: any) {
+    const standardId = event.id;
+    // Find the selected standard from the standards list
+    const selectedStandard = this.standards.find(standard => standard.id === standardId);
+    if (selectedStandard && selectedStandard.subjects) {
+        // Filter subjects based on the IDs stored in the selected standard's 'subjects' key
+        this.filteredSubjects = this.subjects.filter(subject => selectedStandard.subjects.includes(subject.id));
+    } else {
+        // If no standard is selected or it has no subjects, reset the filtered subjects list
+        this.filteredSubjects = [];
+    }
+    // Optionally, reset the selected subject, chapter, and topic
+    this.questionForm.get('subject')?.setValue(null);
+    this.questionForm.get('chapter')?.setValue(null);
+    this.questionForm.get('topics')?.setValue(null);
+}
+
+ onSubjectSelected(event: any) {
+    const subjectId = event.id;
+    this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subjectId);
+    // Optionally, reset the selected chapter and topic
+    this.questionForm.get('chapter')?.setValue(null);
+    this.questionForm.get('topics')?.setValue(null);
+ }
+
+ onChapterSelected(event: any) {
+    const chapterId = event.id;
+    this.filteredTopics = this.topics.filter(topic => topic.chapter === chapterId);
+    // Optionally, reset the selected topic
+    this.questionForm.get('topics')?.setValue(null);
+ }
 }

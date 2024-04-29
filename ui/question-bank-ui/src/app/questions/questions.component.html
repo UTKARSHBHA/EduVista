@@ -1,115 +1,170 @@
 <div class="questions-container">
-    <h2>Questions</h2>
-    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="questions-form">
-        <div class="question-fields">
-
-            <div class="fields">
-                <label for="type">Type:</label>
-                <select id="type" formControlName="type">
-                    <option value="mcq">Multiple Choice</option>
-                    <option value="tf">True or False</option>
-                    <option value="descriptive">Descriptive</option>
-                </select>
-            </div>
-            <div class="fields">
-                <label for="difficulty_level">Difficulty Level:</label>
-                <select id="difficulty_level" formControlName="difficulty_level">
-                    <option value="hard">Hard</option>
-                    <option value="medium">Medium</option>
-                    <option value="easy">Easy</option>
-                </select>
-            </div>
-            <div class="fields">
-                <div class="labelButton">
-
-                    <label for="standard">Standard:</label>
-                    <i style="font-size: 30px; color: green; cursor: pointer;" class="fa-solid fa-circle-plus"
-                    (click)="openStandardModal()"
-                    ></i>      
-                </div>
-                <select id="standard" formControlName="standard">
-                    <option *ngFor="let standard of standards" [value]="standard.id">{{standard.name}}</option>
-                </select>
-            </div>
-            <div class="fields">
-                <div class="labelButton">
-
-                    <label for="subject">Subject:</label>
-                    <i style="font-size: 30px; color: green; cursor: pointer;" class="fa-solid fa-circle-plus"
-                    (click)="openSubjectModal()"
-                    ></i>      
-                </div>
-                <select id="subject" formControlName="subject">
-                    <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}</option>
-                </select>
-            </div>
-            <div class="fields">
-                <div class="labelButton">
-                    
-                    <label for="topic">Topic:</label>
-                    <i style="font-size: 30px; color: green; cursor: pointer;" class="fa-solid fa-circle-plus"
-                    (click)="openTopicModal()"
-                    ></i>      
-                </div>
-                <select id="topic" formControlName="topic">
-                    <option *ngFor="let topic of topics" [value]="topic.id">{{topic.name}}</option>
-                </select>
-            </div>
-            <div class="fields">
-                <div class="labelButton">
-                    
-                    <label for="chapter">Chapter:</label>
-                    <i style="font-size: 30px; color: green; cursor: pointer;" class="fa-solid fa-circle-plus"
-                    (click)="openChapterModal()"
-                    ></i>      
-                </div>                <select id="chapter" formControlName="chapter">
-                    <option *ngFor="let chapter of chapters" [value]="chapter.id">{{chapter.name}}</option>
-                </select>
-            </div>
-            <div class="fields">
-                <label for="marks">Marks:</label>
-                <input id="marks" type="number" formControlName="marks">
-            </div>
-            <div class="fields">
-                <label for="image">Image:</label>
-                <input #fileInput id="image" type="file" (change)="onFileSelected($event)">
-            </div>
-            <input type="hidden" formControlName="image">
+  <h2>Questions</h2>
+  <form
+    [formGroup]="questionForm"
+    (ngSubmit)="onSubmit()"
+    class="questions-form"
+  >
+    <div class="question-fields">
+      <div class="fields">
+        <label for="type">Type:</label>
+        <ng-select
+          [items]="['mcq', 'tf', 'descriptive']"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="type"
+          placeholder="Select Type"
+        >
+        </ng-select>
+      </div>
+      <div class="fields">
+        <label for="difficulty_level">Difficulty Level:</label>
+        <ng-select
+          [items]="['hard', 'medium', 'easy']"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="difficulty_level"
+          placeholder="Select Difficulty Level"
+        >
+        </ng-select>
+      </div>
+      <div class="fields">
+        <div class="labelButton">
+          <label for="standard">Standard:</label>
+          <i
+            style="font-size: 30px; color: green; cursor: pointer"
+            class="fa-solid fa-circle-plus"
+            (click)="openStandardModal()"
+          ></i>
         </div>
-        <div>
-            <label for="question_text">Question:</label>
-            <textarea id="question_text" formControlName="question_text"></textarea>
+        <ng-select
+          [items]="standards"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="standard"
+          (change)="onStandardSelected($event)"
+          placeholder="Select Standard"
+        >
+        </ng-select>
+      </div>
+      <div class="fields">
+        <div class="labelButton">
+          <label for="subject">Subject:</label>
+          <i
+            style="font-size: 30px; color: green; cursor: pointer"
+            class="fa-solid fa-circle-plus"
+            (click)="openSubjectModal()"
+          ></i>
         </div>
-        <!-- <div *ngIf="questionForm.get('type')?.value === 'mcq'" class="mcq-options-container"> -->
-        @if(questionForm.get('type')?.value === 'mcq' || questionForm.get('type')?.value === 'tf' ){
-            <div class="mcq-options-container">
-                @if(questionForm.get('type')?.value === 'mcq'){
-
-                    <button (click)="addOption()">Add Option</button>
-                }
-                <div formArrayName="options">
-                    <div *ngFor="let option of optionsArray.controls; let i = index" [formGroupName]="i">
-                        <div class="optionList">
-                            <input formControlName="text" placeholder="Option Text">
-                           
-                                <input id="isOptionCorrect" type="checkbox" formControlName="is_correct"> 
-                            <!-- </div> -->
-                            <button *ngIf="optionsArray.length>2" (click)="removeOption(i)" class="remove-option">Remove</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        }
-        <!-- </div> -->
-        <div class="btnList">
-            @if(questionId){
-                <button type="submit">Update Question</button>
-            }
-            @else{
-
-                <button type="submit">Add Question</button>
-            }
-            <button type="submit" (click)="resetForm()">Reset</button>
+        <ng-select
+          [items]="filteredSubjects"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="subject"
+          (change)="onSubjectSelected($event)"
+          placeholder="Select Subject"
+        >
+        </ng-select>
+      </div>
+      <div class="fields">
+        <div class="labelButton">
+          <label for="chapter">Chapter:</label>
+          <i
+            style="font-size: 30px; color: green; cursor: pointer"
+            class="fa-solid fa-circle-plus"
+            (click)="openChapterModal()"
+          ></i>
         </div>
-    </form>
+        <ng-select
+          [items]="filteredChapters"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="chapter"
+          (change)="onChapterSelected($event)"
+          placeholder="Select Chapter"
+        >
+        </ng-select>
+      </div>
+      <div class="fields">
+        <div class="labelButton">
+          <label for="topic">Topic:</label>
+          <i
+            style="font-size: 30px; color: green; cursor: pointer"
+            class="fa-solid fa-circle-plus"
+            (click)="openTopicModal()"
+          ></i>
+        </div>
+        <ng-select
+          [items]="filteredTopics"
+          bindLabel="name"
+          bindValue="id"
+          [multiple]="true"
+          formControlName="topics"
+          placeholder="Select Topics"
+        >
+        </ng-select>
+      </div>
+      <div class="fields">
+        <label for="marks">Marks:</label>
+        <input id="marks" type="number" formControlName="marks" min="1"/>
+      </div>
+      <div class="fields">
+        <label for="image" class="custom-file-upload">Image:</label>
+        <input
+          #fileInput
+          id="image"
+          type="file"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+      <input type="hidden" formControlName="image" />
+    </div>
+    <div class="questionText">
+      <label for="question_text">Question:</label>
+      <textarea id="question_text" formControlName="question_text"></textarea>
+    </div>
+    @if(questionForm.get('type')?.value === 'mcq' ||
+    questionForm.get('type')?.value === 'tf' ){
+    <div class="mcq-options-container">
+      @if(questionForm.get('type')?.value === 'mcq'){
+
+      <button (click)="addOption()">Add Option</button>
+      }
+      <div formArrayName="options" class="options">
+        <div
+          *ngFor="let option of optionsArray.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="optionList">
+            <input formControlName="text" placeholder="Option Text" />
+
+            <input
+              id="isOptionCorrect"
+              type="checkbox"
+              formControlName="is_correct"
+            />
+            <!-- </div> -->
+            <button
+              *ngIf="optionsArray.length > 2"
+              (click)="removeOption(i)"
+              class="remove-option"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    <!-- </div> -->
+    <div class="btnList">
+      @if(questionId){
+      <button type="submit">Update Question</button>
+      } @else{
+
+      <button type="submit">Add Question</button>
+      }
+      <button type="submit" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
+</div>

@@ -31,11 +31,8 @@ export class QuestionsListComponent implements OnInit {
     { field: 'marks' , filter: true },
     {
       headerName: 'Topics',
-      field: 'topics',
-      valueGetter: (params) => {
-        // Assuming 'topics' is an array of objects with a 'name' property
-        return params.data.topics.map((topic:any) => topic.name).join(', ');
-      },
+      field: 'topics_name',
+      
       filter: true,
    },
     // { field: 'topic_name' , filter: true },
@@ -71,6 +68,7 @@ export class QuestionsListComponent implements OnInit {
 
   loadQuestions(page: number = 1): void {
     this.questionsService.getQuestions(page, this.pageSize).subscribe((data) => {
+      console.log(data);  
        this.rowData = data.results;
        this.totalQuestions = data.count;
     });
