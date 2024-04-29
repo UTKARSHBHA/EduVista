@@ -22,7 +22,7 @@ export class ChaptersComponent {
   constructor(private formBuilder: FormBuilder, private chaptersService: ChaptersService, private subjectsService: SubjectsService) { 
   this.chapterForm = this.formBuilder.group({
       name: ['', Validators.required],
-      subject: ['', Validators.required] // Assuming each chapter is associated with a topic
+      subject: [null, Validators.required] // Assuming each chapter is associated with a topic
     });
     
   }
