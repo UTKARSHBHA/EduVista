@@ -1,44 +1,22 @@
-<!-- In standards.component.html -->
-
-<!-- <h2>Standards</h2>
-<form [formGroup]="standardForm" (ngSubmit)="onSubmit()">
- <div>
-    <label for="name">Name:</label>
-    <input id="name" type="text" formControlName="name">
- </div>
- <button type="submit">Add Standard</button>
-</form>
-<ul>
- @for(standard of standards; track standard.id){
-    <li>{{standard.name}}</li>
-    <button (click)="deleteStandard(standard.id)">Delete</button>
-
- }
-</ul> -->
-
 <div class="container">
    <h2>Standards</h2>
    <i class="fa-solid fa-xmark closeModal" mat-button mat-dialog-close></i>
 
-
-   <form [formGroup]="standardForm" (ngSubmit)="onSubmit()" class="standard-form">
+   <form [formGroup]="standardsForm" (ngSubmit)="onSubmit()" class="standard-form">
       <div class="inputFields">
          <label for="name">Name:</label>
          <input id="name" type="text" formControlName="name">
       </div>
+      <div class="inputFields">
+         <label for="subject">Subject:</label>
+         <ng-select [items]="subjects"
+                     bindLabel="name"
+                     bindValue="id"
+                     [multiple]="true"
+                     formControlName="subjects"
+                     placeholder="Select Subject">
+         </ng-select>
+      </div>
       <button type="submit">Add Standard</button>
    </form>
-   <!-- <div class="standardList">
-      <ul>
-         @for(standard of standards; track standard.id){
-         <div class="standard">
-
-            <li>{{standard.name}}</li>
-            <button (click)="deleteStandard(standard.id)" class="delete-btn"><i class="fas fa-trash"></i></button>
-         </div>
-
-         }
-         
-      </ul>
-   </div> -->
 </div>
