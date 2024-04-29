@@ -107,12 +107,22 @@ WSGI_APPLICATION = 'EduVistaServer.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # for pgedge cloud
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'eduvista',
+    #     'USER': 'admin',
+    #     'PASSWORD': 'K6NI839Y295ebXC4rPTD5z7k',
+    #     'HOST': 'enormously-apparent-mite.a1.pgedge.io',
+    #     'PORT': '5432',
+    # }
+    # For Local
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'eduvista',
         'USER': 'admin',
-        'PASSWORD': 'K6NI839Y295ebXC4rPTD5z7k',
-        'HOST': 'enormously-apparent-mite.a1.pgedge.io',
+        'PASSWORD': 'Chiku420',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
