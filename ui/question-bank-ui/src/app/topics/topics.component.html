@@ -1,24 +1,19 @@
 <div class="container">
-
-   
    <h2>Topics</h2>
-
-   <i class="fa-solid fa-xmark closeModal" mat-button mat-dialog-close></i>
-
-<form [formGroup]="topicForm" (ngSubmit)="onSubmit()" class="topic-form">
- <div class="inputFields">
-    <label for="name">Name:</label>
-    <input id="name" type="text" formControlName="name">
- </div>
- <div class="inputFields">
-    <label for="subject">Subject:</label>
-    <select id="subject" formControlName="subject">
-      @for(subject of subjects; track subject.id){
-         <option [value]="subject.id">{{subject.name}}</option>
-      }
-    </select>
- </div>
- <button type="submit">Add Topic</button>
-</form>
-
+   <form [formGroup]="topicForm" (ngSubmit)="onSubmit()" class="topic-form">
+      <div class="inputFields">
+         <label for="name">Name:</label>
+         <input id="name" type="text" formControlName="name">
+      </div>
+      <div class="inputFields">
+         <label for="topics">Chapters:</label>
+         <ng-select [items]="chapters"
+                     bindLabel="name"
+                     bindValue="id"
+                     placeholder="Select Chapter"
+                     formControlName="chapter">
+         </ng-select>
+      </div>
+      <button type="submit">Add Topic</button>
+   </form>
 </div>

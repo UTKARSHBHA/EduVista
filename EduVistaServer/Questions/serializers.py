@@ -22,7 +22,7 @@ class StandardSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = ['id', 'name'] # Adjust the fields as needed
+        fields = ['id', 'name', 'chapter'] # Adjust the fields as needed
 
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
