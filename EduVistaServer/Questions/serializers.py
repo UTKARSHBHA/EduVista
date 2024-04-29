@@ -42,7 +42,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     options = OptionSerializer( many=True)
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topic', 'chapter' , 'options','standard_name' , 'subject_name' , 'topic_name' , 'chapter_name', 'image']
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'topic_name' , 'chapter_name', 'image']
 
     def to_internal_value(self, data):
         # Handle the image field manually
@@ -73,7 +73,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         instance.standard = validated_data.get('standard', instance.standard)
         instance.subject = validated_data.get('subject', instance.subject)
         instance.marks = validated_data.get('marks', instance.marks)
-        instance.topic = validated_data.get('topic', instance.topic)
+        instance.topics = validated_data.get('topic', instance.topic)
         instance.chapter = validated_data.get('chapter', instance.chapter)
         instance.image = validated_data.get('image', instance.image)
         instance.save()

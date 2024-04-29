@@ -11,6 +11,7 @@ class Subject(models.Model):
 
 class Standard(models.Model):
     name = models.CharField(max_length=100)
+    subjects = models.ManyToManyField(Subject, related_name='standards')
 
     def __str__(self):
         return self.name
@@ -46,7 +47,7 @@ class Question(models.Model):
     standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     marks = models.IntegerField()
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topics = models.ManyToManyField(Topic, related_name='questions')
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     question_text = models.TextField()
     image = models.ImageField(upload_to='questions-images/', blank=True, null=True)
