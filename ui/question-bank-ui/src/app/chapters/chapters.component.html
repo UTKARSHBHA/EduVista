@@ -10,14 +10,25 @@
            <label for="name">Name:</label>
            <input id="name" type="text" formControlName="name">
        </div>
-       <div class="inputFields">
+       <!-- chapters.component.html -->
+        <div class="inputFields">
+            <label for="subject">subject:</label>
+            <ng-select [items]="subjects"
+                        bindLabel="name"
+                        bindValue="id"
+                        formControlName="subject"
+                        placeholder="Select subject">
+            </ng-select>
+        </div>
+
+       <!-- <div class="inputFields">
            <label for="topic">Topic:</label>
            <select id="topic" formControlName="topic">
             @for(topic of topics; track topic.id){
                <option [value]="topic.id">{{topic.name}}</option>
             }
            </select>
-       </div>
+       </div> -->
        <button type="submit">Add Chapter</button>
    </form>
    

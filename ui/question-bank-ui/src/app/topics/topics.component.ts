@@ -24,7 +24,7 @@ export class TopicsComponent {
   constructor(private formBuilder: FormBuilder, private topicsService: TopicsService, private chaptersService: ChaptersService) { 
   this.topicForm = this.formBuilder.group({
       name: ['', Validators.required],
-      chapter: ['', Validators.required],
+      chapter: [null , Validators.required],
    });
 
   }

@@ -3,24 +3,26 @@ import { ChaptersService } from '../services/chapters.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TopicsService } from '../services/topics.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SubjectsService } from '../services/subjects.service';
 
 @Component({
   selector: 'app-chapters',
   standalone: true,
-  imports: [ReactiveFormsModule, MatDialogModule],
+  imports: [ReactiveFormsModule, MatDialogModule, NgSelectModule],
   templateUrl: './chapters.component.html',
   styleUrl: './chapters.component.css'
 })
 export class ChaptersComponent {
   chapters: any = [];
-  topics: any[] = []; // Array to hold the list of topics
+  subjects: any[] = []; // Array to hold the list of topics
 
   chapterForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private chaptersService: ChaptersService, private topicsService: TopicsService) { 
+  constructor(private formBuilder: FormBuilder, private chaptersService: ChaptersService, private subjectsService: SubjectsService) { 
   this.chapterForm = this.formBuilder.group({
       name: ['', Validators.required],
-      topic: ['', Validators.required] // Assuming each chapter is associated with a topic
+      subject: ['', Validators.required] // Assuming each chapter is associated with a topic
     });
     
   }
@@ -28,7 +30,7 @@ export class ChaptersComponent {
   ngOnInit(): void {
     
     // this.loadChapters();
-    this.loadTopics(); 
+    this.loadSubjects(); 
 
  }
  loadChapters(): void {
@@ -37,9 +39,9 @@ export class ChaptersComponent {
   });
 }
 
-loadTopics(): void {
-  this.topicsService.getTopics().subscribe((data:any) => {
-    this.topics = data;
+loadSubjects(): void {
+  this.subjectsService.getSubjects().subscribe((data:any) => {
+    this.subjects = data;
   });
 }
 
