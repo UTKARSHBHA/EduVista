@@ -22,7 +22,7 @@ class StandardSerializer(serializers.ModelSerializer):
 class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
-        fields = '__all__'
+        fields = ['id', 'name'] # Adjust the fields as needed
 
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,13 +36,22 @@ class OptionSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     standard_name = serializers.StringRelatedField(source='standard.name')
     subject_name = serializers.StringRelatedField(source='subject.name')
-    topic_name = serializers.StringRelatedField(source='topic.name')
+    # topic_name = serializers.StringRelatedField(source='topic.name')
     chapter_name = serializers.StringRelatedField(source='chapter.name')
+    # topics_names = serializers.SerializerMethodField()
 
     options = OptionSerializer( many=True)
+    topics = TopicSerializer(many=True, read_only=True)
+
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'topic_name' , 'chapter_name', 'image']
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', ]
+
+
+    def get_topics_names(self, obj):
+        # This method returns a list of topic names associated with the question
+        return [topic.name for topic in obj.topics.all()]
+
 
     def to_internal_value(self, data):
         # Handle the image field manually

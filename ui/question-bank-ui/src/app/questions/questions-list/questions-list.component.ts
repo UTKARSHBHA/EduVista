@@ -29,7 +29,17 @@ export class QuestionsListComponent implements OnInit {
     { field: 'standard_name' , filter: true },
     { field: 'subject_name' , filter: true },
     { field: 'marks' , filter: true },
-    { field: 'topic_name' , filter: true },
+    {
+      headerName: 'Topics',
+      field: 'topics',
+      valueGetter: (params) => {
+        // Assuming 'topics' is an array of objects with a 'name' property
+        return params.data.topics.map((topic:any) => topic.name).join(', ');
+      },
+      filter: true,
+   },
+    // { field: 'topic_name' , filter: true },
+    // { field: 'topics' , filter: true },
     { field: 'chapter_name' , filter: true },
     {
       field: 'delete',
