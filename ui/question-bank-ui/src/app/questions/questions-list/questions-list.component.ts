@@ -14,48 +14,44 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-questions-list',
   standalone: true,
-  imports: [AgGridAngular,     MatPaginatorModule
-  ],
+  imports: [AgGridAngular, MatPaginatorModule],
   templateUrl: './questions-list.component.html',
   styleUrl: './questions-list.component.css',
 })
 export class QuestionsListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    { field: 'id' },
-    { field: 'question_text', filter: true },
-    { field: 'type' , filter: true },
-    { field: 'difficulty_level' , filter: true },
-    { field: 'standard_name' , filter: true },
-    { field: 'subject_name' , filter: true },
-    { field: 'marks' , filter: true },
+    // { headerName: 'ID',field: 'id' },
+    { headerName: 'Question', field: 'question_text', filter: true },
+    { headerName: 'Type', field: 'type', filter: true },
+    { headerName: 'Difficulty', field: 'difficulty_level', filter: true },
+    { headerName: 'Standard', field: 'standard_name', filter: true },
+    { headerName: 'Subject', field: 'subject_name', filter: true },
+    { headerName: 'Marks', field: 'marks', filter: true },
     {
       headerName: 'Topics',
       field: 'topics_name',
-      
+
       filter: true,
-   },
+    },
     // { field: 'topic_name' , filter: true },
     // { field: 'topics' , filter: true },
-    { field: 'chapter_name' , filter: true },
+    { headerName: 'Chapter', field: 'chapter_name', filter: true },
     {
-      field: 'delete',
+      field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
     },
     {
-        field: 'view',
-        cellRenderer: ViewButtonRendererComponent,
+      field: 'View',
+      cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
     },
-    
   ];
 
   pageSize = 10;
   totalQuestions = 0;
   currentPage = 0;
-
-
 
   constructor(
     private questionsService: QuestionsService,
@@ -67,18 +63,20 @@ export class QuestionsListComponent implements OnInit {
   }
 
   loadQuestions(page: number = 1): void {
-    this.questionsService.getQuestions(page, this.pageSize).subscribe((data) => {
-      console.log(data);  
-       this.rowData = data.results;
-       this.totalQuestions = data.count;
-    });
-   }
+    this.questionsService
+      .getQuestions(page, this.pageSize)
+      .subscribe((data) => {
+        console.log(data);
+        this.rowData = data.results;
+        this.totalQuestions = data.count;
+      });
+  }
 
-   onPageChange(event: any): void {
+  onPageChange(event: any): void {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadQuestions(this.currentPage + 1); // Pagination is 1-indexed
-   }
+  }
 
   routTo(route: string) {
     this.router.navigate(['/' + route]);
@@ -88,10 +86,9 @@ export class QuestionsListComponent implements OnInit {
     this.deleteQuestion(e.data.id);
   }
 
-  view(e: any){
-    console.log("veiw clicked");
+  view(e: any) {
+    console.log('veiw clicked');
     this.router.navigate(['/question-view', e.data.id]);
-
   }
 
   deleteQuestion(questionId: number): void {
@@ -107,5 +104,4 @@ export class QuestionsListComponent implements OnInit {
       });
     }
   }
-
 }
