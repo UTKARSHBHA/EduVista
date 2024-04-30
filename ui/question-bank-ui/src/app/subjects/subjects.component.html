@@ -15,7 +15,7 @@
          <label for="name">Name:</label>
          <input id="name" type="text" formControlName="name">
       </div>
-      <button type="submit">Add Subject</button>
+      <button type="submit" [disabled]="!subjectForm.valid">Add Subject</button>
    </form>
    
 </div>

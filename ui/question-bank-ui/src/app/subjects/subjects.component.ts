@@ -30,7 +30,9 @@ export class SubjectsComponent {
  }
 
  onSubmit(): void {
+  console.log('clicked');
   if (this.subjectForm.valid) {
+    console.log("in valid");
     this.subjectsService.createSubject(this.subjectForm.value).subscribe(data => {
       console.log('Subject created:', data);
       this.subjects.push(data);

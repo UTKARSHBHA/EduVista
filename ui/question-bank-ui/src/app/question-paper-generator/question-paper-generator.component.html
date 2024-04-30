@@ -76,7 +76,7 @@
                 </button>
             </div>
         </div>
-        <button (click)="addQuestionRow()" class="btn" >
+        <button (click)="addQuestionRow()" class="btn" [disabled]="questionsGrid.invalid" >
             <i class="fas fa-plus"></i> Add Question Type
         </button>
     </div>

@@ -24,6 +24,6 @@
                      placeholder="Select Subject">
          </ng-select>
       </div>
-      <button type="submit">Add Standard</button>
+      <button type="submit" [disabled]="!standardsForm.valid" >Add Standard</button>
    </form>
 </div>

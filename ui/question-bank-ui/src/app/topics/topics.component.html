@@ -25,6 +25,6 @@
                      formControlName="chapter">
          </ng-select>
       </div>
-      <button type="submit">Add Topic</button>
+      <button type="submit" [disabled]="!topicForm.valid">Add Topic</button>
    </form>
 </div>

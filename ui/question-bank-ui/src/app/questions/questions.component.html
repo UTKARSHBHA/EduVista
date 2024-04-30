@@ -167,10 +167,10 @@
     <!-- </div> -->
     <div class="btnList">
       @if(questionId){
-      <button type="submit">Update Question</button>
+      <button type="submit" [disabled]="!questionForm.valid">Update Question</button>
       } @else{
 
-      <button type="submit">Add Question</button>
+      <button type="submit" [disabled]="!questionForm.valid">Add Question</button>
       }
       <button type="submit" (click)="resetForm()">Reset</button>
     </div>

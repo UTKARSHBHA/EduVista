@@ -201,11 +201,12 @@ export class QuestionsComponent implements OnInit {
 
   onSubmit(): void {
     console.log('on submit clicked');
-    console.log(this.questionId);
-    console.log(this.questionForm.value);
-    console.log(this.questionForm.errors);
-    console.log(this.questionForm.valid);
+    // console.log(this.questionId);
+    // console.log(this.questionForm.value);
+    // console.log(this.questionForm.errors);
+    // console.log(this.questionForm.valid);
     if (this.questionForm.valid) {
+      console.log("valid");
       if (this.questionId) {
         // console.log(formData);
         this.questionsService

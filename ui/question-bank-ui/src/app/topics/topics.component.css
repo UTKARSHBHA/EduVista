@@ -55,7 +55,7 @@
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.topic-form button:hover {
+.topic-form button:hover:not(:disabled) {
     background-color: #0056b3; /* Darker blue on hover */
 }
 .topicList{
@@ -111,3 +111,9 @@
     display: flex;
     justify-content:space-between;
   }
+
+  button:disabled {
+    background-color: #cccccc; /* Change the background color */
+    cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+    opacity: 0.6; /* Optionally, reduce the opacity to further indicate it's disabled */
+}
