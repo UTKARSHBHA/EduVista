@@ -22,7 +22,7 @@ export class StandardsComponent {
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
     private subjectsService: SubjectsService,
-    @Optional() public dialogRef: MatDialogRef<StandardsComponent>
+      @Optional() public dialogRef: MatDialogRef<StandardsComponent>
  ) {
     this.standardsForm = this.formBuilder.group({
       name: ['', Validators.required],

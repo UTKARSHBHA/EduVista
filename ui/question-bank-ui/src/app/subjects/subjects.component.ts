@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { SubjectsService } from '../services/subjects.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { StandardsComponent } from '../standards/standards.component';
 @Component({
   selector: 'app-subjects',
   standalone: true,
-  imports: [ReactiveFormsModule, MatDialogModule],
+  imports: [ReactiveFormsModule, MatDialogModule,],
   templateUrl: './subjects.component.html',
   styleUrl: './subjects.component.css'
 })
@@ -16,7 +17,9 @@ export class SubjectsComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private subjectsService: SubjectsService
+    private subjectsService: SubjectsService,
+    @Optional() public dialogRef: MatDialogRef<StandardsComponent>
+
  ) {
     this.subjectForm = this.formBuilder.group({
       name: ['', Validators.required]
@@ -32,6 +35,7 @@ export class SubjectsComponent {
       console.log('Subject created:', data);
       this.subjects.push(data);
       this.subjectForm.reset();
+      this.dialogRef?.close({ refresh: true})
     });
   }
 }

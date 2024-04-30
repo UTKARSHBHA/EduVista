@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { ChaptersService } from '../services/chapters.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TopicsService } from '../services/topics.service';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SubjectsService } from '../services/subjects.service';
+import { StandardsComponent } from '../standards/standards.component';
 
 @Component({
   selector: 'app-chapters',
@@ -19,7 +20,12 @@ export class ChaptersComponent {
 
   chapterForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private chaptersService: ChaptersService, private subjectsService: SubjectsService) { 
+  constructor(private formBuilder: FormBuilder,
+     private chaptersService: ChaptersService,
+      private subjectsService: SubjectsService,
+      @Optional() public dialogRef: MatDialogRef<StandardsComponent>
+
+    ) { 
   this.chapterForm = this.formBuilder.group({
       name: ['', Validators.required],
       subject: [null, Validators.required] // Assuming each chapter is associated with a topic
@@ -51,6 +57,8 @@ onSubmit(): void {
       console.log('Chapter added:', data);
       this.chapters.push(data);
       this.chapterForm.reset();
+      this.dialogRef?.close({ refresh: true})
+
     });
   }
 }

@@ -45,7 +45,7 @@ export class QuestionsComponent implements OnInit {
   StandardModal: MatDialogRef<StandardsComponent> | undefined;
   SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
   TopicModal: MatDialogRef<TopicsComponent> | undefined;
-  chaptersModal: MatDialogRef<ChaptersComponent> | undefined;
+  ChapterModal: MatDialogRef<ChaptersComponent> | undefined;
   filteredSubjects: any[] = [];
   filteredChapters: any[] = [];
   filteredTopics: any[] = [];
@@ -153,6 +153,7 @@ export class QuestionsComponent implements OnInit {
     this.chaptersService.getChapters().subscribe((data: any) => {
       this.chapters = data;
       this.filteredChapters = [...this.chapters];
+      // console.log('chapters', this.chapters);
     });
   }
 
@@ -160,6 +161,7 @@ export class QuestionsComponent implements OnInit {
     this.topicsService.getTopics().subscribe((data: any) => {
       this.topics = data;
       this.filteredTopics = [...this.topics];
+      // console.log('topics', this.topics);
     });
   }
 
@@ -287,6 +289,12 @@ export class QuestionsComponent implements OnInit {
       height: '90vh',
       width: '90vw',
     });
+    this.SubjectModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadSubjects();
+      }
+    });
     
   }
   openTopicModal() {
@@ -295,12 +303,24 @@ export class QuestionsComponent implements OnInit {
       height: '90vh',
       width: '90vw',
     });
+    this.TopicModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadTopics();
+      }
+    });
   }
   openChapterModal() {
-    this.chaptersModal = this.matDialog.open(ChaptersComponent, {
+    this.ChapterModal = this.matDialog.open(ChaptersComponent, {
       disableClose: true,
       height: '90vh',
       width: '90vw',
+    });
+    this.ChapterModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadChapters();
+      }
     });
   }
 
@@ -340,6 +360,7 @@ export class QuestionsComponent implements OnInit {
     this.filteredTopics = this.topics.filter(
       (topic) => topic.chapter === chapterId
     );
+    console.log(this.filteredTopics);
     // Optionally, reset the selected topic
     this.questionForm.get('topics')?.setValue(null);
   }
