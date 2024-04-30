@@ -80,9 +80,9 @@ export class QuestionsComponent implements OnInit {
     this.loadSubjects();
     this.loadStandards();
 
-    this.filteredSubjects = [...this.subjects];
-    this.filteredChapters = [...this.chapters];
-    this.filteredTopics = [...this.topics];
+    this.filteredSubjects = [];
+    this.filteredChapters = [];
+    this.filteredTopics = [];
 
     this.questionId = this.route.snapshot.paramMap.get('id');
 
@@ -152,7 +152,6 @@ export class QuestionsComponent implements OnInit {
   loadChapters(): void {
     this.chaptersService.getChapters().subscribe((data: any) => {
       this.chapters = data;
-      this.filteredChapters = [...this.chapters];
       // console.log('chapters', this.chapters);
     });
   }
@@ -160,7 +159,6 @@ export class QuestionsComponent implements OnInit {
   loadTopics(): void {
     this.topicsService.getTopics().subscribe((data: any) => {
       this.topics = data;
-      this.filteredTopics = [...this.topics];
       // console.log('topics', this.topics);
     });
   }
@@ -168,7 +166,6 @@ export class QuestionsComponent implements OnInit {
   loadSubjects(): void {
     this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
-      this.filteredSubjects = [...this.subjects];
     });
   }
 
@@ -343,6 +340,8 @@ export class QuestionsComponent implements OnInit {
     this.questionForm.get('subject')?.setValue(null);
     this.questionForm.get('chapter')?.setValue(null);
     this.questionForm.get('topics')?.setValue(null);
+    this.filteredChapters = [];
+    this.filteredTopics = [];
   }
 
   onSubjectSelected(event: any) {
@@ -353,6 +352,7 @@ export class QuestionsComponent implements OnInit {
     // Optionally, reset the selected chapter and topic
     this.questionForm.get('chapter')?.setValue(null);
     this.questionForm.get('topics')?.setValue(null);
+    this.filteredTopics = [];
   }
 
   onChapterSelected(event: any) {

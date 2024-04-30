@@ -25,6 +25,7 @@
           bindValue="id"
           formControlName="difficulty_level"
           placeholder="Select Difficulty Level"
+          
         >
         </ng-select>
       </div>
@@ -44,6 +45,7 @@
           formControlName="standard"
           (change)="onStandardSelected($event)"
           placeholder="Select Standard"
+
         >
         </ng-select>
       </div>
@@ -63,6 +65,8 @@
           formControlName="subject"
           (change)="onSubjectSelected($event)"
           placeholder="Select Subject"
+          [disabled]="!filteredSubjects.length"
+
         >
         </ng-select>
       </div>
@@ -82,6 +86,8 @@
           formControlName="chapter"
           (change)="onChapterSelected($event)"
           placeholder="Select Chapter"
+          [disabled]="!filteredChapters.length"
+
         >
         </ng-select>
       </div>
@@ -101,6 +107,8 @@
           [multiple]="true"
           formControlName="topics"
           placeholder="Select Topics"
+          [disabled]="!filteredTopics.length"
+
         >
         </ng-select>
       </div>
