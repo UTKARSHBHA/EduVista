@@ -12,7 +12,7 @@ class Command(BaseCommand):
         url = "https://opentdb.com/api.php?amount=100"
 
         # Send a GET request to the API
-        for i in range(50):
+        for i in range(100):
 
             response = requests.get(url)
 

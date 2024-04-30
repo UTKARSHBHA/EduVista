@@ -64,12 +64,6 @@ class ChapterViewSet(viewsets.ModelViewSet):
     # queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
 
-    def get_queryset(self):
-        queryset = Chapter.objects.all()
-        subject = self.request.query_params.get('subject', None)
-        if subject is not None:
-            queryset = queryset.filter(subject=subject)
-        return queryset
 
 class StandardViewSet(viewsets.ModelViewSet):
     queryset = Standard.objects.all()
@@ -79,30 +73,13 @@ class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
-    # def get_queryset(self):
-    #     """
-    #     Optionally restricts the returned topics to a given chapter,
-    #     by filtering against a `chapter` query parameter in the URL.
-    #     """
-    #     queryset = Topic.objects.all()
-    #     chapter_ids = self.request.query_params.get('chapters', None)
-    #     if chapter_ids is not None:
-    #         # Ensure chapter_ids is a list of integers
-    #         chapter_ids = [int(id) for id in chapter_ids.split(',')]
-    #         queryset = queryset.filter(chapter__in=chapter_ids)
-    #     return queryset
     
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
 
-    # def get_queryset(self):
-    #     queryset = Subject.objects.all()
-    #     standard = self.request.query_params.get('standard', None)
-    #     if standard is not None:
-    #         queryset = queryset.filter(standard=standard)
-    #     return queryset
+  
 
 
 class OptionViewSet(viewsets.ModelViewSet):
@@ -212,17 +189,27 @@ def generate_question_paper(request):
         # Extract JSON data from the request with default values
         data = request.data
         standard = data.get('standard', None)
+        subject = data.get('subject', None)
         topics = data.get('topics', [])
         chapters = data.get('chapters', [])
         questions_grid = data.get('questionsGrid', [])
 
+        # print(data)
+        
+        # print(topics)
 
         # Fetch all relevant questions and shuffle them
         questions = list(Question.objects.filter(
-            standard=standard,  
-            topics__in=topics,
+            standard=standard, 
+            subject=subject, 
+            # topics__in=topics,  
             chapter__in=chapters
         ))
+        # print(questions)
+
+
+
+
         shuffle(questions)
 
         selected_questions = []
