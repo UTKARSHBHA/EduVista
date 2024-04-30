@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { StandardsService } from '../services/standards.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-standards',
   standalone: true,
-  imports: [ReactiveFormsModule ,    MatDialogModule, NgSelectModule
+  imports: [ReactiveFormsModule ,MatDialogModule, NgSelectModule
   ],
   templateUrl: './standards.component.html',
   styleUrl: './standards.component.css',
@@ -21,7 +21,8 @@ export class StandardsComponent {
  constructor(
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
-    private subjectsService: SubjectsService
+    private subjectsService: SubjectsService,
+    @Optional() public dialogRef: MatDialogRef<StandardsComponent>
  ) {
     this.standardsForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -47,6 +48,7 @@ export class StandardsComponent {
       (response) => {
         console.log('Standard added:', response);
         this.standardsForm.reset(); // Reset the form
+        this.dialogRef?.close({ refresh: true})
       },
       (error) => {
         console.error('Error:', error);

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { QuestionsService } from '../services/questions.service';
-import {  } from 'ngx-bootstrap';
+import {} from 'ngx-bootstrap';
 import {
   FormArray,
   FormBuilder,
@@ -18,8 +18,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA
-} from "@angular/material/dialog";
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { StandardsComponent } from '../standards/standards.component';
 import { SubjectsComponent } from '../subjects/subjects.component';
 import { TopicsComponent } from '../topics/topics.component';
@@ -29,17 +29,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-    NgSelectModule,
-  ],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, NgSelectModule],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })
 export class QuestionsComponent implements OnInit {
-
   questionForm: FormGroup;
   questions: any[] = [];
   chapters: any[] = [];
@@ -51,7 +45,7 @@ export class QuestionsComponent implements OnInit {
   StandardModal: MatDialogRef<StandardsComponent> | undefined;
   SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
   TopicModal: MatDialogRef<TopicsComponent> | undefined;
-  chaptersModal: MatDialogRef<ChaptersComponent>  | undefined;
+  chaptersModal: MatDialogRef<ChaptersComponent> | undefined;
   filteredSubjects: any[] = [];
   filteredChapters: any[] = [];
   filteredTopics: any[] = [];
@@ -66,7 +60,6 @@ export class QuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private matDialog: MatDialog
   ) {
-
     this.questionForm = this.formBuilder.group({
       question_text: ['', Validators.required],
       type: ['', Validators.required],
@@ -113,7 +106,7 @@ export class QuestionsComponent implements OnInit {
         } else if (selectedType === 'tf') {
           // Clear any existing options
           this.optionsArray.clear();
-        
+
           this.optionsArray.push(
             this.formBuilder.group({
               text: ['True', Validators.required],
@@ -160,7 +153,6 @@ export class QuestionsComponent implements OnInit {
     this.chaptersService.getChapters().subscribe((data: any) => {
       this.chapters = data;
       this.filteredChapters = [...this.chapters];
-
     });
   }
 
@@ -168,7 +160,6 @@ export class QuestionsComponent implements OnInit {
     this.topicsService.getTopics().subscribe((data: any) => {
       this.topics = data;
       this.filteredTopics = [...this.topics];
-
     });
   }
 
@@ -176,7 +167,6 @@ export class QuestionsComponent implements OnInit {
     this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
       this.filteredSubjects = [...this.subjects];
-
     });
   }
 
@@ -184,16 +174,16 @@ export class QuestionsComponent implements OnInit {
 
   onFileSelected(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
-       const file = event.target.files[0];
-       const reader = new FileReader();
-       reader.readAsDataURL(file);
-       reader.onload = () => {
-         this.questionForm.get('image')?.setValue(reader.result);
-       };
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.questionForm.get('image')?.setValue(reader.result);
+      };
     } else {
-       this.questionForm.get('image')?.setValue(null);
+      this.questionForm.get('image')?.setValue(null);
     }
-   }
+  }
 
   // deleteQuestion(questionId: number): void {
   //   if (confirm('Are you sure you want to delete this question?')) {
@@ -224,7 +214,7 @@ export class QuestionsComponent implements OnInit {
           .subscribe({
             next: (data) => {
               console.log('Question updated:', data);
-              // this.loadQuestions(); 
+              // this.loadQuestions();
               this.questionForm.reset(); // Reset the form
               this.selectedFile = null; // Clear the selected file
               this.fileInput.nativeElement.value = ''; // Clear the file input
@@ -279,71 +269,78 @@ export class QuestionsComponent implements OnInit {
 
   openStandardModal() {
     this.StandardModal = this.matDialog.open(StandardsComponent, {
-      height: "90vh",
-      width: "90vw",
-      disableClose: true
-
-    }
-  );
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    });
+    this.StandardModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadStandards();
+      }
+    });
 
   }
   openSubjectModal() {
     this.SubjectModal = this.matDialog.open(SubjectsComponent, {
       disableClose: true,
-      height: "90vh",
-      width: "90vw"
-
+      height: '90vh',
+      width: '90vw',
     });
-
+    
   }
   openTopicModal() {
     this.TopicModal = this.matDialog.open(TopicsComponent, {
       disableClose: true,
-      height: "90vh",
-      width: "90vw"
-
+      height: '90vh',
+      width: '90vw',
     });
-
   }
   openChapterModal() {
     this.chaptersModal = this.matDialog.open(ChaptersComponent, {
       disableClose: true,
-      height: "90vh",
-      width: "90vw"
-
+      height: '90vh',
+      width: '90vw',
     });
-
   }
 
   onStandardSelected(event: any) {
     const standardId = event.id;
     // Find the selected standard from the standards list
-    const selectedStandard = this.standards.find(standard => standard.id === standardId);
+    const selectedStandard = this.standards?.find(
+      (standard) => standard.id === standardId
+    );
     if (selectedStandard && selectedStandard.subjects) {
-        // Filter subjects based on the IDs stored in the selected standard's 'subjects' key
-        this.filteredSubjects = this.subjects.filter(subject => selectedStandard.subjects.includes(subject.id));
+      // Filter subjects based on the IDs stored in the selected standard's 'subjects' key
+      this.filteredSubjects = this.subjects.filter((subject) =>
+        selectedStandard.subjects.includes(subject.id)
+      );
     } else {
-        // If no standard is selected or it has no subjects, reset the filtered subjects list
-        this.filteredSubjects = [];
+      // If no standard is selected or it has no subjects, reset the filtered subjects list
+      this.filteredSubjects = [];
     }
     // Optionally, reset the selected subject, chapter, and topic
     this.questionForm.get('subject')?.setValue(null);
     this.questionForm.get('chapter')?.setValue(null);
     this.questionForm.get('topics')?.setValue(null);
-}
+  }
 
- onSubjectSelected(event: any) {
+  onSubjectSelected(event: any) {
     const subjectId = event.id;
-    this.filteredChapters = this.chapters.filter(chapter => chapter.subject === subjectId);
+    this.filteredChapters = this.chapters.filter(
+      (chapter) => chapter.subject === subjectId
+    );
     // Optionally, reset the selected chapter and topic
     this.questionForm.get('chapter')?.setValue(null);
     this.questionForm.get('topics')?.setValue(null);
- }
+  }
 
- onChapterSelected(event: any) {
+  onChapterSelected(event: any) {
     const chapterId = event.id;
-    this.filteredTopics = this.topics.filter(topic => topic.chapter === chapterId);
+    this.filteredTopics = this.topics.filter(
+      (topic) => topic.chapter === chapterId
+    );
     // Optionally, reset the selected topic
     this.questionForm.get('topics')?.setValue(null);
- }
+  }
 }
