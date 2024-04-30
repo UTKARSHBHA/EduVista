@@ -2,10 +2,11 @@ import { Component, Optional } from '@angular/core';
 import { ChaptersService } from '../services/chapters.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TopicsService } from '../services/topics.service';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SubjectsService } from '../services/subjects.service';
 import { StandardsComponent } from '../standards/standards.component';
+import { SubjectsComponent } from '../subjects/subjects.component';
 
 @Component({
   selector: 'app-chapters',
@@ -19,10 +20,13 @@ export class ChaptersComponent {
   subjects: any[] = []; // Array to hold the list of topics
 
   chapterForm: FormGroup;
+  SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
 
   constructor(private formBuilder: FormBuilder,
      private chaptersService: ChaptersService,
       private subjectsService: SubjectsService,
+      private matDialog: MatDialog,
+
       @Optional() public dialogRef: MatDialogRef<StandardsComponent>
 
     ) { 
@@ -76,5 +80,20 @@ deleteChapter(chapterId: number): void {
           }
       });
   }
+}
+
+openSubjectModal() {
+  this.SubjectModal = this.matDialog.open(SubjectsComponent, {
+    disableClose: true,
+    height: '90vh',
+    width: '90vw',
+  });
+  this.SubjectModal.afterClosed().subscribe((result: any) => {
+    console.log('The dialog was closed', result);
+    if(result && result.refresh){
+      this.loadSubjects();
+    }
+  });
+  
 }
 }

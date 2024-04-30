@@ -8,7 +8,14 @@
          <input id="name" type="text" formControlName="name">
       </div>
       <div class="inputFields">
-         <label for="subject">Subject:</label>
+         <div class="labelButton">
+            <label for="subject">Subject:</label>
+            <i
+              style="font-size: 30px; color: green; cursor: pointer"
+              class="fa-solid fa-circle-plus"
+              (click)="openSubjectModal()"
+            ></i>
+          </div>
          <ng-select [items]="subjects"
                      bindLabel="name"
                      bindValue="id"

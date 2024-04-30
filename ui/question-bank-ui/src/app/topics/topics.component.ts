@@ -8,10 +8,11 @@ import {
 } from '@angular/forms';
 import { TopicsService } from '../services/topics.service';
 import { SubjectsService } from '../services/subjects.service';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ChaptersService } from '../services/chapters.service';
 import { StandardsComponent } from '../standards/standards.component';
+import { ChaptersComponent } from '../chapters/chapters.component';
 
 @Component({
   selector: 'app-topics',
@@ -24,11 +25,14 @@ export class TopicsComponent {
   topics: any = [];
   topicForm: FormGroup;
   chapters: any[] = []; // Array to hold the list of subjects
+  ChapterModal: MatDialogRef<ChaptersComponent>|undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private topicsService: TopicsService,
     private chaptersService: ChaptersService,
+    private matDialog: MatDialog,
+
     @Optional() public dialogRef: MatDialogRef<StandardsComponent>
   ) {
     this.topicForm = this.formBuilder.group({
@@ -77,5 +81,20 @@ export class TopicsComponent {
         },
       });
     }
+  }
+
+  openChapterModal() {
+    this.ChapterModal = this.matDialog.open(ChaptersComponent, {
+      disableClose: true,
+      height: '90vh',
+      width: '90vw',
+    });
+    this.ChapterModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadChapters();
+      }
+    });
+    
   }
 }

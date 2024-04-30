@@ -10,7 +10,14 @@
          <input id="name" type="text" formControlName="name">
       </div>
       <div class="inputFields">
-         <label for="topics">Chapters:</label>
+         <div class="labelButton">
+            <label for="chapter">Chapter:</label>
+            <i
+              style="font-size: 30px; color: green; cursor: pointer"
+              class="fa-solid fa-circle-plus"
+              (click)="openChapterModal()"
+            ></i>
+          </div>
          <ng-select [items]="chapters"
                      bindLabel="name"
                      bindValue="id"
