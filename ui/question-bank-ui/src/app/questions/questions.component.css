@@ -85,6 +85,7 @@
 /* Adjustments for labels */
 .questions-form label {
  font-weight: bold;
+ 
 }
 
 /* Existing styles */
@@ -139,6 +140,7 @@ input[type="file"]{
 
 .questions-form input{
   height: 36px;
+  border: 1px solid #ced4da;
 }
 
 .questionText{
