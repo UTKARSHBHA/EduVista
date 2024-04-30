@@ -220,7 +220,7 @@ def generate_question_paper(request):
         # Fetch all relevant questions and shuffle them
         questions = list(Question.objects.filter(
             standard=standard,  
-            topic__in=topics,
+            topics__in=topics,
             chapter__in=chapters
         ))
         shuffle(questions)
