@@ -69,8 +69,8 @@
                             formControlName="type"
                             >
                 </ng-select>
-                <input type="number" formControlName="marks" placeholder="Marks" (ngModelChange) = "updateTotalMarksAndCount()">
-                <input type="number" formControlName="count" placeholder="Count" (ngModelChange) = "updateTotalMarksAndCount()">
+                <input type="number" formControlName="marks" placeholder="Marks" min="1" (ngModelChange) = "updateTotalMarksAndCount()">
+                <input type="number" formControlName="count" placeholder="Count" min="1" (ngModelChange) = "updateTotalMarksAndCount()">
                 <button (click)="removeQuestionRow(i)" class="btn" >
                     <i class="fas fa-trash"></i>
                 </button>
