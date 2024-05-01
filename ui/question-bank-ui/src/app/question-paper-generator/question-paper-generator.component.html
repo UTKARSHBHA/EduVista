@@ -114,4 +114,26 @@
     <button type="submit" [disabled]="!questionPaperForm.valid" class="btn" >Generate Question Paper</button>
   </form>
   <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
-</div>
+
+
+  <!-- In your question-paper-generator.component.html -->
+<div *ngIf="questionPaper.length > 0" class="questionPaper">
+  <h2>Generated Question Paper</h2>
+
+    <div *ngFor="let question of questionPaper; let i = index" class="question">
+        
+      <p>Question {{ i + 1 }}: {{ question.question_text }}</p>
+      <div class="questionMetaData">
+          
+          <p>Type: {{ question.type }}</p>
+          <p>Marks: {{ question.marks }}</p>
+        </div>
+        <div *ngIf="question.options && question.options.length > 0" class="options">
+          <p>Options:</p>
+          <ul>
+            <li *ngFor="let option of question.options">{{ option.text }}</li>
+          </ul>
+        </div>
+      </div>
+  </div>
+ </div>

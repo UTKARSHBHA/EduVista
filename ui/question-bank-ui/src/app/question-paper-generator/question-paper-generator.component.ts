@@ -41,6 +41,9 @@ export class QuestionPaperGeneratorComponent {
   errorMessage: string | null = null;
   isAllTopicsSelected: boolean = false ;
 
+  questionPaper: any[] = [];
+
+
   constructor(
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
@@ -193,6 +196,8 @@ export class QuestionPaperGeneratorComponent {
         (response) => {
           console.log(response); // Handle the response from the backend
           this.errorMessage = null;
+          this.questionPaper = response.questions;
+
 
           // Additional logic for handling a successful response
         },
