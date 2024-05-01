@@ -61,7 +61,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     
 
 class ChapterViewSet(viewsets.ModelViewSet):
-    # queryset = Chapter.objects.all()
+    queryset = Chapter.objects.all()
     serializer_class = ChapterSerializer
 
 
@@ -202,13 +202,13 @@ def generate_question_paper(request):
         questions = list(Question.objects.filter(
             standard=standard, 
             subject=subject, 
-            # topics__in=topics,  
+            topics__in=topics,  
             chapter__in=chapters
         ))
         # print(questions)
 
 
-
+        print(topics)
 
         shuffle(questions)
 
@@ -234,3 +234,4 @@ def generate_question_paper(request):
         return Response(question_paper)
     else:
         return Response({'error': 'Invalid request method.'}, status=400)
+        

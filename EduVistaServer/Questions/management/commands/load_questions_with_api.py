@@ -81,9 +81,13 @@ class Command(BaseCommand):
                         continue
 
                     # Add topics to the question
-                    for topic_name in topics:
-                        topic, created = Topic.objects.get_or_create(name=topic_name, chapter=chapter)
-                        question.topics.add(topic)
+                    # for topic_name in topics:
+                    #     topic, created = Topic.objects.get_or_create(name=topic_name, chapter=chapter)
+                    #     question.topics.add(topic)
+
+                    topics = [Topic.objects.get_or_create(name=name, chapter = chapter)[0] for name in topics]
+
+                    question.topics.set(topics)
 
                     # Create options for MCQ and TF questions
                     if type in ['mcq', 'tf']:
@@ -94,7 +98,7 @@ class Command(BaseCommand):
                         Option.objects.bulk_create(options)
 
                     # Add the question to the list
-                    questions.append(question)
+                    # questions.append(question)
 
                 self.stdout.write(self.style.SUCCESS('Successfully loaded questions from the Open Trivia Database'))
             else:

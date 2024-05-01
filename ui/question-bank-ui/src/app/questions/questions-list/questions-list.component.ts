@@ -70,6 +70,7 @@ export class QuestionsListComponent implements OnInit {
         this.rowData = data.results;
         this.totalQuestions = data.count;
       });
+    
   }
 
   onPageChange(event: any): void {
