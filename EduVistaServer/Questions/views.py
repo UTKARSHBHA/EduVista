@@ -229,7 +229,8 @@ def generate_question_paper(request):
 
         # Generate the question paper
         question_paper = {
-            'questions': [{'id': question.id, 'question_text': question.question_text, 'type': question.type, 'marks': question.marks} for question in selected_questions]
+            'questions': QuestionSerializer(selected_questions, many=True).data
+
         }
 
         if len(selected_questions) < sum(question_type.get('count', 0) for question_type in questions_grid): 
