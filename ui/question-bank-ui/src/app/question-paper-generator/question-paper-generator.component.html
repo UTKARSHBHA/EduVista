@@ -39,6 +39,8 @@
                       (change)="onChapterSelected($event)"
                       placeholder="Select Chapters">
           </ng-select>
+          <input type="checkbox" (change)="toggleSelectAllChapters($event)"> Select All
+
       </div>
       <!-- Topic -->
       <div *ngIf="filteredTopics.length" class="formField">
@@ -52,6 +54,8 @@
                       [clearable]="false"
                       placeholder="Select Topics">
           </ng-select>
+          <input type="checkbox" (change)="toggleSelectAllTopics($event)"> Select All
+
       </div>
 
       <div class="formField">

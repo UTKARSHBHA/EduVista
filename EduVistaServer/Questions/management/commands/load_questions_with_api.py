@@ -1,3 +1,4 @@
+import time
 from django.core.management.base import BaseCommand
 import requests
 from Questions.models import Question, Standard, Subject, Topic, Chapter, Option
@@ -12,7 +13,9 @@ class Command(BaseCommand):
         url = "https://opentdb.com/api.php?amount=100"
 
         # Send a GET request to the API
-        for i in range(100):
+        for i in range(1000000000000):
+
+            time.sleep(5)
 
             response = requests.get(url)
 
