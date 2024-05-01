@@ -39,6 +39,7 @@ export class QuestionPaperGeneratorComponent {
   questionCount: number = 0;
 
   errorMessage: string | null = null;
+  isAllTopicsSelected: boolean = false ;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -144,16 +145,34 @@ export class QuestionPaperGeneratorComponent {
   }
 
   onSubjectSelected(event: any): void {
+    if(!event){
+
+      this.filteredChapters = []; 
+      this.filteredTopics = []; // Reset filtered topics when subject changes
+      this.questionPaperForm.get('chapters')?.reset();
+      this.questionPaperForm.get('topics')?.reset();
+      return;
+    }
+    // console.log(event);
+    
+
     const subjectId = event.id;
-    console.log(subjectId);
+    // console.log(subjectId);
+    
+    // console.log(this.isAllTopicsSelected);
+    this.isAllTopicsSelected = false;
+    // console.log(this.isAllTopicsSelected);
+  
 
     this.filteredChapters = this.chapters.filter(
       (chapter) => chapter.subject === subjectId
     );
+    console.log(this.filteredChapters);
 
     this.filteredTopics = []; // Reset filtered topics when subject changes
     this.questionPaperForm.get('chapters')?.reset();
     this.questionPaperForm.get('topics')?.reset();
+
   }
 
   onChapterSelected(event: any): void {
@@ -191,8 +210,8 @@ export class QuestionPaperGeneratorComponent {
   }
 
   toggleSelectAllChapters(event: any): void {
-    const isChecked = event.target.checked;
-    if (isChecked) {
+    this.isAllTopicsSelected = event.target.checked; // Update the property based on the checkbox state
+    if (this.isAllTopicsSelected) {
         // Select all chapters
         this.questionPaperForm.get('chapters')?.setValue(this.filteredChapters.map(chapter => chapter.id));
     } else {

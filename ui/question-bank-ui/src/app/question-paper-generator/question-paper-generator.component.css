@@ -45,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .question-row select,
@@ -55,7 +55,7 @@
 
 .question-row, .gridLabel{
     display: flex;
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
     justify-content: space-between;
 }
 
@@ -75,3 +75,14 @@ button:disabled {
     opacity: 0.6; /* Optionally, reduce the opacity to further indicate it's disabled */
 }
 
+.labelSelectAll{
+    display: flex;
+    justify-content: space-between;
+    /* gap: 1rem; */
+}
+.formField {
+    display: flex;
+  
+    flex-direction: column;
+    gap: 1rem;
+  }

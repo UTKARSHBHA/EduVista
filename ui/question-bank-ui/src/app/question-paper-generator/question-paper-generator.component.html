@@ -2,7 +2,7 @@
   <form [formGroup]="questionPaperForm" (ngSubmit)="generateQuestionPaper()">
       <!-- Standard -->
       <div class="formField">
-          <!-- <label for="standard">Standard:</label> -->
+          <label for="standard">Standard:</label>
           <ng-select [items]="standards"
                       bindLabel="name"
                       bindValue="id"
@@ -13,9 +13,9 @@
           </ng-select>
       </div>
       <!-- Subject -->
-      <div class="formField">
+      <!-- <div class="formField"> -->
         <div *ngIf="filteredSubjects.length" class="formField">
-          <!-- <label for="subject">Subject:</label> -->
+          <label for="subject">Subject:</label>
           <ng-select [items]="filteredSubjects"
                       bindLabel="name"
                       bindValue="id"
@@ -25,10 +25,20 @@
           </ng-select>
           
         </div>
-      </div>
+      <!-- </div> -->
       <!-- Chapter -->
       <div *ngIf="filteredChapters.length" class="formField">
-          <!-- <label for="chapter">Chapter:</label> -->
+        <div class="labelSelectAll">
+          <label for="chapter">Chapter:</label>
+          <div>
+
+            <input type="checkbox" [checked]="isAllTopicsSelected" (change)="toggleSelectAllChapters($event)">
+            <span>
+              Select All
+            </span> 
+          </div>
+
+        </div>
           <ng-select [items]="filteredChapters"
                       bindLabel="name"
                       bindValue="id"
@@ -39,12 +49,22 @@
                       (change)="onChapterSelected($event)"
                       placeholder="Select Chapters">
           </ng-select>
-          <input type="checkbox" (change)="toggleSelectAllChapters($event)"> Select All
 
       </div>
       <!-- Topic -->
       <div *ngIf="filteredTopics.length" class="formField">
-          <!-- <label for="topic">Topic:</label> -->
+        <div class="labelSelectAll">
+          <label for="topic">Topic:</label>
+          <div>
+
+            <input type="checkbox"  (change)="toggleSelectAllTopics($event)"> 
+            <span>
+
+              Select All
+            </span>
+          </div>
+
+        </div>
           <ng-select [items]="filteredTopics"
                       bindLabel="name"
                       bindValue="id"
@@ -54,7 +74,6 @@
                       [clearable]="false"
                       placeholder="Select Topics">
           </ng-select>
-          <input type="checkbox" (change)="toggleSelectAllTopics($event)"> Select All
 
       </div>
 

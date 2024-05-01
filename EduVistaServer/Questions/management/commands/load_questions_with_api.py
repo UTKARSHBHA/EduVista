@@ -16,7 +16,7 @@ class Command(BaseCommand):
         for i in range(1000000000000):
 
             time.sleep(5)
-
+            print(i)
             response = requests.get(url)
 
             # Check if the request was successful
@@ -81,8 +81,9 @@ class Command(BaseCommand):
 
                     # If the question was not created (meaning it already existed), skip to the next iteration
                     if not created:
+                        print('not creaated')
                         continue
-
+                    print('created')
                     # Add topics to the question
                     # for topic_name in topics:
                     #     topic, created = Topic.objects.get_or_create(name=topic_name, chapter=chapter)
