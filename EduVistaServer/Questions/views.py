@@ -42,6 +42,7 @@ from random import shuffle
 
 from rest_framework.pagination import PageNumberPagination
 
+from django.db.models import Q
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -199,16 +200,20 @@ def generate_question_paper(request):
         # print(topics)
 
         # Fetch all relevant questions and shuffle them
-        questions = list(Question.objects.filter(
-            standard=standard, 
-            subject=subject, 
-            topics__in=topics,  
-            chapter__in=chapters
-        ))
+        
+        query = Q(standard=standard, subject=subject)
+        if topics: # Only add topic filter if topics list is not empty
+            query &= Q(topics__in=topics)
+        if chapters: 
+            query &= Q(chapter__in=chapters)
+
+
+
+        questions = list(Question.objects.filter(query))
         # print(questions)
 
 
-        print(topics)
+        # print(topics)
 
         shuffle(questions)
 

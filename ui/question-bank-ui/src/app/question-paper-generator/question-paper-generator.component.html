@@ -85,6 +85,7 @@
         <p>Total Marks: {{ totalMarks }}</p>
         <p>Question Count: {{ questionCount }}</p>
     </div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
     <!-- Submit Button -->
     <button type="submit" [disabled]="!questionPaperForm.valid" class="btn" >Generate Question Paper</button>

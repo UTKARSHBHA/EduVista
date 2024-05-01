@@ -38,6 +38,9 @@ export class QuestionPaperGeneratorComponent {
  totalMarks: number = 0; // Initialize total marks
  questionCount: number = 0;
 
+ errorMessage: string | null = null;
+
+
  constructor(
     private formBuilder: FormBuilder,
     private standardsService: StandardsService,
@@ -171,16 +174,21 @@ removeQuestionRow(index: number): void {
       this.questionPaperService.generateQuestionPaper(formValue).subscribe(
         (response) => {
           console.log(response); // Handle the response from the backend
+          this.errorMessage = null;
+
           // Additional logic for handling a successful response
         },
         (error) => {
           console.error('Error:', error);
           // Handle the error, e.g., by setting an error message
+          this.errorMessage = error.error.error;
         }
       );
     } else {
       // Optionally, handle the case where the form is invalid
       console.error('Form is invalid');
+      // this.errorMessage = 'Please fill out all required fields correctly.';
+
     }
  }
 }
