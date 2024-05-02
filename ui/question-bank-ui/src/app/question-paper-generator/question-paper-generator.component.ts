@@ -17,9 +17,9 @@ import { ChaptersService } from '../services/chapters.service';
 import { QuestionPaperService } from '../service/question-paper.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
-import domtoimage from 'dom-to-image';
+
+
+
 @Component({
   selector: 'app-question-paper-generator',
   standalone: true,
@@ -244,39 +244,20 @@ export class QuestionPaperGeneratorComponent {
   }
 
 
-  saveQuestionPaper(): void {
-    const element = document.getElementById('questionPaper');
-    if(element){
-
-      domtoimage.toPng(element)
-      .then((dataUrl) => {
-        const img = new Image();
-        img.src = dataUrl;
-        img.onload = () => {
-          const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of portrait orientation
-          const imgWidth = 210; // Width of A4 in mm
-          const imgHeight = img.height * imgWidth / img.width;
-          const pageHeight = 295; // Height of A4 in mm
-
-          // Calculate the number of pages needed
-          const numPages = Math.ceil(imgHeight / pageHeight);
-
-          for (let i = 0; i < numPages; i++) {
-            // Calculate the position of the image on the page
-            const yPos = -i * pageHeight;
-            // Add a new page if not the first page
-            if (i > 0) {
-              pdf.addPage();
-            }
-            // Add the image to the PDF
-            pdf.addImage(img, 'PNG', 0, yPos, imgWidth, imgHeight);
-          }
-
-          pdf.save("question_paper.pdf");
-        };
-      })
-      .catch((error) => {
-        console.error('oops, something went wrong!', error);
-      });
+  
+printQuestionPaper(): void {
+  const printContent = document.getElementById('questionPaper')?.innerHTML;
+  const originalContent = document.body.innerHTML;
+ 
+  if (!printContent) {
+     alert('Nothing to print.');
+     return;
+  }
+ 
+  document.body.innerHTML = printContent;
+ 
+  window.print();
+ 
+  document.body.innerHTML = originalContent;
  }
-}}
+}

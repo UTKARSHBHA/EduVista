@@ -137,6 +137,7 @@
   <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
 
   <!-- In your question-paper-generator.component.html -->
+  
   <div *ngIf="questionPaper.length > 0" id="questionPaper">
     <h2>Question Paper</h2>
 
@@ -157,5 +158,7 @@
       </div>
     </div>
   </div>
-  <button (click)="saveQuestionPaper()">Save as PDF</button>
+
+    <button (click)="printQuestionPaper()">Print Question Paper</button>
+
 </div>
