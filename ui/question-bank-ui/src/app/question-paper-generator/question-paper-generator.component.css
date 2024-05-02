@@ -112,3 +112,26 @@ button:disabled {
 .options{
     padding-left: 2rem;
 }
+
+.print-btn {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding around the text */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block for padding */
+    font-size: 16px; /* Increase font size for better readability */
+    margin: 1rem 0; /* Add some margin */
+    cursor: pointer; /* Change cursor to pointer when hovering */
+    border-radius: 4px; /* Rounded corners for a softer look */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+   }
+   
+   .print-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+   }
+   
+   .print-btn i {
+    margin-right: 5px; /* Add some space between the icon and the text */
+   }

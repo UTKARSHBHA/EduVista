@@ -137,9 +137,13 @@
   <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
 
   <!-- In your question-paper-generator.component.html -->
-  
-  <div *ngIf="questionPaper.length > 0" id="questionPaper">
-    <h2>Question Paper</h2>
+  @if(questionPaper.length){
+    <button (click)="printQuestionPaper()" class="print-btn">
+      <i class="fas fa-print"></i> Print Question Paper
+     </button>  
+
+    <div *ngIf="questionPaper.length > 0" id="questionPaper">
+      <h2>Question Paper</h2>
 
     <div *ngFor="let question of questionPaper; let i = index" class="question" >
       <p>Question {{ i + 1 }}: {{ question.question_text }}</p>
@@ -147,7 +151,7 @@
         <p>Type:{{ question.type }}</p>
         <p>Marks:{{ question.marks }}</p>
       </div>
-      <div
+      <div  
         *ngIf="question.options && question.options.length > 0"
         class="options"
       >
@@ -159,6 +163,7 @@
     </div>
   </div>
 
-    <button (click)="printQuestionPaper()">Print Question Paper</button>
+  
+  }
 
 </div>
