@@ -200,6 +200,7 @@ export class QuestionPaperGeneratorComponent {
           console.log(response); // Handle the response from the backend
           this.errorMessage = null;
           this.questionPaper = response.questions;
+          // this.questionPaperForm.reset();
 
 
           // Additional logic for handling a successful response
@@ -244,20 +245,34 @@ export class QuestionPaperGeneratorComponent {
   }
 
 
-  
+
+// printQuestionPaper(): void {
+//   const printContent = document.getElementById('questionPaper')?.innerHTML;
+//   const originalContent = document.body.innerHTML;
+ 
+//   if (!printContent) {
+//      alert('Nothing to print.');
+//      return;
+//   }
+ 
+//   document.body.innerHTML = printContent;
+ 
+//   window.print();
+ 
+//   document.body.innerHTML = originalContent;
+//  }
+
 printQuestionPaper(): void {
   const printContent = document.getElementById('questionPaper')?.innerHTML;
-  const originalContent = document.body.innerHTML;
- 
-  if (!printContent) {
-     alert('Nothing to print.');
-     return;
+  if(printContent){
+
+    const printWindow = window.open('', '_blank');
+    printWindow?.document.open();
+    printWindow?.document.write('<html><head><title>Print</title></head><body>');
+    printWindow?.document.write(printContent);
+    printWindow?.document.write('</body></html>');
+    printWindow?.document.close();
+    printWindow?.print();
   }
- 
-  document.body.innerHTML = printContent;
- 
-  window.print();
- 
-  document.body.innerHTML = originalContent;
  }
 }
