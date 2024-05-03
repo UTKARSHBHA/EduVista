@@ -47,7 +47,7 @@ class Question(models.Model):
     standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     marks = models.IntegerField()
-    topics = models.ManyToManyField(Topic, related_name='questions', blank=True)
+    topics = models.ManyToManyField(Topic, related_name='questions')
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     question_text = models.TextField()
     image = models.ImageField(upload_to='questions-images/', blank=True, null=True)

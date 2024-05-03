@@ -58,7 +58,8 @@ export class QuestionsComponent implements OnInit {
     private subjectsService: SubjectsService,
     private standardsService: StandardsService,
     private route: ActivatedRoute,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private router: Router
   ) {
     this.questionForm = this.formBuilder.group({
       question_text: ['', Validators.required],
@@ -67,7 +68,7 @@ export class QuestionsComponent implements OnInit {
       standard: ['', Validators.required],
       subject: ['', Validators.required],
       marks: ['', Validators.required],
-      topics: [[]],
+      topics: [[], Validators.required],
       chapter: ['', Validators.required],
       image: [null],
       options: this.formBuilder.array([]),
@@ -106,6 +107,7 @@ export class QuestionsComponent implements OnInit {
           console.log(question);
           // Assuming you have a method to set the options form array based on the question's options
           this.setOptionsFormArray(question.options);
+
         });
     } else {
       this.questionForm.get('type')?.valueChanges.subscribe((selectedType) => {
@@ -230,6 +232,9 @@ export class QuestionsComponent implements OnInit {
               this.questionForm.reset(); // Reset the form
               this.selectedFile = null; // Clear the selected file
               this.fileInput.nativeElement.value = ''; // Clear the file input
+              alert("Successfully updated the question");
+              this.router.navigate(['/questions']);
+
             },
             error: (error) => {
               console.error('Error updating question', error);
@@ -245,6 +250,7 @@ export class QuestionsComponent implements OnInit {
             this.questionForm.reset();
             this.selectedFile = null;
             this.fileInput.nativeElement.value = '';
+            alert("Successfully added question");
           },
           error: (error) => {
             console.error('Error adding question', error);
