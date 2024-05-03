@@ -135,3 +135,38 @@ button:disabled {
    .print-btn i {
     margin-right: 5px; /* Add some space between the icon and the text */
    }
+
+
+
+   /* @media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: red;
+    }
+
+    #questionPaper {
+        width: 100%;
+        padding: 2rem;
+        box-shadow: none;
+    }
+
+    .question {
+        border: none;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        page-break-inside: avoid;
+    }
+
+    .questionMetaData {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .options {
+        padding-left: 2rem;
+    }
+
+  
+} */
