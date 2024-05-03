@@ -43,7 +43,7 @@
           bindLabel="name"
           bindValue="id"
           formControlName="standard"
-          (change)="onStandardSelected($event)"
+          (change)="onStandardSelected($event.id)"
           placeholder="Select Standard"
 
         >
@@ -63,9 +63,8 @@
           bindLabel="name"
           bindValue="id"
           formControlName="subject"
-          (change)="onSubjectSelected($event)"
+          (change)="onSubjectSelected($event.id)"
           placeholder="Select Subject"
-          [disabled]="!filteredSubjects.length"
 
         >
         </ng-select>
@@ -84,9 +83,8 @@
           bindLabel="name"
           bindValue="id"
           formControlName="chapter"
-          (change)="onChapterSelected($event)"
+          (change)="onChapterSelected($event.id)"
           placeholder="Select Chapter"
-          [disabled]="!filteredChapters.length"
 
         >
         </ng-select>
@@ -107,7 +105,6 @@
           [multiple]="true"
           formControlName="topics"
           placeholder="Select Topics"
-          [disabled]="!filteredTopics.length"
 
         >
         </ng-select>

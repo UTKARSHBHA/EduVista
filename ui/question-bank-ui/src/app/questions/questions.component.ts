@@ -72,7 +72,7 @@ export class QuestionsComponent implements OnInit {
       image: [null],
       options: this.formBuilder.array([]),
     });
-  }
+  } 
 
   ngOnInit(): void {
     this.loadChapters();
@@ -87,10 +87,22 @@ export class QuestionsComponent implements OnInit {
     this.questionId = this.route.snapshot.paramMap.get('id');
 
     if (this.questionId) {
+      // this.questionForm.get('subject')?.enable();
+      // this.questionForm.get('standard')?.enable();
+      // this.questionForm.get('topics')?.enable();
+      // this.questionForm.get('chapter')?.enable();
+
+
       this.questionsService
         .getQuestionById(+this.questionId)
         .subscribe((question) => {
+          console.log(question);
+          this.onStandardSelected(question.standard);
+          this.onSubjectSelected(question.subject);
+          this.onChapterSelected(question.chapter);
           this.questionForm.patchValue(question);
+          
+
           console.log(question);
           // Assuming you have a method to set the options form array based on the question's options
           this.setOptionsFormArray(question.options);
@@ -322,8 +334,8 @@ export class QuestionsComponent implements OnInit {
     });
   }
 
-  onStandardSelected(event: any) {
-    const standardId = event.id;
+  onStandardSelected(standardId: any) {
+    // const standardId = event.id;
     // Find the selected standard from the standards list
     const selectedStandard = this.standards?.find(
       (standard) => standard.id === standardId
@@ -345,8 +357,8 @@ export class QuestionsComponent implements OnInit {
     this.filteredTopics = [];
   }
 
-  onSubjectSelected(event: any) {
-    const subjectId = event.id;
+  onSubjectSelected(subjectId: any) {
+    // const subjectId = event.id;
     this.filteredChapters = this.chapters.filter(
       (chapter) => chapter.subject === subjectId
     );
@@ -356,8 +368,8 @@ export class QuestionsComponent implements OnInit {
     this.filteredTopics = [];
   }
 
-  onChapterSelected(event: any) {
-    const chapterId = event.id;
+  onChapterSelected(chapterId: any) {
+    // const chapterId = event.id;
     this.filteredTopics = this.topics.filter(
       (topic) => topic.chapter === chapterId
     );

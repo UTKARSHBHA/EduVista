@@ -81,6 +81,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         topics = validated_data.pop('topics', [])
 
         # Update question fields
+        # if(topics):
         instance.topics.set(topics)
 
 
