@@ -18,12 +18,15 @@ import { QuestionPaperService } from '../service/question-paper.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
   selector: 'app-question-paper-generator',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, FormsModule,    DragDropModule,
+  ],
   templateUrl: './question-paper-generator.component.html',
   styleUrl: './question-paper-generator.component.css',
 })
@@ -320,4 +323,20 @@ printQuestionPaper(): void {
      printWindow?.print();
   }
  }
+ drop(event: CdkDragDrop<string[]>) {
+  // Get the current form array
+  const questionsGrid = this.questionPaperForm.get('questionsGrid') as FormArray;
+ 
+  // Move the item in the form array to reflect the new order
+  moveItemInArray(questionsGrid.controls, event.previousIndex, event.currentIndex);
+ 
+  // Create a new form array with the items in the new order
+  const newQuestionsGrid = new FormArray(questionsGrid.controls);
+ 
+  // Replace the old form array with the new one
+  this.questionPaperForm.setControl('questionsGrid', newQuestionsGrid);
+ }
+
+
+
 }

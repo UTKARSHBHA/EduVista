@@ -3,28 +3,16 @@
     <!-- Standard -->
     <div class="formField">
       <label for="standard">Standard:</label>
-      <ng-select
-        [items]="standards"
-        bindLabel="name"
-        bindValue="id"
-        formControlName="standard"
-        (change)="onStandardSelected($event)"
-        placeholder="Select Standard"
-      >
+      <ng-select [items]="standards" bindLabel="name" bindValue="id" formControlName="standard"
+        (change)="onStandardSelected($event)" placeholder="Select Standard">
       </ng-select>
     </div>
     <!-- Subject -->
     <!-- <div class="formField"> -->
     <div *ngIf="filteredSubjects.length" class="formField">
       <label for="subject">Subject:</label>
-      <ng-select
-        [items]="filteredSubjects"
-        bindLabel="name"
-        bindValue="id"
-        formControlName="subject"
-        (change)="onSubjectSelected($event)"
-        placeholder="Select Subject"
-      >
+      <ng-select [items]="filteredSubjects" bindLabel="name" bindValue="id" formControlName="subject"
+        (change)="onSubjectSelected($event)" placeholder="Select Subject">
       </ng-select>
     </div>
     <!-- </div> -->
@@ -33,25 +21,12 @@
       <div class="labelSelectAll">
         <label for="chapter">Chapter:</label>
         <div>
-          <input
-            type="checkbox"
-            [checked]="isAllTopicsSelected"
-            (change)="toggleSelectAllChapters($event)"
-          />
+          <input type="checkbox" [checked]="isAllTopicsSelected" (change)="toggleSelectAllChapters($event)" />
           <span> Select All </span>
         </div>
       </div>
-      <ng-select
-        [items]="filteredChapters"
-        bindLabel="name"
-        bindValue="id"
-        formControlName="chapters"
-        [multiple]="true"
-        [closeOnSelect]="false"
-        [clearable]="false"
-        (change)="onChapterSelected($event)"
-        placeholder="Select Chapters"
-      >
+      <ng-select [items]="filteredChapters" bindLabel="name" bindValue="id" formControlName="chapters" [multiple]="true"
+        [closeOnSelect]="false" [clearable]="false" (change)="onChapterSelected($event)" placeholder="Select Chapters">
       </ng-select>
     </div>
     <!-- Topic -->
@@ -63,16 +38,8 @@
           <span> Select All </span>
         </div>
       </div>
-      <ng-select
-        [items]="filteredTopics"
-        bindLabel="name"
-        bindValue="id"
-        formControlName="topics"
-        [multiple]="true"
-        [closeOnSelect]="false"
-        [clearable]="false"
-        placeholder="Select Topics"
-      >
+      <ng-select [items]="filteredTopics" bindLabel="name" bindValue="id" formControlName="topics" [multiple]="true"
+        [closeOnSelect]="false" [clearable]="false" placeholder="Select Topics">
       </ng-select>
     </div>
 
@@ -83,42 +50,27 @@
         <p>Count</p>
         <p></p>
       </div>
-      <div
-        formArrayName="questionsGrid"
-        *ngFor="let question of questionsGrid.controls; let i = index"
-      >
-        <div [formGroupName]="i" class="question-row">
-          <ng-select
-            [items]="['mcq', 'tf', 'descriptive']"
-            bindLabel="name"
-            bindValue="id"
-            formControlName="type"
-          >
-          </ng-select>
-          <input
-            type="number"
-            formControlName="marks"
-            placeholder="Marks"
-            min="1"
-            (ngModelChange)="updateTotalMarksAndCount()"
-          />
-          <input
-            type="number"
-            formControlName="count"
-            placeholder="Count"
-            min="1"
-            (ngModelChange)="updateTotalMarksAndCount()"
-          />
-          <button (click)="removeQuestionRow(i)" class="btn">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </div>
-      <button
-        (click)="addQuestionRow()"
-        class="btn"
-        [disabled]="questionsGrid.invalid"
-      >
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" formArrayName="questionsGrid" class="question-grid">
+
+        @for(question of questionsGrid.controls; track question ; let i = $index){
+
+          <!-- <div formArrayName="questionsGrid" *ngFor="let question of questionsGrid.controls; let i = index" cdkDropList (cdkDropListDropped)="drop($event)" class="question-grid"> -->
+            <div [formGroupName]="i" class="question-row" cdkDrag>
+              <ng-select [items]="['mcq', 'tf', 'descriptive']" bindLabel="name" bindValue="id" formControlName="type">
+              </ng-select>
+              <input type="number" formControlName="marks" placeholder="Marks" min="1"
+              (ngModelChange)="updateTotalMarksAndCount()" />
+              <input type="number" formControlName="count" placeholder="Count" min="1"
+              (ngModelChange)="updateTotalMarksAndCount()" />
+              <button (click)="removeQuestionRow(i)" class="btn">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          }
+          </div>
+          <!-- </div> -->
+
+      <button (click)="addQuestionRow()" class="btn" [disabled]="questionsGrid.invalid">
         <i class="fas fa-plus"></i> Add Question Type
       </button>
     </div>
@@ -138,23 +90,20 @@
 
   <!-- In your question-paper-generator.component.html -->
   @if(questionPaper.length){
-    <button (click)="printQuestionPaper()" class="print-btn">
-      <i class="fas fa-print"></i> Print Question Paper
-     </button>  
+  <button (click)="printQuestionPaper()" class="print-btn">
+    <i class="fas fa-print"></i> Print Question Paper
+  </button>
 
-    <div *ngIf="questionPaper.length > 0" id="questionPaper">
-      <h2>Question Paper</h2>
+  <div *ngIf="questionPaper.length > 0" id="questionPaper">
+    <h2>Question Paper</h2>
 
-    <div *ngFor="let question of questionPaper; let i = index" class="question" >
+    <div *ngFor="let question of questionPaper; let i = index" class="question">
       <p>Question {{ i + 1 }}: {{ question.question_text }}</p>
-      <div class="questionMetaData" >
+      <div class="questionMetaData">
         <p>Type:{{ question.type }}</p>
         <p>Marks:{{ question.marks }}</p>
       </div>
-      <div  
-        *ngIf="question.options && question.options.length > 0"
-        class="options"
-      >
+      <div *ngIf="question.options && question.options.length > 0" class="options">
         <p>Options:</p>
         <ol type="A">
           <li *ngFor="let option of question.options">{{ option.text }}</li>
@@ -163,7 +112,5 @@
     </div>
   </div>
 
-  
   }
-
 </div>
