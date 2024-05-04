@@ -151,13 +151,21 @@
     <!-- In your question-paper-generator.component.html -->
   </div>
 
-  @if(questionPaper.length){
-  <button (click)="printQuestionPaper()" class="print-btn no-print">
-    <i class="fas fa-print"></i> Print Question Paper
-  </button>
-  <button (click)="saveQuestionPaper()" class="btn">Save Question Paper</button>
+  <!-- @if(questionPaper.length){ -->
+    
   <div *ngIf="questionPaper.length > 0" id="questionPaper">
-    <h2>Question Paper</h2>
+    <div class="questionPaperHeader">
+      <h2>Question Paper</h2>
+      <div class="questionPaperButtonContainer">
+
+        <button (click)="printQuestionPaper()" class="print-btn no-print">
+          <i class="fas fa-print"></i> 
+        </button>
+        <button (click)="saveQuestionPaper()" class="btn">
+          <i class="fas fa-save"></i>
+        </button>
+      </div>
+    </div>
 
     <div *ngFor="let question of questionPaper; let i = index" class="question">
       <p>Question {{ i + 1 }}: {{ question.question_text }}</p>
@@ -177,5 +185,5 @@
     </div>
   </div>
 
-  }
+  <!-- } -->
 </div>

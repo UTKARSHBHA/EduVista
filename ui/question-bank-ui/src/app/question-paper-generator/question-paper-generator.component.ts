@@ -297,6 +297,7 @@ export class QuestionPaperGeneratorComponent {
    
        this.questionPaperService.saveQuestionPaper(questionPaperData).subscribe(response => {
          console.log('Question paper saved successfully');
+         alert("Question paper saved successfully in the database")
        }, error => {
          console.error('Error saving question paper', error);
        });
