@@ -24,7 +24,7 @@ router.register(r'question-papers', QuestionPaperViewSet, basename='question_pap
 
 urlpatterns = [
     
-    path('', include(router.urls)),
+    path('', include(router.urls)), 
     
     path('signup/', SignupView.as_view(), name='signup'),
 

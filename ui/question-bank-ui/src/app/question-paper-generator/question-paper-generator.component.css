@@ -136,7 +136,16 @@ button:disabled {
     margin-right: 5px; /* Add some space between the icon and the text */
    }
 
-
+   .questionPaperHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+   }
+   .questionPaperButtonContainer{
+    display: flex;
+    gap: 1rem;
+   }
 
    @media print {
          body {
@@ -186,13 +195,3 @@ button:disabled {
    }
 
  
-   .questionPaperHeader{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-   }
-   .questionPaperButtonContainer{
-    display: flex;
-    gap: 1rem;
-   }

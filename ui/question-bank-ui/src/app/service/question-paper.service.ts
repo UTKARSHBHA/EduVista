@@ -26,4 +26,9 @@ deleteQuestionPaper(id: number): Observable<any> {
   const url = `${'http://localhost:8000/api/question-papers/'}${id}/`;
   return this.http.delete<any>(url);
 }
+
+getQuestionPaperById(id: string): Observable<any> {
+  const url = `${'http://localhost:8000/api/question-papers/'}${id}/`;
+  return this.http.get<any>(url);
+}
  }

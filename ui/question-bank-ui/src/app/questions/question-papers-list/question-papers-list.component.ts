@@ -1,44 +1,54 @@
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
-import { QuestionPaperService } from '../../service/question-paper.service'; 
+import { QuestionPaperService } from '../../service/question-paper.service';
 import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
+import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question-papers-list',
   standalone: true,
   imports: [AgGridAngular],
   templateUrl: './question-papers-list.component.html',
-  styleUrl: './question-papers-list.component.css'
+  styleUrl: './question-papers-list.component.css',
 })
 export class QuestionPapersListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-     { headerName: 'ID', field: 'id' },
+    { headerName: 'ID', field: 'id' },
     //  { headerName: 'Title', field: 'title', filter: true },
-     { headerName: 'Standard', field: 'standard_name', filter: true },
-     { headerName: 'Subject', field: 'subject_name', filter: true },
-     { headerName: 'Chapter', field: 'chapter_name', filter: true },
-     { headerName: 'Topics', field: 'topics_name', filter: true },
-     { headerName: 'Total Marks', field: 'total_marks', filter: true },
-     { headerName: 'Question Count', field: 'question_count', filter: true },
-     {
+    { headerName: 'Standard', field: 'standard_name', filter: true },
+    { headerName: 'Subject', field: 'subject_name', filter: true },
+    { headerName: 'Chapter', field: 'chapter_name', filter: true },
+    { headerName: 'Topics', field: 'topics_name', filter: true },
+    { headerName: 'Total Marks', field: 'total_marks', filter: true },
+    { headerName: 'Question Count', field: 'question_count', filter: true },
+    {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
     },
+    {
+      field: 'View',
+      cellRenderer: ViewButtonRendererComponent,
+      onCellClicked: this.view.bind(this),
+    },
   ];
- 
-  constructor(private questionPaperService: QuestionPaperService) {}
- 
+
+  constructor(
+    private questionPaperService: QuestionPaperService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-     this.loadQuestionPapers();
+    this.loadQuestionPapers();
   }
- 
+
   loadQuestionPapers(): void {
-     this.questionPaperService.getQuestionPapers().subscribe((data) => {
-       this.rowData = data;
-     });
+    this.questionPaperService.getQuestionPapers().subscribe((data) => {
+      this.rowData = data;
+    });
   }
   delete(e: any) {
     this.deleteQuestionPaper(e.data.id);
@@ -56,4 +66,8 @@ export class QuestionPapersListComponent implements OnInit {
       });
     }
   }
- }
+  view(e: any) {
+    console.log('veiw clicked');
+    this.router.navigate(['/question-paper-view', e.data.id]);
+  }
+}

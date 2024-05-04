@@ -80,6 +80,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'question-paper-view/:id',
+    loadComponent: () =>
+      // ui/question-bank-ui/src/app/question-papers/question-paper-view/question-paper-view.component.ts
+      import('./question-papers/question-paper-view/question-paper-view.component').then(
+        (m) => m.QuestionPaperViewComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'questions/:id',
     loadComponent: () =>
       import('./questions/questions.component').then(
