@@ -62,6 +62,14 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'question-papers-list',
+    loadComponent: () =>
+      import('./questions/question-papers-list/question-papers-list.component').then(
+        (m) => m.QuestionPapersListComponent
+      ),
+    canActivate: [AuthGuard],
+  },
   
   {
     path: 'question-view/:id',

@@ -18,4 +18,7 @@ export class QuestionPaperService {
   saveQuestionPaper(questionPaperData: any): Observable<any> {
     return this.http.post<any>('http://localhost:8000/api/question-papers/', questionPaperData);
  }
+ getQuestionPapers(): Observable<any> {
+  return this.http.get<any>('http://localhost:8000/api/question-papers/');
+}
  }

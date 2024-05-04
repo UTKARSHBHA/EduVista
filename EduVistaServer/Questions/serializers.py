@@ -144,6 +144,23 @@ class SignupSerializer(serializers.ModelSerializer):
 
 
 class QuestionPaperSerializer(serializers.ModelSerializer):
+    standard_name = serializers.SerializerMethodField()
+    subject_name = serializers.SerializerMethodField()
+    chapter_name = serializers.SerializerMethodField()
+    topics_name = serializers.SerializerMethodField()
+
     class Meta:
         model = QuestionPaper
-        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count']
+        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name' ]
+
+    def get_standard_name(self, obj):
+        return obj.standard.name if obj.standard else None
+
+    def get_subject_name(self, obj):
+        return obj.subject.name if obj.subject else None
+
+    def get_chapter_name(self, obj):
+        return obj.chapter.name if obj.chapter else None
+
+    def get_topics_name(self, obj):
+        return ', '.join([topic.name for topic in obj.topics.all()]) if obj.topics.exists() else None

@@ -292,7 +292,9 @@ export class QuestionPaperGeneratorComponent {
          subject: formValue.subject,
          topics: formValue.topics ?? [],
          chapters: formValue.chapters,
-         question_paper_json: JSON.stringify(this.questionPaper)
+         question_paper_json: JSON.stringify(this.questionPaper),
+         total_marks: this.totalMarks,
+         question_count: this.questionCount
        };
    
        this.questionPaperService.saveQuestionPaper(questionPaperData).subscribe(response => {
