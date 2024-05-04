@@ -21,4 +21,9 @@ export class QuestionPaperService {
  getQuestionPapers(): Observable<any> {
   return this.http.get<any>('http://localhost:8000/api/question-papers/');
 }
+
+deleteQuestionPaper(id: number): Observable<any> {
+  const url = `${'http://localhost:8000/api/question-papers/'}${id}/`;
+  return this.http.delete<any>(url);
+}
  }
