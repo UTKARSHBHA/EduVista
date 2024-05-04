@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
+from django.contrib.postgres.fields import JSONField
 
 
 class Subject(models.Model):
@@ -72,3 +73,14 @@ class PasswordResetToken(models.Model):
         if not self.token:
             self.token = get_random_string(length=32)
         return super().save(*args, **kwargs)
+    
+
+class QuestionPaper(models.Model):
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=True, null=True)
+    topics = models.ManyToManyField(Topic, blank=True)
+    question_paper_json = models.JSONField()
+
+    def __str__(self):
+        return f"{self.standard.name} - {self.subject.name} - {self.chapter.name if self.chapter else 'No Chapter'}"

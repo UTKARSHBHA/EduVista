@@ -1,10 +1,10 @@
 from rest_framework import viewsets, status
 
 # Import your serializers
-from .serializers import QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
+from .serializers import QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
 
 # Import your models
-from .models import Question, Chapter, Subject, Standard, Topic, Option
+from .models import Question, Chapter, QuestionPaper, Subject, Standard, Topic, Option
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -241,3 +241,8 @@ def generate_question_paper(request):
     else:
         return Response({'error': 'Invalid request method.'}, status=400)
         
+
+
+class QuestionPaperViewSet(viewsets.ModelViewSet):
+    queryset = QuestionPaper.objects.all()
+    serializer_class = QuestionPaperSerializer

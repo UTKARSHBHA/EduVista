@@ -1,102 +1,161 @@
 <div class="form-container">
-<div class="no-print">
-
-  <form [formGroup]="questionPaperForm" (ngSubmit)="generateQuestionPaper()">
-    <!-- Standard -->
-    <div class="formField">
-      <label for="standard">Standard:</label>
-      <ng-select [items]="standards" bindLabel="name" bindValue="id" formControlName="standard"
-        (change)="onStandardSelected($event)" placeholder="Select Standard">
-      </ng-select>
-    </div>
-    <!-- Subject -->
-    <!-- <div class="formField"> -->
-    <div *ngIf="filteredSubjects.length" class="formField">
-      <label for="subject">Subject:</label>
-      <ng-select [items]="filteredSubjects" bindLabel="name" bindValue="id" formControlName="subject"
-        (change)="onSubjectSelected($event)" placeholder="Select Subject">
-      </ng-select>
-    </div>
-    <!-- </div> -->
-    <!-- Chapter -->
-    <div *ngIf="filteredChapters.length" class="formField">
-      <div class="labelSelectAll">
-        <label for="chapter">Chapter:</label>
-        <div>
-          <input type="checkbox" [checked]="isAllTopicsSelected" (change)="toggleSelectAllChapters($event)" />
-          <span> Select All </span>
+  <div class="no-print">
+    <form [formGroup]="questionPaperForm" (ngSubmit)="generateQuestionPaper()">
+      <!-- Standard -->
+      <div class="formField">
+        <label for="standard">Standard:</label>
+        <ng-select
+          [items]="standards"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="standard"
+          (change)="onStandardSelected($event)"
+          placeholder="Select Standard"
+        >
+        </ng-select>
+      </div>
+      <!-- Subject -->
+      <!-- <div class="formField"> -->
+      <div *ngIf="filteredSubjects.length" class="formField">
+        <label for="subject">Subject:</label>
+        <ng-select
+          [items]="filteredSubjects"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="subject"
+          (change)="onSubjectSelected($event)"
+          placeholder="Select Subject"
+        >
+        </ng-select>
+      </div>
+      <!-- </div> -->
+      <!-- Chapter -->
+      <div *ngIf="filteredChapters.length" class="formField">
+        <div class="labelSelectAll">
+          <label for="chapter">Chapter:</label>
+          <div>
+            <input
+              type="checkbox"
+              [checked]="isAllTopicsSelected"
+              (change)="toggleSelectAllChapters($event)"
+            />
+            <span> Select All </span>
+          </div>
         </div>
+        <ng-select
+          [items]="filteredChapters"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="chapters"
+          [multiple]="true"
+          [closeOnSelect]="false"
+          [clearable]="false"
+          (change)="onChapterSelected($event)"
+          placeholder="Select Chapters"
+        >
+        </ng-select>
       </div>
-      <ng-select [items]="filteredChapters" bindLabel="name" bindValue="id" formControlName="chapters" [multiple]="true"
-        [closeOnSelect]="false" [clearable]="false" (change)="onChapterSelected($event)" placeholder="Select Chapters">
-      </ng-select>
-    </div>
-    <!-- Topic -->
-    <div *ngIf="filteredTopics.length" class="formField">
-      <div class="labelSelectAll">
-        <label for="topic">Topic:</label>
-        <div>
-          <input type="checkbox" (change)="toggleSelectAllTopics($event)" />
-          <span> Select All </span>
+      <!-- Topic -->
+      <div *ngIf="filteredTopics.length" class="formField">
+        <div class="labelSelectAll">
+          <label for="topic">Topic:</label>
+          <div>
+            <input type="checkbox" (change)="toggleSelectAllTopics($event)" />
+            <span> Select All </span>
+          </div>
         </div>
+        <ng-select
+          [items]="filteredTopics"
+          bindLabel="name"
+          bindValue="id"
+          formControlName="topics"
+          [multiple]="true"
+          [closeOnSelect]="false"
+          [clearable]="false"
+          placeholder="Select Topics"
+          (change)="onTopicSelected($event)"
+        >
+        </ng-select>
       </div>
-      <ng-select [items]="filteredTopics" bindLabel="name" bindValue="id" formControlName="topics" [multiple]="true"
-        [closeOnSelect]="false" [clearable]="false" placeholder="Select Topics">
-      </ng-select>
-    </div>
 
-    <div class="formField">
-      <div class="gridLabel">
-        <p>Type</p>
-        <p>Marks</p>
-        <p>Count</p>
-        <p></p>
-      </div>
-      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" formArrayName="questionsGrid" class="question-grid">
-
-        @for(question of questionsGrid.controls; track question ; let i = $index){
+      <div class="formField">
+        <div class="gridLabel">
+          <p>Type</p>
+          <p>Marks</p>
+          <p>Count</p>
+          <p></p>
+        </div>
+        <div
+          cdkDropList
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+          formArrayName="questionsGrid"
+          class="question-grid"
+        >
+          @for(question of questionsGrid.controls; track question ; let i =
+          $index){
 
           <!-- <div formArrayName="questionsGrid" *ngFor="let question of questionsGrid.controls; let i = index" cdkDropList (cdkDropListDropped)="drop($event)" class="question-grid"> -->
-            <div [formGroupName]="i" class="question-row" cdkDrag>
-              <ng-select [items]="['mcq', 'tf', 'descriptive']" bindLabel="name" bindValue="id" formControlName="type">
-              </ng-select>
-              <input type="number" formControlName="marks" placeholder="Marks" min="1"
-              (ngModelChange)="updateTotalMarksAndCount()" />
-              <input type="number" formControlName="count" placeholder="Count" min="1"
-              (ngModelChange)="updateTotalMarksAndCount()" />
-              <button (click)="removeQuestionRow(i)" class="btn">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          }
+          <div [formGroupName]="i" class="question-row" cdkDrag>
+            <ng-select
+              [items]="['mcq', 'tf', 'descriptive']"
+              bindLabel="name"
+              bindValue="id"
+              formControlName="type"
+            >
+            </ng-select>
+            <input
+              type="number"
+              formControlName="marks"
+              placeholder="Marks"
+              min="1"
+              (ngModelChange)="updateTotalMarksAndCount()"
+            />
+            <input
+              type="number"
+              formControlName="count"
+              placeholder="Count"
+              min="1"
+              (ngModelChange)="updateTotalMarksAndCount()"
+            />
+            <button (click)="removeQuestionRow(i)" class="btn">
+              <i class="fas fa-trash"></i>
+            </button>
           </div>
-          <!-- </div> -->
+          }
+        </div>
+        <!-- </div> -->
 
-      <button (click)="addQuestionRow()" class="btn" [disabled]="questionsGrid.invalid">
-        <i class="fas fa-plus"></i> Add Question Type
+        <button
+          (click)="addQuestionRow()"
+          class="btn"
+          [disabled]="questionsGrid.invalid"
+        >
+          <i class="fas fa-plus"></i> Add Question Type
+        </button>
+      </div>
+
+      <div>
+        <p>Total Marks: {{ totalMarks }}</p>
+        <p>Question Count: {{ questionCount }}</p>
+      </div>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="!questionPaperForm.valid" class="btn">
+        Generate Question Paper
       </button>
-    </div>
+    </form>
+    <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
 
-    <div>
-      <p>Total Marks: {{ totalMarks }}</p>
-      <p>Question Count: {{ questionCount }}</p>
-    </div>
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-
-    <!-- Submit Button -->
-    <button type="submit" [disabled]="!questionPaperForm.valid" class="btn">
-      Generate Question Paper
-    </button>
-  </form>
-  <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
-
-  <!-- In your question-paper-generator.component.html -->
-</div>
+    <!-- In your question-paper-generator.component.html -->
+  </div>
 
   @if(questionPaper.length){
   <button (click)="printQuestionPaper()" class="print-btn no-print">
     <i class="fas fa-print"></i> Print Question Paper
   </button>
+  <button (click)="saveQuestionPaper()" class="btn">Save Question Paper</button>
   <div *ngIf="questionPaper.length > 0" id="questionPaper">
     <h2>Question Paper</h2>
 
@@ -106,7 +165,10 @@
         <p>Type:{{ question.type }}</p>
         <p>Marks:{{ question.marks }}</p>
       </div>
-      <div *ngIf="question.options && question.options.length > 0" class="options">
+      <div
+        *ngIf="question.options && question.options.length > 0"
+        class="options"
+      >
         <p>Options:</p>
         <ol type="A">
           <li *ngFor="let option of question.options">{{ option.text }}</li>

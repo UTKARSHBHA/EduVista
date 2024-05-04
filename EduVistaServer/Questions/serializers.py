@@ -6,6 +6,8 @@ from django.core.files.base import ContentFile
 import logging
 import uuid
 from datetime import datetime
+from .models import QuestionPaper
+
 
 logger = logging.getLogger(__name__)
 
@@ -138,3 +140,10 @@ class SignupSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+    
+
+
+class QuestionPaperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionPaper
+        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json']

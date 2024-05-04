@@ -17,15 +17,18 @@ import { ChaptersService } from '../services/chapters.service';
 import { QuestionPaperService } from '../service/question-paper.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-
 
 @Component({
   selector: 'app-question-paper-generator',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, FormsModule,    DragDropModule,
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    NgSelectModule,
+    FormsModule,
+    DragDropModule,
   ],
   templateUrl: './question-paper-generator.component.html',
   styleUrl: './question-paper-generator.component.css',
@@ -45,10 +48,9 @@ export class QuestionPaperGeneratorComponent {
   questionCount: number = 0;
 
   errorMessage: string | null = null;
-  isAllTopicsSelected: boolean = false ;
+  isAllTopicsSelected: boolean = false;
 
   questionPaper: any[] = [];
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -132,6 +134,7 @@ export class QuestionPaperGeneratorComponent {
     });
   }
   onStandardSelected(event: any): void {
+    this.questionPaper = [];
     const standardId = event.id;
     // Assuming 'standards' is an array of all standards loaded on init
     const selectedStandard = this.standards.find(
@@ -154,24 +157,23 @@ export class QuestionPaperGeneratorComponent {
   }
 
   onSubjectSelected(event: any): void {
-    if(!event){
+    this.questionPaper = [];
 
-      this.filteredChapters = []; 
+    if (!event) {
+      this.filteredChapters = [];
       this.filteredTopics = []; // Reset filtered topics when subject changes
       this.questionPaperForm.get('chapters')?.reset();
       this.questionPaperForm.get('topics')?.reset();
       return;
     }
     // console.log(event);
-    
 
     const subjectId = event.id;
     // console.log(subjectId);
-    
+
     // console.log(this.isAllTopicsSelected);
     this.isAllTopicsSelected = false;
     // console.log(this.isAllTopicsSelected);
-  
 
     this.filteredChapters = this.chapters.filter(
       (chapter) => chapter.subject === subjectId
@@ -181,10 +183,11 @@ export class QuestionPaperGeneratorComponent {
     this.filteredTopics = []; // Reset filtered topics when subject changes
     this.questionPaperForm.get('chapters')?.reset();
     this.questionPaperForm.get('topics')?.reset();
-
   }
 
   onChapterSelected(event: any): void {
+    this.questionPaper = [];
+
     const chapterIds = event.map((chapter: any) => chapter.id);
     console.log(chapterIds);
     // Filter topics based on the selected chapters
@@ -192,6 +195,9 @@ export class QuestionPaperGeneratorComponent {
       chapterIds.includes(topic.chapter)
     );
     this.questionPaperForm.get('topics')?.reset();
+  }
+  onTopicSelected(event: any): void {
+    this.questionPaper = [];
   }
 
   generateQuestionPaper(): void {
@@ -204,7 +210,6 @@ export class QuestionPaperGeneratorComponent {
           this.errorMessage = null;
           this.questionPaper = response.questions;
           // this.questionPaperForm.reset();
-
 
           // Additional logic for handling a successful response
         },
@@ -222,21 +227,28 @@ export class QuestionPaperGeneratorComponent {
   }
 
   toggleSelectAllChapters(event: any): void {
+    this.questionPaper = [];
+
     this.isAllTopicsSelected = event.target.checked; // Update the property based on the checkbox state
     if (this.isAllTopicsSelected) {
-        // Select all chapters
-        this.questionPaperForm.get('chapters')?.setValue(this.filteredChapters.map(chapter => chapter.id));
+      // Select all chapters
+      this.questionPaperForm
+        .get('chapters')
+        ?.setValue(this.filteredChapters.map((chapter) => chapter.id));
     } else {
-        // Deselect all chapters
-        this.questionPaperForm.get('chapters')?.setValue([]);
+      // Deselect all chapters
+      this.questionPaperForm.get('chapters')?.setValue([]);
     }
     const selectedChapterIds = this.questionPaperForm.get('chapters')?.value;
 
-    this.filteredTopics = this.topics.filter(topic => selectedChapterIds.includes(topic.chapter));
-
-}
+    this.filteredTopics = this.topics.filter((topic) =>
+      selectedChapterIds.includes(topic.chapter)
+    );
+  }
 
   toggleSelectAllTopics(event: any): void {
+    this.questionPaper = [];
+
     const isChecked = event.target.checked;
     if (isChecked) {
       this.questionPaperForm
@@ -247,30 +259,49 @@ export class QuestionPaperGeneratorComponent {
     }
   }
 
+  printQuestionPaper(): void {
+    window.print();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    // Get the current form array
+    const questionsGrid = this.questionPaperForm.get(
+      'questionsGrid'
+    ) as FormArray;
+
+    // Move the item in the form array to reflect the new order
+    moveItemInArray(
+      questionsGrid.controls,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    // Create a new form array with the items in the new order
+    const newQuestionsGrid = new FormArray(questionsGrid.controls);
+
+    // Replace the old form array with the new one
+    this.questionPaperForm.setControl('questionsGrid', newQuestionsGrid);
+  }
 
 
-printQuestionPaper(): void {
-
- 
-  window.print();
- 
- }
-
-
- drop(event: CdkDragDrop<string[]>) {
-  // Get the current form array
-  const questionsGrid = this.questionPaperForm.get('questionsGrid') as FormArray;
- 
-  // Move the item in the form array to reflect the new order
-  moveItemInArray(questionsGrid.controls, event.previousIndex, event.currentIndex);
- 
-  // Create a new form array with the items in the new order
-  const newQuestionsGrid = new FormArray(questionsGrid.controls);
- 
-  // Replace the old form array with the new one
-  this.questionPaperForm.setControl('questionsGrid', newQuestionsGrid);
- }
-
-
-
+  saveQuestionPaper() {
+    if (this.questionPaperForm.valid) {
+       const formValue = this.questionPaperForm.value;
+       const questionPaperData = {
+         standard: formValue.standard,
+         subject: formValue.subject,
+         topics: formValue.topics ?? [],
+         chapters: formValue.chapters,
+         question_paper_json: JSON.stringify(this.questionPaper)
+       };
+   
+       this.questionPaperService.saveQuestionPaper(questionPaperData).subscribe(response => {
+         console.log('Question paper saved successfully');
+       }, error => {
+         console.error('Error saving question paper', error);
+       });
+    } else {
+       console.error('Form is invalid');
+    }
+   }
 }

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import QuestionViewSet, ChapterViewSet, StandardViewSet, TopicViewSet, SubjectViewSet, OptionViewSet
+from .views import QuestionViewSet, ChapterViewSet, StandardViewSet, TopicViewSet, SubjectViewSet, OptionViewSet, QuestionPaperViewSet
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -20,6 +20,7 @@ router.register(r'options', OptionViewSet)
 router.register(r'subjects', SubjectViewSet, basename='subjects')
 router.register(r'topics', TopicViewSet, basename='topics')
 router.register(r'chapters', ChapterViewSet, basename='chapters')
+router.register(r'question-papers', QuestionPaperViewSet, basename='question_papers')
 
 urlpatterns = [
     
