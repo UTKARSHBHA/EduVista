@@ -249,80 +249,14 @@ export class QuestionPaperGeneratorComponent {
 
 
 
-// printQuestionPaper(): void {
-//   const printContent = document.getElementById('questionPaper')?.innerHTML;
-//   const originalContent = document.body.innerHTML;
- 
-//   if (!printContent) {
-//      alert('Nothing to print.');
-//      return;
-//   }
- 
-//   document.body.innerHTML = printContent;
- 
-//   window.print();
- 
-//   document.body.innerHTML = originalContent;
-//  }
-
 printQuestionPaper(): void {
-  const printContent = document.getElementById('questionPaper')?.innerHTML;
-  if (printContent) {
-     const printWindow = window.open('', '_blank');
-     printWindow?.document.open();
-     printWindow?.document.write('<html><head><title>Print</title>');
- 
-     // Dynamically inject print-specific CSS
-     printWindow?.document.write('<style>');
-     printWindow?.document.write(`
 
-     
-       @media print {
-         body {
-           margin: 0;
-           padding: 0;
-           background-color: white;
-         }
  
-         #questionPaper {
-           width: 100%;
-           padding: 20px;
-           box-shadow: none;
-         }
+  window.print();
  
-         .question {
-           border: 1px solid gray;
-           padding: 10px;
-           margin-bottom: 10px;
-           page-break-inside: avoid;
-         }
- 
-         .questionMetaData {
-           display: flex;
-           justify-content: flex-end;
-           gap: 10px;
-         }
- 
-         .options {
-           padding-left: 20px;
-         }
- 
-         .print-btn {
-           display: none;
-         }
- 
-         /* Additional print-specific styles can be added here */
-       }
-     `);
-     printWindow?.document.write('</style>');
- 
-     printWindow?.document.write('</head><body>');
-     printWindow?.document.write(printContent);
-     printWindow?.document.write('</body></html>');
-     printWindow?.document.close();
-     printWindow?.print();
-  }
  }
+
+
  drop(event: CdkDragDrop<string[]>) {
   // Get the current form array
   const questionsGrid = this.questionPaperForm.get('questionsGrid') as FormArray;

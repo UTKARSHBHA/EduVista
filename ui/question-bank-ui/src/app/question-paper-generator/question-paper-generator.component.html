@@ -1,4 +1,6 @@
 <div class="form-container">
+<div class="no-print">
+
   <form [formGroup]="questionPaperForm" (ngSubmit)="generateQuestionPaper()">
     <!-- Standard -->
     <div class="formField">
@@ -89,11 +91,12 @@
   <!-- <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div> -->
 
   <!-- In your question-paper-generator.component.html -->
+</div>
+
   @if(questionPaper.length){
-  <button (click)="printQuestionPaper()" class="print-btn">
+  <button (click)="printQuestionPaper()" class="print-btn no-print">
     <i class="fas fa-print"></i> Print Question Paper
   </button>
-
   <div *ngIf="questionPaper.length > 0" id="questionPaper">
     <h2>Question Paper</h2>
 
