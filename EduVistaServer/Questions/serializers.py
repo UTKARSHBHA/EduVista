@@ -146,4 +146,4 @@ class SignupSerializer(serializers.ModelSerializer):
 class QuestionPaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionPaper
-        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json']
+        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count']
