@@ -54,7 +54,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       padding-left: 20px !important;
     }
 
-    .print-btn {
+    button {
       display: none !important;
     }
 
