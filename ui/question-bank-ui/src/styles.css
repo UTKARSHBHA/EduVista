@@ -15,8 +15,47 @@
 {    
     .no-print, .no-print *
     {
-        display: none !important;
+        display: none ;
     }
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+@media print {
+    body {
+      margin: 0 !important ;
+      padding: 0 !important;
+      background-color: white !important;
+    }
+
+    #questionPaper {
+      width: 100% !important ;
+      padding: 20px !important;
+      box-shadow: none !important;
+      display: block !important;
+    }
+
+    .question {
+        display: block !important;
+      border: 1px solid gray !important;
+      padding: 10px !important;
+      margin-bottom: 10px !important;
+      page-break-inside: avoid !important ;
+    }
+
+    .questionMetaData {
+      display: flex !important;
+      justify-content: flex-end !important;
+      gap: 10px !important;
+    }
+
+    .options {
+      padding-left: 20px !important;
+    }
+
+    .print-btn {
+      display: none !important;
+    }
+
+   }
