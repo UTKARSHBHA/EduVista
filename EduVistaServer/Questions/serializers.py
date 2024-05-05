@@ -148,10 +148,12 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
     subject_name = serializers.SerializerMethodField()
     chapter_name = serializers.SerializerMethodField()
     topics_name = serializers.SerializerMethodField()
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = QuestionPaper
-        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name' ]
+        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name','created_at', 'updated_at', ]
 
     def get_standard_name(self, obj):
         return obj.standard.name if obj.standard else None

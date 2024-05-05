@@ -24,6 +24,8 @@ export class QuestionPapersListComponent implements OnInit {
     { headerName: 'Topics', field: 'topics_name', filter: true },
     { headerName: 'Total Marks', field: 'total_marks', filter: true },
     { headerName: 'Question Count', field: 'question_count', filter: true },
+    { headerName: 'Created', field: 'created_at', filter: true },
+    { headerName: 'Updated', field: 'updated_at', filter: true },
     {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
