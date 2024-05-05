@@ -81,8 +81,10 @@ class QuestionPaper(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=True, null=True)
     topics = models.ManyToManyField(Topic, blank=True)
     question_paper_json = models.JSONField()
-    total_marks = models.IntegerField(default=0)
-    question_count = models.IntegerField(default=0)
+    total_marks = models.IntegerField()
+    question_count = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True) # Automatically set when the object is first created
+    updated_at = models.DateTimeField(auto_now=True) # Automatically updated every time the object is saved
 
     def __str__(self):
         return f"{self.standard.name} - {self.subject.name} - {self.chapter.name if self.chapter else 'No Chapter'}"
