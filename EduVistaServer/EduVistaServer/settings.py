@@ -192,3 +192,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CORS_ALLOW_ALL_ORIGINS = True # Allow all origins
 
+
+
+AUTH_USER_MODEL = 'Questions.CustomUser'
