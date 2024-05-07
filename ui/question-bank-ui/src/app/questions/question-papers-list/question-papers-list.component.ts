@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class QuestionPapersListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    { headerName: 'ID', field: 'id' },
+    { headerName: 'ID', field: 'id', width:80 },
     //  { headerName: 'Title', field: 'title', filter: true },
     { headerName: 'Standard', field: 'standard_name', filter: true },
     { headerName: 'Subject', field: 'subject_name', filter: true },
@@ -30,11 +30,13 @@ export class QuestionPapersListComponent implements OnInit {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
+      width:100
     },
     {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
+      width:100
     },
   ];
 

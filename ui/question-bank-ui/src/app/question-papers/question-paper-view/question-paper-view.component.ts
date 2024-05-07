@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionPaperService } from '../../service/question-paper.service';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './question-paper-view.component.css'
 })
 export class QuestionPaperViewComponent implements OnInit {
-  questionPaper: any[] = [];
+  @Input() questionPaper:any = [];
+  
  
   constructor(
      private route: ActivatedRoute,

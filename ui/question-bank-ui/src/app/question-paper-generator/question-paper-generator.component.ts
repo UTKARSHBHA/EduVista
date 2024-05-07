@@ -19,6 +19,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { QuestionPaperViewComponent } from '../question-papers/question-paper-view/question-paper-view.component';
 
 @Component({
   selector: 'app-question-paper-generator',
@@ -29,6 +30,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
     NgSelectModule,
     FormsModule,
     DragDropModule,
+    QuestionPaperViewComponent
   ],
   templateUrl: './question-paper-generator.component.html',
   styleUrl: './question-paper-generator.component.css',
