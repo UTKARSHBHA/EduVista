@@ -1,6 +1,6 @@
-from django.contrib.auth.models import Group, User
+# from django.contrib.auth.models import Group, CustomUser
 from rest_framework import serializers
-from .models import Question, Chapter, Subject, Standard, Topic, Option
+from .models import CustomUser, Question, Chapter, Subject, Standard, Topic, Option
 import base64
 from django.core.files.base import ContentFile
 import logging
@@ -133,12 +133,12 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('username', 'password', 'email')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user = CustomUser.objects.create_user(**validated_data)
         return user
     
 
