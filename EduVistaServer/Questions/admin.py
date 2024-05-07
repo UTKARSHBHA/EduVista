@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, QuestionPaper, Subject, Standard, Chapter, Topic, Option
+from .models import Question, QuestionPaper, Subject, Standard, Chapter, Topic, Option, CustomUser
 # Register your models here.
 
 admin.site.register(Question)
@@ -9,3 +9,4 @@ admin.site.register(Chapter)
 admin.site.register(Topic)
 admin.site.register(Option)
 admin.site.register(QuestionPaper)
+admin.site.register(CustomUser)
