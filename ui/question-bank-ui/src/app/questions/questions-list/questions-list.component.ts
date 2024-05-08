@@ -21,13 +21,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 export class QuestionsListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    // { headerName: 'ID',field: 'id' },
+    { headerName: 'ID',field: 'id', width: 50 },
     { headerName: 'Question', field: 'question_text', filter: true },
     { headerName: 'Type', field: 'type', filter: true },
     { headerName: 'Difficulty', field: 'difficulty_level', filter: true },
     { headerName: 'Standard', field: 'standard_name', filter: true },
     { headerName: 'Subject', field: 'subject_name', filter: true },
-    { headerName: 'Marks', field: 'marks', filter: true },
+    { headerName: 'Marks', field: 'marks', filter: true, width: 100 },
     {
       headerName: 'Topics',
       field: 'topics_name',
@@ -41,11 +41,13 @@ export class QuestionsListComponent implements OnInit {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
+      width: 100,
     },
     {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
+      width: 100,
     },
   ];
 
