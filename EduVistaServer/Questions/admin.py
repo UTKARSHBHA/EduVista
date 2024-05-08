@@ -10,3 +10,11 @@ admin.site.register(Topic)
 admin.site.register(Option)
 admin.site.register(QuestionPaper)
 admin.site.register(CustomUser)
+
+
+# @admin.register(CustomUser)
+# class CustomUserAdmin(admin.ModelAdmin):
+#     list_display = ('username', 'email', 'is_staff', 'is_active')
+#     list_filter = ('is_staff', 'is_active')
+#     search_fields = ('username', 'email')
+#     ordering = ('username',)

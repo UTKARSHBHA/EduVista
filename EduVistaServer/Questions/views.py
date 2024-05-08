@@ -43,6 +43,8 @@ from random import shuffle
 from rest_framework.pagination import PageNumberPagination
 
 from django.db.models import Q
+from rest_framework.permissions import DjangoModelPermissions
+
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -56,29 +58,37 @@ class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     pagination_class = CustomPageNumberPagination
+    permission_classes = [DjangoModelPermissions]
+
 
     # parser_classes = [MultiPartParser, FormParser]
 
     
-
 class ChapterViewSet(viewsets.ModelViewSet):
     queryset = Chapter.objects.all()
-    serializer_class = ChapterSerializer
+    serializer_class = ChapterSerializer    
+    permission_classes = [DjangoModelPermissions]
+
+
 
 
 class StandardViewSet(viewsets.ModelViewSet):
     queryset = Standard.objects.all()
     serializer_class = StandardSerializer
+    permission_classes = [DjangoModelPermissions]
+
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+    permission_classes = [DjangoModelPermissions]
 
     
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
+    permission_classes = [DjangoModelPermissions]
 
   
 
@@ -86,6 +96,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
+    permission_classes = [DjangoModelPermissions]
 
 
 
@@ -246,3 +257,4 @@ def generate_question_paper(request):
 class QuestionPaperViewSet(viewsets.ModelViewSet):
     queryset = QuestionPaper.objects.all()
     serializer_class = QuestionPaperSerializer
+    permission_classes = [DjangoModelPermissions]
