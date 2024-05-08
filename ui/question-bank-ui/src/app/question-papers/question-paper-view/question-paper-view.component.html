@@ -7,9 +7,13 @@
         <button (click)="printQuestionPaper()" class="print-btn no-print">
           <i class="fas fa-print"></i> 
         </button>
-        <!-- <button class="btn">
+        <button 
+        *ngIf="showSaveButton"
+        class="btn"
+        (click)="saveQuestionPaper()"
+        >
           <i class="fas fa-save"></i>
-        </button> -->
+        </button>
       </div>    
     </div>
 

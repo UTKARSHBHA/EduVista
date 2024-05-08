@@ -155,7 +155,7 @@
   <!-- @if(questionPaper.length){ -->
 
   <div *ngIf="questionPaper.length > 0" id="questionPaper">
-    <app-question-paper-view [questionPaper] = questionPaper/>
+    <app-question-paper-view [questionPaper]="questionPaper" [showSaveButton]="true" (saveRequested)="saveQuestionPaper()"></app-question-paper-view>
     <!-- <div class="questionPaperHeader">
       <h2>Question Paper</h2>
       <div class="questionPaperButtonContainer">
