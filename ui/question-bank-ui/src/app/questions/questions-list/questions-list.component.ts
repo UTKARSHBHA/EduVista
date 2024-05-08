@@ -51,7 +51,7 @@ export class QuestionsListComponent implements OnInit {
 
   pageSize = 10;
   totalQuestions = 0;
-  currentPage = 0;
+  currentPage = 1;
 
   constructor(
     private questionsService: QuestionsService,
