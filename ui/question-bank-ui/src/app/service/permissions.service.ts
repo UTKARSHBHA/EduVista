@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionsService {
   permissions: any ;
+  username;
 
   constructor(
     private authService: AuthService,
+    private jwtHelper: JwtHelperService,
 
-  ) { 
+  ) {
+    
 
-    this.permissions = this.authService.decodeToken();
-    console.log(this.permissions);
+    this.permissions = this.jwtHelper.decodeToken(localStorage.getItem('access_token')?? '').permissions;
+    
+    this.username = this.jwtHelper.decodeToken(localStorage.getItem('access_token')?? '').username;
+
+    console.log(this.permissions , this.username);
   }
 
   hasViewQuestionPermission(): boolean {

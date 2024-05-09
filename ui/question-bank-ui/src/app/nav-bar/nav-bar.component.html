@@ -37,7 +37,7 @@
       Login
     </button>
     <div *ngIf="!authService.isTokenExpired()" class="user-profile">
-      <span>Welcome, User!</span>
+      <span>Welcome, {{permissionsService.username}}</span>
       <!-- Replace 'User' with the actual user's name -->
       <div class="dropdown">
         <button class="dropbtn">Options</button>

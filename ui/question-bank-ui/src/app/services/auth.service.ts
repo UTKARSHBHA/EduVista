@@ -115,16 +115,16 @@ export class AuthService {
     return this.http.post(url, { old_password: oldPassword, new_password: newPassword });
    }
 
-   decodeToken(){
-    const token = localStorage.getItem('access_token');
-    if(token){
-      try {
-        const decodedToken = this.jwtHelper.decodeToken(token);
-        return decodedToken.permissions;
-      } catch (error) {
-        console.error('Error decoding JWT token:', error);
-        return null;
-      }
-    }
-  }
+  //  decodeToken(){
+  //   const token = localStorage.getItem('access_token');
+  //   if(token){
+  //     try {
+  //       const decodedToken = this.jwtHelper.decodeToken(token);
+  //       return decodedToken.permissions;
+  //     } catch (error) {
+  //       console.error('Error decoding JWT token:', error);
+  //       return null;
+  //     }
+  //   }
+  // }
 }
