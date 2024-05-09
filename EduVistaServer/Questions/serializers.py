@@ -8,6 +8,7 @@ import uuid
 from datetime import datetime
 from .models import QuestionPaper
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -166,3 +167,16 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
 
     def get_topics_name(self, obj):
         return ', '.join([topic.name for topic in obj.topics.all()]) if obj.topics.exists() else None
+
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add additional claims
+        token['role'] = user.role # Assuming the user model has a 'role' field
+        token['username'] = user.username
+        token['permissions'] = list(user.get_all_permissions())
+        return token

@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 
 # Import your serializers
-from .serializers import QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
+from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
 
 # Import your models
 from .models import Question, Chapter, QuestionPaper, Subject, Standard, Topic, Option
@@ -44,6 +44,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from django.db.models import Q
 from rest_framework.permissions import DjangoModelPermissions
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 # Create a logger instance
@@ -258,3 +259,7 @@ class QuestionPaperViewSet(viewsets.ModelViewSet):
     queryset = QuestionPaper.objects.all()
     serializer_class = QuestionPaperSerializer
     permission_classes = [DjangoModelPermissions]
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

@@ -10,11 +10,13 @@ import { Router } from '@angular/router';
 import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
 import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-questions-list',
   standalone: true,
-  imports: [AgGridAngular, MatPaginatorModule],
+  imports: [AgGridAngular, MatPaginatorModule, CommonModule],
   templateUrl: './questions-list.component.html',
   styleUrl: './questions-list.component.css',
 })
@@ -55,13 +57,15 @@ export class QuestionsListComponent implements OnInit {
   totalQuestions = 0;
   currentPage = 1;
 
+
   constructor(
     private questionsService: QuestionsService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.loadQuestions();
+    
   }
 
   loadQuestions(page: number = 1): void {
@@ -107,4 +111,6 @@ export class QuestionsListComponent implements OnInit {
       });
     }
   }
+  
+  
 }

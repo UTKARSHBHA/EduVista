@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { log } from 'console';
 import { CookieService } from 'ngx-cookie-service';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -113,4 +114,17 @@ export class AuthService {
     const url = 'http://localhost:8000/api/change_password/';
     return this.http.post(url, { old_password: oldPassword, new_password: newPassword });
    }
+
+   decodeToken(){
+    const token = localStorage.getItem('access_token');
+    if(token){
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        return decodedToken.permissions;
+      } catch (error) {
+        console.error('Error decoding JWT token:', error);
+        return null;
+      }
+    }
+  }
 }

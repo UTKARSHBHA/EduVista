@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { PermissionsService } from '../service/permissions.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
-  constructor(public authService: AuthService , private router: Router) {}
+  constructor(public authService: AuthService , private router: Router, public permissionsService: PermissionsService) {}
  
   // isLoggedIn(): boolean {
   //    return this.authService.isLoggedIn(); // Implement this method in your AuthService
@@ -31,4 +32,8 @@ export class NavBarComponent {
 
   }
  }
+ 
+
+
+
  
