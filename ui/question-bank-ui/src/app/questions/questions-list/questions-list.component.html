@@ -2,13 +2,22 @@
 
     <header>
         <div class="leftButton">
-
-            <button class="add-btn" (click)="routTo('standards')">Add Standard</button>
-            <button class="add-btn" (click)="routTo('subjects')">Add Subject</button>
-            <button class="add-btn" (click)="routTo('chapters')">Add Chapter</button>
-            <button class="add-btn" (click)="routTo('topics')">Add Topic</button>
+            @if(permissionsService.hasAddStandardPermission()){
+                <button class="add-btn" (click)="routTo('standards')">Add Standard</button>
+            }
+            @if(permissionsService.hasAddSubjectPermission()){
+                <button class="add-btn" (click)="routTo('subjects')">Add Subject</button>
+            }
+            @if(permissionsService.hasAddChapterPermission()){
+                <button class="add-btn" (click)="routTo('chapters')">Add Chapter</button>
+            }
+            @if(permissionsService.hasAddTopicPermission()){
+                <button class="add-btn" (click)="routTo('topics')">Add Topic</button>
+            }
         </div>
-        <button class="add-btn" (click)="routTo('questions')">Add</button>
+        @if(permissionsService.hasAddQuestionPermission()){
+            <button class="add-btn" (click)="routTo('questions')">Add</button>
+        }
     </header>
     
     <ag-grid-angular class="ag-theme-quartz"

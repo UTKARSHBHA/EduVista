@@ -12,6 +12,7 @@ import { ViewButtonRendererComponent } from '../view-question-button/view-questi
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { PermissionsService } from '../../service/permissions.service';
 
 @Component({
   selector: 'app-questions-list',
@@ -44,12 +45,15 @@ export class QuestionsListComponent implements OnInit {
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
       width: 100,
+      hide: !this.permissionsService.hasDeleteQuestionPermission(),
+
     },
     {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
       width: 100,
+      hide: !this.permissionsService.hasViewQuestionPermission(),
     },
   ];
 
@@ -61,6 +65,7 @@ export class QuestionsListComponent implements OnInit {
   constructor(
     private questionsService: QuestionsService,
     private router: Router,
+    public permissionsService: PermissionsService
   ) {}
 
   ngOnInit(): void {

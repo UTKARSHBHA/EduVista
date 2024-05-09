@@ -5,18 +5,18 @@
     </a>
   </div>
   <ul class="navbar-links">
-    @if(permissionsService.hasChangeStandardPermission()){
+    @if(permissionsService.hasAddStandardPermission()){
       <li><a routerLink="/standards">Standards</a></li>
     }
 
-    @if(permissionsService.hasChangeSubjectPermission()){
+    @if(permissionsService.hasAddSubjectPermission()){
       <li><a routerLink="/subjects">Subjects</a></li>
     }
 
-    @if(permissionsService.hasChangeTopicPermission()){
+    @if(permissionsService.hasAddTopicPermission()){
       <li><a routerLink="/topics">Topics</a></li>
     }
-    @if(permissionsService.hasChangeChapterPermission()){
+    @if(permissionsService.hasAddChapterPermission()){
       <li><a routerLink="/chapters">Chapters</a></li>
     }
     @if(permissionsService.hasViewQuestionPermission()){

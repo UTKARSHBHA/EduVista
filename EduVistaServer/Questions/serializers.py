@@ -37,6 +37,7 @@ class OptionSerializer(serializers.ModelSerializer):
         model = Option
         fields = ['id', 'text', 'is_correct']
 class QuestionSerializer(serializers.ModelSerializer):
+    # print(request.user)
     standard_name = serializers.StringRelatedField(source='standard.name')
     subject_name = serializers.StringRelatedField(source='subject.name')
     chapter_name = serializers.StringRelatedField(source='chapter.name')
@@ -179,4 +180,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['role'] = user.role # Assuming the user model has a 'role' field
         token['username'] = user.username
         token['permissions'] = list(user.get_all_permissions())
+        # print(list(user.get_all_permissions()))
         return token
+

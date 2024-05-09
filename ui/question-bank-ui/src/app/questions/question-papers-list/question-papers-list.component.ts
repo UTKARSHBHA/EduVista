@@ -5,6 +5,7 @@ import { QuestionPaperService } from '../../service/question-paper.service';
 import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
 import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
 import { Router } from '@angular/router';
+import { PermissionsService } from '../../service/permissions.service';
 
 @Component({
   selector: 'app-question-papers-list',
@@ -30,19 +31,25 @@ export class QuestionPapersListComponent implements OnInit {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
-      width:100
+      width:100,
+      hide: !this.permissionsService.hasDeleteQuestionPaperPermission(),
+
     },
     {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
-      width:100
+      width:100,
+      hide: !this.permissionsService.hasViewQuestionPaperPermission(),
+
     },
   ];
 
   constructor(
     private questionPaperService: QuestionPaperService,
-    private router: Router
+    private router: Router,
+    public permissionsService: PermissionsService
+
   ) {}
 
   ngOnInit(): void {

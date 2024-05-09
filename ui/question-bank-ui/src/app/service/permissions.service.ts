@@ -12,14 +12,15 @@ export class PermissionsService {
 
   ) { 
 
-    const token = localStorage.getItem('access_token'); // Or wherever you store the token
     this.permissions = this.authService.decodeToken();
     console.log(this.permissions);
   }
 
   hasViewQuestionPermission(): boolean {
-    // console.log('hasviewquestionpermission called',this.permissions?.includes('Questions.view_question') )
     return this.permissions?.includes('Questions.view_question');
+  }
+  hasViewQuestionPaperPermission(): boolean{
+    return this.permissions?.includes('Questions.view_questionpaper');
   }
 
   hasChangeSubjectPermission(): boolean{
@@ -34,12 +35,49 @@ export class PermissionsService {
   hasChangeChapterPermission(): boolean{
     return this.permissions?.includes('Questions.change_chapter');
   }
+  hasChangeQuestionPermission(): boolean{
+    return this.permissions?.includes('Questions.change_question');
+  }
+
+  hasAddSubjectPermission(): boolean{
+    return this.permissions?.includes('Questions.add_subject');
+  }
+  hasAddStandardPermission(): boolean{
+    return this.permissions?.includes('Questions.add_standard');
+  }
+  hasAddTopicPermission(): boolean{
+    return this.permissions?.includes('Questions.add_topic');
+  }
+  hasAddChapterPermission(): boolean{
+    return this.permissions?.includes('Questions.add_chapter');
+  }
+  hasAddQuestionPermission(): boolean{
+    return this.permissions?.includes('Questions.add_question');
+  }
   hasAddQuestionPaperPermission(): boolean{
     return this.permissions?.includes('Questions.add_questionpaper');
   }
-  hasViewQuestionPaperPermission(): boolean{
-    return this.permissions?.includes('Questions.view_questionpaper');
+
+  hasDeleteSubjectPermission(): boolean{
+    return this.permissions?.includes('Questions.delete_subject');
   }
+  hasDeleteStandardPermission(): boolean{
+    return this.permissions?.includes('Questions.delete_standard');
+  }
+  hasDeleteTopicPermission(): boolean{
+    return this.permissions?.includes('Questions.delete_topic');
+  }
+  hasDeleteChapterPermission(): boolean{
+    return this.permissions?.includes('Questions.delete_chapter');
+  }
+  hasDeleteQuestionPermission(): boolean{
+    return this.permissions?.includes('Questions.delete_question');
+  }
+  hasDeleteQuestionPaperPermission(): boolean{
+    return this.permissions?.includes('Questions.delete_questionpaper');
+  }
+
+  
   
   
 }
