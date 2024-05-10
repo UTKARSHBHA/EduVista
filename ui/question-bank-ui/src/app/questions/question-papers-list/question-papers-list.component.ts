@@ -17,13 +17,15 @@ import { PermissionsService } from '../../service/permissions.service';
 export class QuestionPapersListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    { headerName: 'ID', field: 'id', width:80 },
+    { headerName: 'ID', field: 'id', width:80,filter: true },
     //  { headerName: 'Title', field: 'title', filter: true },
-    { headerName: 'Standard', field: 'standard_name', filter: true },
+    { headerName: 'Created By',field: 'user', width: 120,filter: true },
+
+    { headerName: 'Standard', field: 'standard_name', width: 120, filter: true },
     { headerName: 'Subject', field: 'subject_name', filter: true },
     { headerName: 'Chapter', field: 'chapter_name', filter: true },
     { headerName: 'Topics', field: 'topics_name', filter: true },
-    { headerName: 'Total Marks', field: 'total_marks', filter: true },
+    { headerName: 'Total Marks', field: 'total_marks', width: 130, filter: true },
     { headerName: 'Question Count', field: 'question_count', filter: true },
     { headerName: 'Created', field: 'created_at', filter: true },
     { headerName: 'Updated', field: 'updated_at', filter: true },

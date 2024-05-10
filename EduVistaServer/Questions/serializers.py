@@ -41,11 +41,11 @@ class ChapterSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class OptionSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
+    # user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Option
-        fields = ['id', 'text', 'is_correct', 'user']
+        fields = ['id', 'text', 'is_correct']
 class QuestionSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
 
@@ -80,10 +80,15 @@ class QuestionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 
         options_data = validated_data.pop('options')
+    
         topics_data = validated_data.pop('topics', [])
-
+        # user = validated_data.pop('user')
+        # print(user)
         question = Question.objects.create(**validated_data)
         for option_data in options_data:
+            # user = validated_data.user.id
+            option_data['user'] = self.context['request'].user
+
             Option.objects.create(question=question, **option_data)
        
         if topics_data:

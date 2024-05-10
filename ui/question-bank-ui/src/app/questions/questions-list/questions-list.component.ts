@@ -24,7 +24,8 @@ import { PermissionsService } from '../../service/permissions.service';
 export class QuestionsListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    { headerName: 'ID',field: 'id', width: 50 },
+    { headerName: 'ID',field: 'id', width: 50,filter: true },
+    { headerName: 'Created By',field: 'user', width: 120 ,filter: true},
     { headerName: 'Question', field: 'question_text', filter: true },
     { headerName: 'Type', field: 'type', filter: true },
     { headerName: 'Difficulty', field: 'difficulty_level', filter: true },
