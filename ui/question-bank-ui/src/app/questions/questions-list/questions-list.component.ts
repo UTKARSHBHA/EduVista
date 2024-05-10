@@ -45,7 +45,7 @@ export class QuestionsListComponent implements OnInit {
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
       width: 100,
-      hide: !this.permissionsService.hasDeleteQuestionPermission(),
+      hide: !this.permissionsService.getPermissions('Questions.delete_question'),
 
     },
     {
@@ -53,7 +53,7 @@ export class QuestionsListComponent implements OnInit {
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
       width: 100,
-      hide: !this.permissionsService.hasViewQuestionPermission(),
+      hide: !this.permissionsService.getPermissions('Questions.view_question'),
     },
   ];
 

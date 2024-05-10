@@ -13,6 +13,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AuthService {
   private loginUrl = 'http://localhost:8000/api/token/';
+  permissions: any = [];
+  username:any = localStorage.getItem('username')?localStorage.getItem('username'):null;
+
 
   constructor(
     private http: HttpClient,
@@ -32,6 +35,18 @@ export class AuthService {
         tap((response) => {
           localStorage.setItem('access_token', response.access);
           localStorage.setItem('refresh_token', response.refresh);
+
+          this.permissions = this.jwtHelper.decodeToken(localStorage.getItem('access_token') ?? '').permissions;
+
+          localStorage.setItem('permissions', this.permissions);
+          
+          this.username = this.jwtHelper.decodeToken(localStorage.getItem('access_token') ?? '').username;
+          
+          localStorage.setItem('username', this.username);
+
+          console.log(this.permissions , this.username);
+          
+          
         })
       );
   }
@@ -39,6 +54,9 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('permissions');
+    localStorage.removeItem('username');
+    this.username = null;
   }
 
   refreshToken(): Observable<any> {

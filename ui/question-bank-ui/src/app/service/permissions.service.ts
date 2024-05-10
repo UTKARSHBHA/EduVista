@@ -7,7 +7,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class PermissionsService {
   permissions: any ;
-  username;
 
   constructor(
     private authService: AuthService,
@@ -15,74 +14,14 @@ export class PermissionsService {
 
   ) {
     
-
-    this.permissions = this.jwtHelper.decodeToken(localStorage.getItem('access_token')?? '').permissions;
+    }
     
-    this.username = this.jwtHelper.decodeToken(localStorage.getItem('access_token')?? '').username;
-
-    console.log(this.permissions , this.username);
+  getPermissions(permission : string){
+    this.permissions = localStorage.getItem('permissions');
+    return this.permissions?.includes(permission)
   }
 
-  hasViewQuestionPermission(): boolean {
-    return this.permissions?.includes('Questions.view_question');
-  }
-  hasViewQuestionPaperPermission(): boolean{
-    return this.permissions?.includes('Questions.view_questionpaper');
-  }
-
-  hasChangeSubjectPermission(): boolean{
-    return this.permissions?.includes('Questions.change_subject');
-  }
-  hasChangeStandardPermission(): boolean{
-    return this.permissions?.includes('Questions.change_standard');
-  }
-  hasChangeTopicPermission(): boolean{
-    return this.permissions?.includes('Questions.change_topic');
-  }
-  hasChangeChapterPermission(): boolean{
-    return this.permissions?.includes('Questions.change_chapter');
-  }
-  hasChangeQuestionPermission(): boolean{
-    return this.permissions?.includes('Questions.change_question');
-  }
-
-  hasAddSubjectPermission(): boolean{
-    return this.permissions?.includes('Questions.add_subject');
-  }
-  hasAddStandardPermission(): boolean{
-    return this.permissions?.includes('Questions.add_standard');
-  }
-  hasAddTopicPermission(): boolean{
-    return this.permissions?.includes('Questions.add_topic');
-  }
-  hasAddChapterPermission(): boolean{
-    return this.permissions?.includes('Questions.add_chapter');
-  }
-  hasAddQuestionPermission(): boolean{
-    return this.permissions?.includes('Questions.add_question');
-  }
-  hasAddQuestionPaperPermission(): boolean{
-    return this.permissions?.includes('Questions.add_questionpaper');
-  }
-
-  hasDeleteSubjectPermission(): boolean{
-    return this.permissions?.includes('Questions.delete_subject');
-  }
-  hasDeleteStandardPermission(): boolean{
-    return this.permissions?.includes('Questions.delete_standard');
-  }
-  hasDeleteTopicPermission(): boolean{
-    return this.permissions?.includes('Questions.delete_topic');
-  }
-  hasDeleteChapterPermission(): boolean{
-    return this.permissions?.includes('Questions.delete_chapter');
-  }
-  hasDeleteQuestionPermission(): boolean{
-    return this.permissions?.includes('Questions.delete_question');
-  }
-  hasDeleteQuestionPaperPermission(): boolean{
-    return this.permissions?.includes('Questions.delete_questionpaper');
-  }
+ 
 
   
   

@@ -2,20 +2,20 @@
 
     <header>
         <div class="leftButton">
-            @if(permissionsService.hasAddStandardPermission()){
+            @if(permissionsService.getPermissions('Questions.add_standard')){
                 <button class="add-btn" (click)="routTo('standards')">Add Standard</button>
             }
-            @if(permissionsService.hasAddSubjectPermission()){
+            @if(permissionsService.getPermissions('Questions.add_subject')){
                 <button class="add-btn" (click)="routTo('subjects')">Add Subject</button>
             }
-            @if(permissionsService.hasAddChapterPermission()){
+            @if(permissionsService.getPermissions('Questions.add_chapter')){
                 <button class="add-btn" (click)="routTo('chapters')">Add Chapter</button>
             }
-            @if(permissionsService.hasAddTopicPermission()){
+            @if(permissionsService.getPermissions('Questions.add_topic')){
                 <button class="add-btn" (click)="routTo('topics')">Add Topic</button>
             }
         </div>
-        @if(permissionsService.hasAddQuestionPermission()){
+        @if(permissionsService.getPermissions('Questions.add_question')){
             <button class="add-btn" (click)="routTo('questions')">Add</button>
         }
     </header>
