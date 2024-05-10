@@ -48,6 +48,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -55,6 +56,8 @@ class Subject(models.Model):
 class Standard(models.Model):
     name = models.CharField(max_length=100)
     subjects = models.ManyToManyField(Subject, related_name='standards')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.name
@@ -63,6 +66,7 @@ class Standard(models.Model):
 class Chapter(models.Model):
     name = models.CharField(max_length=100)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -70,6 +74,7 @@ class Chapter(models.Model):
 class Topic(models.Model):
     name = models.CharField(max_length=100)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -94,6 +99,7 @@ class Question(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
     question_text = models.TextField()
     image = models.ImageField(upload_to='questions-images/', blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.question_text
@@ -102,6 +108,7 @@ class Option(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='options')
     text = models.TextField()
     is_correct = models.BooleanField(default=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text
@@ -112,7 +119,7 @@ class PasswordResetToken(models.Model):
     # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     token = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = get_random_string(length=32)
@@ -129,6 +136,7 @@ class QuestionPaper(models.Model):
     question_count = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True) # Automatically set when the object is first created
     updated_at = models.DateTimeField(auto_now=True) # Automatically updated every time the object is saved
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.standard.name} - {self.subject.name} - {self.chapter.name if self.chapter else 'No Chapter'}"

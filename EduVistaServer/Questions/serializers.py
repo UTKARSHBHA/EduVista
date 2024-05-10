@@ -13,30 +13,42 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 logger = logging.getLogger(__name__)
 
 class SubjectSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Subject
         fields = '__all__'
         
 class StandardSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Standard
         fields = '__all__'
         
 class TopicSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Topic
-        fields = ['id', 'name', 'chapter'] # Adjust the fields as needed
+        fields = ['id', 'name', 'chapter', 'user'] # Adjust the fields as needed
 
 class ChapterSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Chapter
         fields = '__all__'
         
 class OptionSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Option
-        fields = ['id', 'text', 'is_correct']
+        fields = ['id', 'text', 'is_correct', 'user']
 class QuestionSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     # print(request.user)
     standard_name = serializers.StringRelatedField(source='standard.name')
     subject_name = serializers.StringRelatedField(source='subject.name')
@@ -47,7 +59,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', 'topics_name']
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', 'topics_name', 'user']
 
     def get_topics_name(self, obj):
         # Assuming 'topics' is a ManyToMany field on the Question model
@@ -146,6 +158,8 @@ class SignupSerializer(serializers.ModelSerializer):
 
 
 class QuestionPaperSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     standard_name = serializers.SerializerMethodField()
     subject_name = serializers.SerializerMethodField()
     chapter_name = serializers.SerializerMethodField()
@@ -155,7 +169,7 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = QuestionPaper
-        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name', 'created_at', 'updated_at']
+        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name', 'created_at', 'updated_at', 'user']
 
     def get_standard_name(self, obj):
         return obj.standard.name if obj.standard else None

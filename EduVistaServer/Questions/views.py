@@ -61,6 +61,9 @@ class QuestionViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPageNumberPagination
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object
 
     # parser_classes = [MultiPartParser, FormParser]
 
@@ -70,7 +73,9 @@ class ChapterViewSet(viewsets.ModelViewSet):
     serializer_class = ChapterSerializer    
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
-
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object
 
 
 class StandardViewSet(viewsets.ModelViewSet):
@@ -78,18 +83,28 @@ class StandardViewSet(viewsets.ModelViewSet):
     serializer_class = StandardSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
-        
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object    
 
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object
+
 
   
 
@@ -99,7 +114,9 @@ class OptionViewSet(viewsets.ModelViewSet):
     serializer_class = OptionSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
-
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object
 
 
 class SignupView(APIView):
@@ -206,7 +223,7 @@ def generate_question_paper(request):
         topics = data.get('topics', [])
         chapters = data.get('chapters', [])
         questions_grid = data.get('questionsGrid', [])
-
+        
         # print(data)
         
         # print(topics)
@@ -259,6 +276,10 @@ class QuestionPaperViewSet(viewsets.ModelViewSet):
     queryset = QuestionPaper.objects.all()
     serializer_class = QuestionPaperSerializer
     permission_classes = [DjangoModelPermissions]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
