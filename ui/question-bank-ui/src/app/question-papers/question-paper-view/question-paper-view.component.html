@@ -18,22 +18,23 @@
     </div>
 
     <div *ngFor="let question of questionPaper; let i = index" class="question">
-      <p>Question {{ i + 1 }}: {{ question.question_text }}</p>
+      <i class="fas fa-exchange-alt replace-btn" (click)="getDifferentQuestion(i)"></i>
+      <p>
+        Question {{ i + 1 }}: {{ question.question_text }}</p>
       <div class="questionMetaData">
         <p>Type:{{ question.type }}</p>
         <p>Marks:{{ question.marks }}</p>
-        <button (click)="getDifferentQuestion(i)">Replace</button>
-
+        
       </div>
       <div
-        *ngIf="question.options && question.options.length > 0"
-        class="options"
+      *ngIf="question.options && question.options.length > 0"
+      class="options"
       >
-        <p>Options:</p>
-        <ol type="A">
-          <li *ngFor="let option of question.options">{{ option.text }}</li>
-        </ol>
-      </div>
+      <p>Options:</p>
+      <ol type="A">
+        <li *ngFor="let option of question.options">{{ option.text }}</li>
+      </ol>
     </div>
+  </div>
   </div>
 <!-- </div> -->

@@ -80,3 +80,11 @@
 .btn:hover:not(:disabled) {
     background-color: #0056b3; /* Darker blue on hover */
 }
+
+.replace-btn{
+    text-align: end;
+
+  padding: 1rem;
+cursor: pointer;
+
+}
