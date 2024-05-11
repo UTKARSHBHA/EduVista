@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuestionPaperService {
+  
 
   private apiUrl = 'http://localhost:8000/api/generate-question-paper/';
  
@@ -46,6 +47,12 @@ getNewQuestion(questionToReplace: any, existingQuestions: any[]): Observable<any
   // Make a POST request to your backend API with the request object
   // Adjust the URL as needed
   return this.http.post<any>('http://localhost:8000/api/get-new-question/', requestObject);
+}
+
+updateQuestionPaper(questionPaperID: any,questionPaper: any[]): Observable<any> {
+  console.log(questionPaper);
+  return this.http.put(`${'http://localhost:8000/api/question-papers/'}${questionPaperID}/`, questionPaper);
+  
 }
 
  }

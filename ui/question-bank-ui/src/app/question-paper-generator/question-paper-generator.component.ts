@@ -53,6 +53,7 @@ export class QuestionPaperGeneratorComponent {
   isAllTopicsSelected: boolean = false;
 
   questionPaper: any[] = [];
+  questionPaperID: string | null = null; // Add this line
 
   constructor(
     private formBuilder: FormBuilder,
@@ -287,9 +288,41 @@ export class QuestionPaperGeneratorComponent {
 
 
   saveQuestionPaper() {
-    if (this.questionPaperForm.valid) {
-       const formValue = this.questionPaperForm.value;
-       const questionPaperData = {
+    console.log('save clicked in generator', this.questionPaperID)
+    if (this.questionPaperID) {
+      this.questionPaperService
+        .getQuestionPaperById(this.questionPaperID)
+        .subscribe(
+          (response) => {
+            // Parse the question_paper_json string into a JavaScript object
+            let questionPaperData = response;
+            questionPaperData.question_paper_json = JSON.stringify(this.questionPaper);
+            console.log('save clicked in view', this.questionPaperID);
+            this.questionPaperService
+              .updateQuestionPaper(this.questionPaperID, questionPaperData)
+              .subscribe(
+                (response) => {
+                  console.log('Question paper updated successfully');
+                  alert('Question paper updated successfully in the database');
+                  this.questionPaper = JSON.parse(response.question_paper_json);
+                },
+                (error) => {
+                  console.error('Error updating question paper', error);
+                }
+              );
+          },
+          (error) => {
+            console.error('Error fetching question paper', error);
+          }
+        );
+
+     
+    }
+    else{
+
+      if (this.questionPaperForm.valid) {
+        const formValue = this.questionPaperForm.value;
+        const questionPaperData = {
          standard: formValue.standard,
          subject: formValue.subject,
          topics: formValue.topics ?? [],
@@ -300,6 +333,7 @@ export class QuestionPaperGeneratorComponent {
        };
    
        this.questionPaperService.saveQuestionPaper(questionPaperData).subscribe(response => {
+        this.questionPaperID = response.id;
          console.log('Question paper saved successfully');
          alert("Question paper saved successfully in the database")
        }, error => {
@@ -307,6 +341,8 @@ export class QuestionPaperGeneratorComponent {
        });
     } else {
        console.error('Form is invalid');
+      }
     }
-   }
-}
+  }
+  }
+  
