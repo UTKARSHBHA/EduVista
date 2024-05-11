@@ -22,6 +22,8 @@
       <div class="questionMetaData">
         <p>Type:{{ question.type }}</p>
         <p>Marks:{{ question.marks }}</p>
+        <button (click)="getDifferentQuestion(i)">Replace</button>
+
       </div>
       <div
         *ngIf="question.options && question.options.length > 0"

@@ -31,4 +31,21 @@ getQuestionPaperById(id: string): Observable<any> {
   const url = `${'http://localhost:8000/api/question-papers/'}${id}/`;
   return this.http.get<any>(url);
 }
+
+getNewQuestion(questionToReplace: any, existingQuestions: any[]): Observable<any> {
+  // Convert the existing questions array to a format that can be sent in the request
+  const existingQuestionsIds = existingQuestions.map(q => q.id).join(',');
+
+  // Create a request object that includes the details of the question to replace and the IDs of existing questions
+  
+  const requestObject = {
+    questionToReplace,
+    existingQuestionsIds
+  };
+
+  // Make a POST request to your backend API with the request object
+  // Adjust the URL as needed
+  return this.http.post<any>('http://localhost:8000/api/get-new-question/', requestObject);
+}
+
  }

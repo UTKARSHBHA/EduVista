@@ -284,3 +284,25 @@ class QuestionPaperViewSet(viewsets.ModelViewSet):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+class GetNewQuestionView(APIView):
+    def post(self, request, *args, **kwargs):
+        question_to_replace = request.data.get('questionToReplace')
+        existing_questions_ids = request.data.get('existingQuestionsIds').split(',')
+        
+        # Logic to find a new question that matches the criteria and is not in the list of existing questions
+        # This is a placeholder for your actual logic
+        new_question = Question.objects.filter(
+            standard=question_to_replace['standard'],
+            subject=question_to_replace['subject'],
+            chapter=question_to_replace['chapter'],
+            topics__in=question_to_replace['topics'],
+            difficulty_level=question_to_replace['difficulty_level'],
+            marks=question_to_replace['marks'],
+            type=question_to_replace['type']
+        ).exclude(id__in=existing_questions_ids).first()
+        
+        if new_question:
+            return Response(QuestionSerializer(new_question).data, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No suitable question found.'}, status=status.HTTP_404_NOT_FOUND)

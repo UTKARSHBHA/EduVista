@@ -41,5 +41,19 @@ export class QuestionPaperViewComponent implements OnInit {
   saveQuestionPaper(): void {
     this.saveRequested.emit(); // Emit the event when the save button is clicked
  }
+ getDifferentQuestion(index: number): void {
+  // Get the question to replace
+  const questionToReplace = this.questionPaper[index];
+
+  // Get the list of all questions in the question paper
+  const existingQuestions = [...this.questionPaper];
+
+  // Call the service method to get a new question
+  this.questionPaperService.getNewQuestion(questionToReplace, existingQuestions).subscribe(newQuestion => {
+    // Replace the question at the given index with the new question
+    console.log("new question", newQuestion);
+    this.questionPaper[index] = newQuestion;
+  });
+}
   
  }
