@@ -13,6 +13,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { PermissionsService } from '../../service/permissions.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { StandardsComponent } from '../../standards/standards.component';
+import { SubjectsComponent } from '../../subjects/subjects.component';
+import { ChaptersComponent } from '../../chapters/chapters.component';
+import { TopicsComponent } from '../../topics/topics.component';
+import { QuestionsComponent } from '../questions.component';
 
 @Component({
   selector: 'app-questions-list',
@@ -61,12 +67,19 @@ export class QuestionsListComponent implements OnInit {
   pageSize = 10;
   totalQuestions = 0;
   currentPage = 1;
+  StandardModal: MatDialogRef<StandardsComponent> | undefined;
+  SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
+  ChapterModal: MatDialogRef<ChaptersComponent> | undefined;
+  TopicModal: MatDialogRef<TopicsComponent> | undefined;
+  QuestionModal: MatDialogRef<QuestionsComponent> | undefined;
 
 
   constructor(
     private questionsService: QuestionsService,
     private router: Router,
-    public permissionsService: PermissionsService
+    public permissionsService: PermissionsService,
+    private matDialog: MatDialog,
+
   ) {}
 
   ngOnInit(): void {
@@ -118,5 +131,40 @@ export class QuestionsListComponent implements OnInit {
     }
   }
   
-  
+  openStandardModal() {
+    this.StandardModal = this.matDialog.open(StandardsComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    });
+  }
+
+  openSubjectModal() {
+    this.SubjectModal = this.matDialog.open(SubjectsComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    }); 
+  }
+  openChapterModal() {
+    this.ChapterModal = this.matDialog.open(ChaptersComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    }); 
+  }
+  openTopicModal() {
+    this.TopicModal = this.matDialog.open(TopicsComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    }); 
+  }
+  openQuestionModal() {
+    this.QuestionModal = this.matDialog.open(QuestionsComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    }); 
+  }
 }

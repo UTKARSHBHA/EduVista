@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Optional, ViewChild } from '@angular/core';
 import { QuestionsService } from '../services/questions.service';
 import {} from 'ngx-bootstrap';
 import {
@@ -18,6 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatDialog,
   MatDialogRef,
+  MatDialogModule,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { StandardsComponent } from '../standards/standards.component';
@@ -29,7 +30,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, NgSelectModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, NgSelectModule,MatDialogModule],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })
@@ -59,7 +60,9 @@ export class QuestionsComponent implements OnInit {
     private standardsService: StandardsService,
     private route: ActivatedRoute,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    @Optional() public dialogRef: MatDialogRef<QuestionsComponent>
+
   ) {
     this.questionForm = this.formBuilder.group({
       question_text: ['', Validators.required],
@@ -234,7 +237,7 @@ export class QuestionsComponent implements OnInit {
               this.fileInput.nativeElement.value = ''; // Clear the file input
               alert("Successfully updated the question");
               this.router.navigate(['/questions']);
-
+              this.dialogRef?.close({ refresh: true});
             },
             error: (error) => {
               console.error('Error updating question', error);

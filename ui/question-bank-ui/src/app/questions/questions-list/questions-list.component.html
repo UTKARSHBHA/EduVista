@@ -3,20 +3,20 @@
     <header>
         <div class="leftButton">
             @if(permissionsService.getPermissions('Questions.add_standard')){
-                <button class="add-btn" (click)="routTo('standards')">Add Standard</button>
+                <button class="add-btn" (click)="openStandardModal()">Add Standard</button>
             }
             @if(permissionsService.getPermissions('Questions.add_subject')){
-                <button class="add-btn" (click)="routTo('subjects')">Add Subject</button>
+                <button class="add-btn" (click)="openSubjectModal()">Add Subject</button>
             }
             @if(permissionsService.getPermissions('Questions.add_chapter')){
-                <button class="add-btn" (click)="routTo('chapters')">Add Chapter</button>
+                <button class="add-btn" (click)="openChapterModal()">Add Chapter</button>
             }
             @if(permissionsService.getPermissions('Questions.add_topic')){
-                <button class="add-btn" (click)="routTo('topics')">Add Topic</button>
+                <button class="add-btn" (click)="openTopicModal()">Add Topic</button>
             }
         </div>
         @if(permissionsService.getPermissions('Questions.add_question')){
-            <button class="add-btn" (click)="routTo('questions')">Add</button>
+            <button class="add-btn" (click)="openQuestionModal()">Add</button>
         }
     </header>
     
