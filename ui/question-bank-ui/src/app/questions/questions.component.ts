@@ -237,7 +237,7 @@ export class QuestionsComponent implements OnInit {
               this.fileInput.nativeElement.value = ''; // Clear the file input
               alert("Successfully updated the question");
               this.router.navigate(['/questions']);
-              this.dialogRef?.close({ refresh: true});
+              
             },
             error: (error) => {
               console.error('Error updating question', error);
@@ -260,6 +260,7 @@ export class QuestionsComponent implements OnInit {
           },
         });
       }
+      this.dialogRef?.close({ refresh: true});
     }
   }
 

@@ -5,7 +5,7 @@
     </a>
   </div>
   <ul class="navbar-links">
-    @if(permissionsService.getPermissions('Questions.add_standard')){
+    <!-- @if(permissionsService.getPermissions('Questions.add_standard')){
       <li><a routerLink="/standards">Standards</a></li>
     }
 
@@ -18,7 +18,7 @@
     }
     @if(permissionsService.getPermissions('Questions.add_chapter')){
       <li><a routerLink="/chapters">Chapters</a></li>
-    }
+    } -->
     @if(permissionsService.getPermissions('Questions.view_question')){
 
     <li><a routerLink="/questions-list">Questions</a></li>
