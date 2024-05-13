@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
 import { StudentRegistrationService } from '../services/student-registration.service';
 import { AgGridAngular } from 'ag-grid-angular';
+import { MatDialog } from '@angular/material/dialog';
+import { StudentRegistrationComponent } from '../student-registration/student-registration.component';
 
 @Component({
   selector: 'app-student-list',
@@ -48,7 +50,10 @@ export class StudentListComponent implements OnInit {
     { headerName: 'Emergency Contact Number', field: 'emergency_contact_number', filter: true },
   ];
 
-  constructor(private studentRegistrationService: StudentRegistrationService) {
+  constructor(private studentRegistrationService: StudentRegistrationService, 
+    private matDialog: MatDialog,
+
+  ) {
     
   }
 
@@ -71,5 +76,12 @@ export class StudentListComponent implements OnInit {
 
   // Inside student-list.component.ts
 
-
+  
+  openStudentRegistrationModal() {
+    const dialogRef = this.matDialog.open(StudentRegistrationComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    });
+  }
 };

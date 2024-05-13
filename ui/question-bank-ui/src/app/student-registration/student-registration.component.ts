@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { StudentRegistrationService } from '../services/student-registration.service';
 import { CommonModule } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-student-registration',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule, CommonModule],
+  imports: [ReactiveFormsModule,FormsModule, CommonModule, MatDialogModule],
   templateUrl: './student-registration.component.html',
   styleUrl: './student-registration.component.css'
 })
@@ -19,17 +20,11 @@ export class StudentRegistrationComponent implements OnInit {
       user: this.formBuilder.group({
         username: ['', Validators.required],
         email: ['', Validators.required],
-        password: ['', Validators.required]
-      }),
-      confirm_password: ['', Validators.required],
-}, {
-    validators: [
-        (group: FormGroup) => {
-            const password = group.get('password')?.value;
-            const confirmPassword = group.get('confirm_password')?.value;
-            return password === confirmPassword? null : { notMatching: true };
-        }
-    ],
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+      }, { validator: this.checkPasswords }),
+      
+  
 
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -76,5 +71,24 @@ export class StudentRegistrationComponent implements OnInit {
       console.log('form not valid');
       console.log(this.registrationForm);
     }
+  }
+
+  checkPasswords(group: FormGroup) {
+    let pass = group.controls['password'].value;
+    let confirmPass = group.controls['confirmPassword'].value;
+  
+    // Remove the mismatch error if it exists
+    if (group.controls['confirmPassword'].errors?.['mismatch']) {
+      group.controls['confirmPassword'].setErrors(null);
+    }
+  
+    // Check if the passwords match
+    if (pass !== confirmPass) {
+      // Set the mismatch error on the confirmPassword form control
+      group.controls['confirmPassword'].setErrors({ mismatch: true });
+    }
+  
+    // Return null if there are no errors
+    return null;
   }
 }
