@@ -207,9 +207,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
 
 class StudentSerializer(serializers.ModelSerializer):
-    user = CustomUserSerializer(write_only=True)  # Nested serializer for user creation
+    user = CustomUserSerializer()  # Nested serializer for user creation
 
     class Meta:
         model = Student
