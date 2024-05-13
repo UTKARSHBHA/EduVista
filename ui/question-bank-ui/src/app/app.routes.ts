@@ -70,6 +70,14 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'student-registration',
+    loadComponent: () =>
+      import('./student-registration/student-registration.component').then(
+        (m) => m.StudentRegistrationComponent
+      ),
+    canActivate: [AuthGuard],
+  },
   
   {
     path: 'question-view/:id',

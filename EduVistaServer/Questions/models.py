@@ -1,3 +1,6 @@
+import datetime
+import random
+import string
 from django.conf import settings
 from django.db import models
 # from django.contrib.auth.models import User
@@ -141,3 +144,48 @@ class QuestionPaper(models.Model):
     def __str__(self):
         return f"{self.standard.name} - {self.subject.name} - {self.chapter.name if self.chapter else 'No Chapter'}"
     
+
+def generate_registration_number():
+    # Define the format for the registration number (e.g., prefix + random string + year)
+    prefix = "REG-"
+    year = str(datetime.date.today().year)[2:]  # Get the last two digits of the current year
+    random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    return f"{prefix}{random_string}{year}"
+
+class Student(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Foreign key to User model
+
+    # Basic Details
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, blank=True)
+
+    # Contact Information
+    phone_number = models.CharField(max_length=15)
+    alternate_phone_number = models.CharField(max_length=15, blank=True)
+
+    # Demographic Information
+    date_of_birth = models.DateField()
+    gender = models.CharField(max_length=10, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
+
+    # Enrollment Information
+    registration_number = models.CharField(max_length=20, unique=True, default=generate_registration_number)
+    admission_date = models.DateField()
+
+    # Address Information (Optional)
+    address_line1 = models.CharField(max_length=100)
+    address_line2 = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=10)
+    country = models.CharField(max_length=30)
+
+    # Additional Information (Optional)
+    profile_picture = models.ImageField(upload_to='student_profile_pics/', blank=True , null=True)
+    parent_guardian_name = models.CharField(max_length=100, blank=True)
+    parent_guardian_contact = models.CharField(max_length=15, blank=True)
+    emergency_contact_name = models.CharField(max_length=100, blank=True)
+    emergency_contact_number = models.CharField(max_length=15, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.registration_number})"

@@ -1,10 +1,10 @@
 from rest_framework import viewsets, status
 
 # Import your serializers
-from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
+from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, StudentSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
 
 # Import your models
-from .models import Question, Chapter, QuestionPaper, Subject, Standard, Topic, Option
+from .models import Question, Chapter, QuestionPaper, Student, Subject, Standard, Topic, Option
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -309,3 +309,9 @@ class GetNewQuestionView(APIView):
             return Response(QuestionSerializer(new_question).data, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No suitable question found.'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]

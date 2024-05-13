@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import Group, CustomUser
 from rest_framework import serializers
-from .models import CustomUser, Question, Chapter, Subject, Standard, Topic, Option
+from .models import CustomUser, Question, Chapter, Student, Subject, Standard, Topic, Option
 import base64
 from django.core.files.base import ContentFile
 import logging
@@ -202,3 +202,51 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # print(list(user.get_all_permissions()))
         return token
 
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'password']
+
+class StudentSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer(write_only=True)  # Nested serializer for user creation
+
+    class Meta:
+        model = Student
+        fields = (
+            'user',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'phone_number',
+            'alternate_phone_number',
+            'date_of_birth',
+            'gender',
+            'registration_number',
+            'admission_date',
+            'address_line1',
+            'address_line2',
+            'city',
+            'state',
+            'postal_code',
+            'country',
+            'profile_picture',
+            'parent_guardian_name',
+            'parent_guardian_contact',
+            'emergency_contact_name',
+            'emergency_contact_number',
+        )
+
+    
+
+    def create(self, validated_data):
+        user_serializer = self.fields['user']  # Access nested serializer
+        user_data = validated_data.pop('user')
+        validated_user_data = user_serializer.validate(user_data)  # Validate user data
+
+        # Create the user object
+        user = CustomUser.objects.create_user(**validated_user_data)
+
+        # Create the student object with the created user
+        student = Student.objects.create(user=user, **validated_data)
+        return student
