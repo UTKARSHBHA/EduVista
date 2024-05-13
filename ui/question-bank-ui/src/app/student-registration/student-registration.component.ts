@@ -29,7 +29,7 @@ export class StudentRegistrationComponent implements OnInit {
       date_of_birth: ['', Validators.required],
       gender: ['', Validators.required],
       // registration_number: [''],
-      admission_date: [''],
+      admission_date: ['', Validators.required],
       // Address fields
       address_line1: ['', Validators.required],
       address_line2: [''],
@@ -40,11 +40,11 @@ export class StudentRegistrationComponent implements OnInit {
       // Profile picture (handle as File type)
       profile_picture: [null],
       // Parent/Guardian fields
-      parent_guardian_name: ['', Validators.required],
-      parent_guardian_contact: ['', Validators.required],
+      parent_guardian_name: ['', ],
+      parent_guardian_contact: ['', ],
       // Emergency contact
-      emergency_contact_name: ['', Validators.required],
-      emergency_contact_number: ['', Validators.required],
+      emergency_contact_name: ['', ],
+      emergency_contact_number: ['', ],
     });
   }
 
@@ -61,6 +61,10 @@ export class StudentRegistrationComponent implements OnInit {
           (error) => {
             console.error(error);
           })
+    }
+    else{
+      console.log('form not valid');
+      console.log(this.registrationForm);
     }
   }
 }
