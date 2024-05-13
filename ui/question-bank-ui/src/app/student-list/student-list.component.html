@@ -1,7 +1,9 @@
 <div class="container">
     <header>
-        <button class="add-btn" mat-raised-button color="primary" (click)="openStudentRegistrationModal()">Open Student Registration</button>
+        @if(permissionsService.getPermissions('Questions.add_student')){
 
+        <button class="add-btn" mat-raised-button color="primary" (click)="openStudentRegistrationModal()">Open Student Registration</button>
+        }
     </header>
 
     <ag-grid-angular class="ag-theme-quartz"

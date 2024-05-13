@@ -4,6 +4,7 @@ import { StudentRegistrationService } from '../services/student-registration.ser
 import { AgGridAngular } from 'ag-grid-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentRegistrationComponent } from '../student-registration/student-registration.component';
+import { PermissionsService } from '../service/permissions.service';
 
 @Component({
   selector: 'app-student-list',
@@ -52,6 +53,7 @@ export class StudentListComponent implements OnInit {
 
   constructor(private studentRegistrationService: StudentRegistrationService, 
     private matDialog: MatDialog,
+    public permissionsService: PermissionsService,
 
   ) {
     
