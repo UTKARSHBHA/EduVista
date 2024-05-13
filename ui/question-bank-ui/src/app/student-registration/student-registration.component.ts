@@ -22,7 +22,7 @@ export class StudentRegistrationComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
-      }),
+      }, { validators: this.checkPasswords }),
       
   
 
@@ -74,21 +74,9 @@ export class StudentRegistrationComponent implements OnInit {
   }
 
   checkPasswords(group: FormGroup) {
-    let pass = group.controls['password'].value;
-    let confirmPass = group.controls['confirmPassword'].value;
-  
-    // Remove the mismatch error if it exists
-    if (group.controls['confirmPassword'].errors?.['mismatch']) {
-      group.controls['confirmPassword'].setErrors(null);
-    }
-  
-    // Check if the passwords match
-    if (pass !== confirmPass) {
-      // Set the mismatch error on the confirmPassword form control
-      group.controls['confirmPassword'].setErrors({ mismatch: true });
-    }
-  
-    // Return null if there are no errors
-    return null;
+    let pass = group.get('password')?.value;
+    let confirmPass = group.get('confirmPassword')?.value;
+
+    return pass === confirmPass? null : { notSame: true }
   }
 }

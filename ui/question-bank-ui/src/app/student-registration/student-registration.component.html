@@ -9,7 +9,7 @@
         <input type="text" id="username" formControlName="username" />
       </div>
         <div
-          *ngIf="registrationForm.get('user.username')?.touched"
+          *ngIf="registrationForm.get('user.username')?.errors?.['required'] && registrationForm.get('user.username')?.touched" 
           class="error"
         >Username is required</div>
       <div class="form-group">
@@ -17,7 +17,7 @@
         <input type="email" id="email" formControlName="email" />
       </div>
         <div
-          *ngIf="registrationForm.get('user.email')?.touched"
+          *ngIf="registrationForm.get('user.email')?.errors?.['required'] && registrationForm.get('user.email')?.touched" 
           class="error"
         >
           Email is required
@@ -27,7 +27,7 @@
         <input type="password" id="password" formControlName="password" />
       </div>
         <div
-          *ngIf="registrationForm.get('user.password')?.touched"
+          *ngIf="registrationForm.get('user.password')?.errors?.['required'] && registrationForm.get('user.password')?.touched" 
           class="error"
         >
           Password is required
@@ -40,11 +40,14 @@
           formControlName="confirmPassword"
         />
       </div>
-        <div
-          *ngIf="registrationForm.get('user.confirmPassword')?.touched"
+        <!-- <div
+          *ngIf="registrationForm.get('user.confirmPassword')?.errors?.['required'] && registrationForm.get('user.confirmPassword')?.touched" 
           class="error"
         >
           Confirm Password is required
+        </div> -->
+        <div *ngIf="registrationForm.get('user')?.errors?.['notSame'] && registrationForm.get('user.confirmPassword')?.touched" class="error">
+          Passwords do not match.
         </div>
     </div>
     <div class="form-group">
