@@ -45,6 +45,7 @@ from rest_framework.pagination import PageNumberPagination
 from django.db.models import Q
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework_simplejwt.views import TokenObtainPairView
+from random import choice
 
 
 # Create a logger instance
@@ -292,7 +293,7 @@ class GetNewQuestionView(APIView):
         
         # Logic to find a new question that matches the criteria and is not in the list of existing questions
         # This is a placeholder for your actual logic
-        new_question = Question.objects.filter(
+        new_questions = list( Question.objects.filter(
             standard=question_to_replace['standard'],
             subject=question_to_replace['subject'],
             chapter=question_to_replace['chapter'],
@@ -300,7 +301,9 @@ class GetNewQuestionView(APIView):
             difficulty_level=question_to_replace['difficulty_level'],
             marks=question_to_replace['marks'],
             type=question_to_replace['type']
-        ).exclude(id__in=existing_questions_ids).first()
+        ).exclude(id__in=existing_questions_ids))
+
+        new_question = choice(new_questions)
         
         if new_question:
             return Response(QuestionSerializer(new_question).data, status=status.HTTP_200_OK)
