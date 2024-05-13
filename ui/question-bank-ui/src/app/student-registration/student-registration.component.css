@@ -27,14 +27,15 @@ form {
 /* Form group styling */
 .form-group {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 0.5rem;
     margin-bottom: 1rem;
+    justify-content: space-between;
 }
 
 /* Input and select styling */
 .form-group input,.form-group select {
-    width: 100%; /* Full width to utilize the form width */
+    width: 60%; /* Full width to utilize the form width */
     padding: 0.5rem;
     border: 1px solid #ced4da; /* Light grey border */
     border-radius: 4px;
