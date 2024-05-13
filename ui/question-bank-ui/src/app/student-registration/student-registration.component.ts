@@ -21,6 +21,16 @@ export class StudentRegistrationComponent implements OnInit {
         email: ['', Validators.required],
         password: ['', Validators.required]
       }),
+      confirm_password: ['', Validators.required],
+}, {
+    validators: [
+        (group: FormGroup) => {
+            const password = group.get('password')?.value;
+            const confirmPassword = group.get('confirm_password')?.value;
+            return password === confirmPassword? null : { notMatching: true };
+        }
+    ],
+
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       middle_name: [''],
