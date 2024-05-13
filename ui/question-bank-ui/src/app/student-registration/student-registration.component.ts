@@ -62,14 +62,17 @@ export class StudentRegistrationComponent implements OnInit {
        .subscribe(
           (response) => {
             alert("Student registered successfully");
+            this.registrationForm.reset()
           },
           (error) => {
             console.error(error);
+            
           })
     }
     else{
       console.log('form not valid');
       console.log(this.registrationForm);
+      
     }
   }
 
