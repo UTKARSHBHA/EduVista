@@ -241,6 +241,13 @@
     <div *ngIf="registrationForm.errors?.['notMatching']" class="error-message">
       Passwords do not match.
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Register</button>
-  </form>
+    @if(studentId){
+
+      <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Update</button>
+    }
+    @else{
+      <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Register</button>
+
+    }
+    </form>
 </div>
