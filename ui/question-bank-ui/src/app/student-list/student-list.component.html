@@ -1,15 +1,24 @@
 <div class="container">
-    <header>
-        @if(permissionsService.getPermissions('Questions.add_student')){
+  <header>
+    @if(permissionsService.getPermissions('Questions.add_student')){
 
-        <button class="add-btn" mat-raised-button color="primary" (click)="openStudentRegistrationModal()">Open Student Registration</button>
-        }
-    </header>
+    <button
+      class="add-btn"
+      mat-raised-button
+      color="primary"
+      (click)="openStudentRegistrationModal()"
+    >
+      Open Student Registration
+    </button>
+    }
+  </header>
 
-    <ag-grid-angular class="ag-theme-quartz"
+  <ag-grid-angular
+    class="ag-theme-quartz"
     [rowData]="rowData"
     [columnDefs]="colDefs"
-    >
-    
-</ag-grid-angular>
+    [domLayout]="'autoHeight'"
+
+  >
+  </ag-grid-angular>
 </div>
