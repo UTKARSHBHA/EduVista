@@ -1,33 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentRegistrationService } from '../services/student-registration.service';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Optional } from 'ag-grid-community';
+import { StandardsComponent } from '../standards/standards.component';
 
 @Component({
   selector: 'app-student-registration',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule, CommonModule, MatDialogModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, MatDialogModule],
   templateUrl: './student-registration.component.html',
-  styleUrl: './student-registration.component.css'
+  styleUrl: './student-registration.component.css',
+  
 })
 export class StudentRegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   studentId: any = null;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private studentRegistrationService: StudentRegistrationService,
+    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() public dialogRef: MatDialogRef<any>,
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private studentRegistrationService: StudentRegistrationService,    private route: ActivatedRoute,
   ) {
     this.registrationForm = this.formBuilder.group({
-      user: this.formBuilder.group({
-        username: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required]],
-        confirmPassword: ['', Validators.required],
-      }, { validators: this.checkPasswords }),
-      
-  
+      user: this.formBuilder.group(
+        {
+          username: ['', Validators.required],
+          email: ['', [Validators.required, Validators.email]],
+          password: ['', [Validators.required]],
+          confirmPassword: ['', Validators.required],
+        },
+        { validators: this.checkPasswords }
+      ),
 
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -58,32 +74,31 @@ export class StudentRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.studentId = this.route.snapshot.paramMap.get('id');
+    // this.studentId = this.route.snapshot.paramMap.get('id');
+    console.log('data' , this.data)
+    this.studentId = this.data.id;
+
 
     if (this.studentId) {
       this.registrationForm.removeControl('user');
       // this.registrationForm.removeControl('confirmPassword');
-      
-
 
       this.studentRegistrationService
         .getStudentById(+this.studentId)
         .subscribe((student) => {
           console.log(student);
-          
+
           this.registrationForm.patchValue(student);
-          
 
           console.log(student);
           // Assuming you have a method to set the options form array based on the student's options
-
         });
     }
   }
 
   onSubmit() {
     if (this.registrationForm.valid) {
-      if(this.studentId){
+      if (this.studentId) {
         // console.log(formData);
         this.studentRegistrationService
           .updateStudent(this.studentId, this.registrationForm.value)
@@ -92,34 +107,30 @@ export class StudentRegistrationComponent implements OnInit {
               console.log('Question updated:', data);
               // this.loadQuestions();
               this.registrationForm.reset(); // Reset the form
-              alert("Successfully updated the student");
-              this.router.navigate(['/student-registration']);
-              
+              alert('Successfully updated the student');
+              // this.router.navigate(['/student-registration']);
             },
             error: (error) => {
               console.error('Error updating student', error);
             },
           });
-
+      } else {
+        this.studentRegistrationService
+          .registerStudent(this.registrationForm.value)
+          .subscribe(
+            (response) => {
+              alert('Student registered successfully');
+              this.registrationForm.reset();
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
       }
-      else{
-
-        this.studentRegistrationService.registerStudent(this.registrationForm.value)
-        .subscribe(
-          (response) => {
-            alert("Student registered successfully");
-            this.registrationForm.reset()
-          },
-          (error) => {
-            console.error(error);
-            
-          })
-        }
-      }
-    else{
+      this.dialogRef?.close({ refresh: true})
+    } else {
       console.log('form not valid');
       console.log(this.registrationForm);
-      
     }
   }
 
@@ -127,6 +138,6 @@ export class StudentRegistrationComponent implements OnInit {
     let pass = group.get('password')?.value;
     let confirmPass = group.get('confirmPassword')?.value;
 
-    return pass === confirmPass? null : { notSame: true }
+    return pass === confirmPass ? null : { notSame: true };
   }
 }

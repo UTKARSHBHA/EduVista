@@ -287,11 +287,12 @@ export class StudentListComponent implements OnInit {
 
   // Inside student-list.component.ts
 
-  openStudentRegistrationModal() {
+  openStudentRegistrationModal(id: any) {
     const dialogRef = this.matDialog.open(StudentRegistrationComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,
+      data: { id },
     });
   }
   dateFormatter(params: any) {
@@ -310,6 +311,7 @@ export class StudentListComponent implements OnInit {
   }
   view(e: any) {
     console.log('veiw clicked');
-    this.router.navigate(['/student-view', e.data.id]);
+    // this.router.navigate(['/student-view', e.data.id]);
+    this.openStudentRegistrationModal(e.data.id);
   }
 }
