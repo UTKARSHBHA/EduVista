@@ -96,6 +96,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'student-view/:id',
+    loadComponent: () =>
+      import('./student-view/student-view.component').then(
+        (m) => m.StudentViewComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'question-paper-view/:id',
     loadComponent: () =>
       // ui/question-bank-ui/src/app/question-papers/question-paper-view/question-paper-view.component.ts
@@ -109,6 +117,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./questions/questions.component').then(
         (m) => m.QuestionsComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'student-registration/:id',
+    loadComponent: () =>
+      import('./student-registration/student-registration.component').then(
+        (m) => m.StudentRegistrationComponent
       ),
     canActivate: [AuthGuard],
   },

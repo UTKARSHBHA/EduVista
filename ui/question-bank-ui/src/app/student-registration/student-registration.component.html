@@ -3,6 +3,7 @@
   <i class="fa-solid fa-xmark closeModal" mat-button mat-dialog-close></i>
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    @if(!studentId){
     <div formGroupName="user" class="userInfo">
       <div class="form-group">
         <label for="username">Username *</label>
@@ -22,34 +23,37 @@
         >
           Email is required
         </div>
-      <div class="form-group">
-        <label for="password">Password *</label>
-        <input type="password" id="password" formControlName="password" />
-      </div>
-        <div
+
+
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" formControlName="password" />
+          </div>
+          <div
           *ngIf="registrationForm.get('user.password')?.errors?.['required'] && registrationForm.get('user.password')?.touched" 
           class="error"
-        >
+          >
           Password is required
         </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password *</label>
-        <input
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password *</label>
+          <input
           type="password"
           id="confirmPassword"
           formControlName="confirmPassword"
-        />
-      </div>
+          />
+        </div>
         <!-- <div
           *ngIf="registrationForm.get('user.confirmPassword')?.errors?.['required'] && registrationForm.get('user.confirmPassword')?.touched" 
           class="error"
-        >
+          >
           Confirm Password is required
         </div> -->
         <div *ngIf="registrationForm.get('user')?.errors?.['notSame'] && registrationForm.get('user.confirmPassword')?.touched" class="error">
           Passwords do not match.
         </div>
-    </div>
+      </div>
+    }
     <div class="form-group">
       <label for="first_name">First Name *</label>
       <input type="text" id="first_name" formControlName="first_name" />
@@ -207,6 +211,14 @@
         type="tel"
         id="parent_guardian_contact"
         formControlName="parent_guardian_contact"
+      />
+    </div>
+    <div class="form-group">
+      <label for="parent_guardian_email">Parent/Guardian Email</label>
+      <input
+        type="email"
+        id="parent_guardian_email"
+        formControlName="parent_guardian_email"
       />
     </div>
     <!-- Emergency contact -->

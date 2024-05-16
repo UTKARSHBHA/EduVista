@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StudentRegistrationService } from '../services/student-registration.service';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -14,8 +14,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 })
 export class StudentRegistrationComponent implements OnInit {
   registrationForm: FormGroup;
+  studentId: any = null;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private studentRegistrationService: StudentRegistrationService) {
+
+  constructor(private formBuilder: FormBuilder, private router: Router, private studentRegistrationService: StudentRegistrationService,    private route: ActivatedRoute,
+  ) {
     this.registrationForm = this.formBuilder.group({
       user: this.formBuilder.group({
         username: ['', Validators.required],
@@ -47,6 +50,7 @@ export class StudentRegistrationComponent implements OnInit {
       // Parent/Guardian fields
       parent_guardian_name: ['', ],
       parent_guardian_contact: ['', ],
+      parent_guardian_email: ['', ],
       // Emergency contact
       emergency_contact_name: ['', ],
       emergency_contact_number: ['', ],
@@ -54,12 +58,54 @@ export class StudentRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.studentId = this.route.snapshot.paramMap.get('id');
+
+    if (this.studentId) {
+      this.registrationForm.removeControl('user');
+      // this.registrationForm.removeControl('confirmPassword');
+      
+
+
+      this.studentRegistrationService
+        .getStudentById(+this.studentId)
+        .subscribe((student) => {
+          console.log(student);
+          
+          this.registrationForm.patchValue(student);
+          
+
+          console.log(student);
+          // Assuming you have a method to set the options form array based on the student's options
+
+        });
+    }
   }
 
   onSubmit() {
     if (this.registrationForm.valid) {
-      this.studentRegistrationService.registerStudent(this.registrationForm.value)
-       .subscribe(
+      if(this.studentId){
+        // console.log(formData);
+        this.studentRegistrationService
+          .updateStudent(this.studentId, this.registrationForm.value)
+          .subscribe({
+            next: (data) => {
+              console.log('Question updated:', data);
+              // this.loadQuestions();
+              this.registrationForm.reset(); // Reset the form
+              alert("Successfully updated the student");
+              this.router.navigate(['/student-registration']);
+              
+            },
+            error: (error) => {
+              console.error('Error updating student', error);
+            },
+          });
+
+      }
+      else{
+
+        this.studentRegistrationService.registerStudent(this.registrationForm.value)
+        .subscribe(
           (response) => {
             alert("Student registered successfully");
             this.registrationForm.reset()
@@ -68,7 +114,8 @@ export class StudentRegistrationComponent implements OnInit {
             console.error(error);
             
           })
-    }
+        }
+      }
     else{
       console.log('form not valid');
       console.log(this.registrationForm);

@@ -215,6 +215,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
+            'id',
             'user',
             'first_name',
             'last_name',
@@ -252,3 +253,13 @@ class StudentSerializer(serializers.ModelSerializer):
         # Create the student object with the created user
         student = Student.objects.create(user=user, **validated_data)
         return student
+    
+    # def update(self, request, *args, **kwargs):
+    #     return super().update(request, *args, **kwargs)
+
+    def update(self, instance, validated_data):
+        # Remove the 'user' field from the validated data
+        validated_data.pop('user', None)
+
+        # Call the superclass's update method
+        return super().update(instance, validated_data)

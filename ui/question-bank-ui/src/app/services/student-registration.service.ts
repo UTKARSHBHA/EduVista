@@ -15,4 +15,14 @@ export class StudentRegistrationService {
   getStudents(): Observable<any> {
     return this.http.get('http://localhost:8000/api/students/');
   }
+  getStudentById(id: number): Observable<any> {
+    return this.http.get(`${'http://localhost:8000/api/students/'}${id}`);
+ }
+ deleteStudent(studentId: number): Observable<any> {
+  return this.http.delete(`${'http://localhost:8000/api/students/'}${studentId}`);
+}
+
+updateStudent(studentId: number, studentData: FormData): Observable<any> {
+  return this.http.put(`${'http://localhost:8000/api/students/'}${studentId}/`, studentData);
+}
 }

@@ -7,6 +7,8 @@ import { StudentRegistrationComponent } from '../student-registration/student-re
 import { PermissionsService } from '../service/permissions.service';
 import { WidthType } from 'docx';
 import { HighContrastModeDetector } from '@angular/cdk/a11y';
+import { ViewButtonRendererComponent } from '../questions/view-question-button/view-question-button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-list',
@@ -17,7 +19,7 @@ import { HighContrastModeDetector } from '@angular/cdk/a11y';
 })
 export class StudentListComponent implements OnInit {
   rowData: any[] = [];
-  
+
   genderRenderer = (params: any) => {
     switch (params.value) {
       case 'M':
@@ -82,33 +84,60 @@ export class StudentListComponent implements OnInit {
       hide: true,
     },
 
-    { headerName: 'First Name', field: 'first_name', filter: true, maxWidth: 200,  autoSizeColumnsToFitContent: true },
-    { headerName: 'Last Name', field: 'last_name', filter: true, maxWidth: 200, autoSizeColumnsToFitContent: true },
-    { headerName: 'Email', field: 'user.email', filter: true, maxWidth: 200, autoSizeColumnsToFitContent: true },
+    {
+      headerName: 'First Name',
+      field: 'first_name',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+    },
+    {
+      headerName: 'Last Name',
+      field: 'last_name',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+    },
+    {
+      headerName: 'Email',
+      field: 'user.email',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+    },
     {
       headerName: 'Gender',
       field: 'gender',
       cellRenderer: this.genderRenderer,
-      filter: true, maxWidth: 200, 
-      
+      filter: true,
+      maxWidth: 200,
     },
-    { headerName: 'Phone Number', field: 'phone_number', filter: true, maxWidth: 200,  autoSizeColumnsToFitContent: true },
+    {
+      headerName: 'Phone Number',
+      field: 'phone_number',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+    },
     { headerName: 'Username', field: 'user.username', filter: true },
     {
       headerName: 'Date of Birth',
       field: 'date_of_birth',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       valueFormatter: this.dateFormatter,
     },
     {
       headerName: 'Registration Number',
       field: 'registration_number',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
     },
     {
       headerName: 'Admission Date',
       field: 'admission_date',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       valueFormatter: this.dateFormatter,
     },
     {
@@ -117,48 +146,83 @@ export class StudentListComponent implements OnInit {
       filter: true,
       valueGetter: this.addressValueGetter,
       maxWidth: 400,
-      
     },
 
-    { headerName: 'Address', field: 'address_line1', filter: true, maxWidth: 200,  hide: true },
-    { headerName: 'Address', field: 'address_line2', filter: true, maxWidth: 200,  hide: true },
-    { headerName: 'City', field: 'city', filter: true, maxWidth: 200,  hide: true },
-    { headerName: 'State', field: 'state', filter: true, maxWidth: 200,  hide: true },
+    {
+      headerName: 'Address',
+      field: 'address_line1',
+      filter: true,
+      maxWidth: 200,
+      hide: true,
+    },
+    {
+      headerName: 'Address',
+      field: 'address_line2',
+      filter: true,
+      maxWidth: 200,
+      hide: true,
+    },
+    {
+      headerName: 'City',
+      field: 'city',
+      filter: true,
+      maxWidth: 200,
+      hide: true,
+    },
+    {
+      headerName: 'State',
+      field: 'state',
+      filter: true,
+      maxWidth: 200,
+      hide: true,
+    },
     {
       headerName: 'Postal Code',
       field: 'postal_code',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       hide: true,
     },
-    { headerName: 'Country', field: 'country', filter: true, maxWidth: 200,  hide: true },
+    {
+      headerName: 'Country',
+      field: 'country',
+      filter: true,
+      maxWidth: 200,
+      hide: true,
+    },
     {
       headerName: 'Parent/Guardian Name',
       field: 'parent_guardian_name',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       hide: true,
     },
     {
       headerName: 'Parent/Guardian Contact',
       field: 'parent_guardian_contact',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       hide: true,
     },
     {
       headerName: 'Parent/Guardian Email',
       field: 'parent_guardian_email',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       hide: true,
     },
     {
       headerName: 'Emergency Contact Name',
       field: 'emergency_contact_name',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       hide: true,
     },
     {
       headerName: 'Emergency Contact Number',
       field: 'emergency_contact_number',
-      filter: true, maxWidth: 200, 
+      filter: true,
+      maxWidth: 200,
       hide: true,
     },
     {
@@ -185,18 +249,26 @@ export class StudentListComponent implements OnInit {
       },
       hide: true,
     },
+    {
+      field: 'View',
+      cellRenderer: ViewButtonRendererComponent,
+      onCellClicked: this.view.bind(this),
+      maxWidth: 100,
+      hide: !this.permissionsService.getPermissions('Questions.view_student'),
+    },
   ];
   autoSizeStrategy: any;
 
   constructor(
     private studentRegistrationService: StudentRegistrationService,
     private matDialog: MatDialog,
-    public permissionsService: PermissionsService
-  ) {
+    public permissionsService: PermissionsService,
+    private router: Router,
 
+  ) {
     this.autoSizeStrategy = {
       type: 'fitCellContents',
-  };
+    };
   }
 
   ngOnInit(): void {
@@ -236,5 +308,8 @@ export class StudentListComponent implements OnInit {
     const data = params.data;
     return `${data.address_line1}, ${data.address_line2}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
   }
-  
+  view(e: any) {
+    console.log('veiw clicked');
+    this.router.navigate(['/student-view', e.data.id]);
+  }
 }

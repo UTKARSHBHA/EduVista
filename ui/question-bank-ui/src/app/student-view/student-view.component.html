@@ -1,0 +1,53 @@
+<div class="container">
+
+    <div class="student-details">
+    <div class="btn-container">
+        <button class="delete-btn" (click)="deleteStudent()">
+        <i class="fas fa-trash"></i>
+    </button>
+    <button class="update-btn" (click)="updateStudent()">
+        <i class="fas fa-edit"></i>
+    </button>
+</div>
+    <h2>Student Profile</h2>
+    <img *ngIf="student.profile_picture" [src]="student.profile_picture" alt="Profile Picture" class="profile-picture">
+    <div class="info-card personal-info">
+      <h3>Personal Information</h3>
+      <p><strong>Full Name:</strong> {{ student.first_name }} {{ student.middle_name }} {{ student.last_name }}</p>
+      <p><strong>Date of Birth:</strong> {{ student.date_of_birth | date:'shortDate' }}</p>
+      <p><strong>Gender:</strong> {{ student.gender }}</p>
+      <p><strong>Phone Number:</strong> {{ student.phone_number }}</p>
+      <p><strong>Alternate Phone Number:</strong> {{ student.alternate_phone_number }}</p>
+    </div>
+    <div class="info-card contact-info">
+      <h3>Contact Information</h3>
+      <p><strong>Address Line 1:</strong> {{ student.address_line1 }}</p>
+      <p><strong>Address Line 2:</strong> {{ student.address_line2 }}</p>
+      <p><strong>City:</strong> {{ student.city }}</p>
+      <p><strong>State:</strong> {{ student.state }}</p>
+      <p><strong>Country:</strong> {{ student.country }}</p>
+      <p><strong>Postal Code:</strong> {{ student.postal_code }}</p>
+    </div>
+    <div class="info-card guardian-info">
+      <h3>Parent/Guardian Information</h3>
+      <p><strong>Name:</strong> {{ student.parent_guardian_name }}</p>
+      <p><strong>Contact:</strong> {{ student.parent_guardian_contact }}</p>
+      <p><strong>Email:</strong> {{ student.parent_guardian_email }}</p>
+    </div>
+    <div class="info-card emergency-contact">
+      <h3>Emergency Contact</h3>
+      <p><strong>Name:</strong> {{ student.emergency_contact_name }}</p>
+      <p><strong>Contact Number:</strong> {{ student.emergency_contact_number }}</p>
+    </div>
+    <div class="info-card admission-info">
+      <h3>Admission Information</h3>
+      <p><strong>Registration Number:</strong> {{ student.registration_number }}</p>
+      <p><strong>Admission Date:</strong> {{ student.admission_date | date:'shortDate' }}</p>
+    </div>
+    <div class="info-card user-info">
+      <h3>User Account</h3>
+      <p><strong>Username:</strong> {{ student.user.username }}</p>
+      <p><strong>Email:</strong> {{ student.user.email }}</p>
+    </div>
+  </div>
+        </div>

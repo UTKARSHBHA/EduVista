@@ -315,3 +315,9 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def get_serializer(self, *args, **kwargs):
+        # Set partial=True if it's an update request
+        if self.action == 'update':
+            kwargs['partial'] = True
+        return super().get_serializer(*args, **kwargs)
