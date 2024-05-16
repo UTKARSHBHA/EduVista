@@ -5,6 +5,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentRegistrationComponent } from '../student-registration/student-registration.component';
 import { PermissionsService } from '../service/permissions.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-student-list',
@@ -62,9 +63,9 @@ export class StudentListComponent implements OnInit {
     { headerName: 'Gender', field: 'gender', cellRenderer: this.genderRenderer, filter: true, hide: true  },
     { headerName: 'Phone Number', field: 'phone_number', filter: true, hide: true  },
     { headerName: 'Username', field: 'user.username', filter: true },
-    { headerName: 'Date of Birth', field: 'date_of_birth', filter: true },
+    { headerName: 'Date of Birth', field: 'date_of_birth', filter: true, valueFormatter: this.dateFormatter, },
     { headerName: 'Registration Number', field: 'registration_number', filter: true },
-    { headerName: 'Admission Date', field: 'admission_date', filter: true },
+    { headerName: 'Admission Date', field: 'admission_date', filter: true, valueFormatter: this.dateFormatter, },
     { headerName: 'Address', field: 'address_line1', filter: true },
     { headerName: 'Address', field: 'address_line2', filter: true },
     { headerName: 'City', field: 'city', filter: true },
@@ -112,6 +113,12 @@ export class StudentListComponent implements OnInit {
       disableClose: true,
     });
   }
-
+  dateFormatter(params: any) {
+    if (params.value) {
+      const date = new Date(params.value);
+      return `${('0' + date.getDate()).slice(-2)} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+    }
+    return '';
+  }
  
 };
