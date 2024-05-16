@@ -48,12 +48,12 @@ export class StudentRegistrationComponent implements OnInit {
       // Profile picture (handle as File type)
       profile_picture: [null],
       // Parent/Guardian fields
-      parent_guardian_name: ['', ],
-      parent_guardian_contact: ['', ],
-      parent_guardian_email: ['', ],
+      parent_guardian_name: ['', Validators.required],
+      parent_guardian_contact: ['', Validators.required],
+      parent_guardian_email: ['', Validators.required],
       // Emergency contact
-      emergency_contact_name: ['', ],
-      emergency_contact_number: ['', ],
+      emergency_contact_name: ['', Validators.required],
+      emergency_contact_number: ['', Validators.required],
     });
   }
 
