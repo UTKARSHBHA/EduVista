@@ -21,11 +21,11 @@ export class StudentListComponent implements OnInit {
   genderRenderer = (params:any) => {
     switch (params.value) {
       case 'M':
-        return '<i class="fa-solid fa-mars" style="color: blue"></i>';
+        return '<i class="fa-solid fa-mars" style="color: blue margin-right: 5px;"></i>';
       case 'F':
-        return '<i class="fa-solid fa-venus" style="color: pink"></i>';
+        return '<i class="fa-solid fa-venus" style="color: pink margin-right: 5px;"></i>';
       case 'O':
-        return '<i class="fa-solid fa-venus-mars"></i>';
+        return '<i class="fa-solid fa-venus-mars " style="margin-right: 5px;"></i>';
       default:
         return 'Unknown';
     }
@@ -36,8 +36,8 @@ export class StudentListComponent implements OnInit {
       <div>
         <div>${this.genderRenderer({ value: data.gender })}
         ${data.first_name} ${data.last_name}</div>
-        <div><a  style="color: inherit" href="mailto:${data.user?.email}"><i class="fa-solid fa-envelope"></i> ${data.user?.email}</a></div>
-        <div><i class="fa-solid fa-phone"></i> ${data.phone_number}</div>
+        <div><a  style="color: inherit" href="mailto:${data.user?.email}"><i class="fa-solid fa-envelope"  style="margin-right: 5px;"></i> ${data.user?.email}</a></div>
+        <div><i class="fa-solid fa-phone"  style="margin-right: 5px;"></i> ${data.phone_number}</div>
       </div>
     `;
   };
@@ -46,8 +46,8 @@ export class StudentListComponent implements OnInit {
     return `
       <div>
         <div>${data.parent_guardian_name}</div>
-        <div><a  style="color: inherit" href="mailto:${data.parent_guardian_email}"><i class="fa-solid fa-envelope"></i> ${data.parent_guardian_email}</a></div>
-        <div><i class="fa-solid fa-phone"></i> ${data.parent_guardian_contact}</div>
+        <div><a  style="color: inherit" href="mailto:${data.parent_guardian_email}"><i class="fa-solid fa-envelope"  style="margin-right: 5px;"></i> ${data.parent_guardian_email}</a></div>
+        <div><i class="fa-solid fa-phone"  style="margin-right: 5px;"></i> ${data.parent_guardian_contact}</div>
       </div>
     `;
   };
@@ -57,7 +57,7 @@ export class StudentListComponent implements OnInit {
     return `
       <div>
         <div>${data.emergency_contact_name}</div>
-        <div><i class="fa-solid fa-phone"></i> ${data.emergency_contact_number}</div>
+        <div><i class="fa-solid fa-phone"  style="margin-right: 5px;"></i> ${data.emergency_contact_number}</div>
       </div>
     `;
   };
