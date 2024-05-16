@@ -28,17 +28,18 @@ export class StudentListComponent implements OnInit {
         return 'Unknown';
     }
   };
-  detailsRenderer = (params:any) => {
+  detailsRenderer = (params: any) => {
     const data = params.data;
     return `
       <div>
         <div>${this.genderRenderer({ value: data.gender })}
         ${data.first_name} ${data.last_name}</div>
-        <div><i class="fa-solid fa-envelope"></i> ${data.user?.email}</div>
+        <div><a  style="color: inherit" href="mailto:${data.user?.email}"><i class="fa-solid fa-envelope"></i> ${data.user?.email}</a></div>
         <div><i class="fa-solid fa-phone"></i> ${data.phone_number}</div>
       </div>
     `;
   };
+  
 
   colDefs = [
     {
