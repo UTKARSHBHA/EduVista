@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StudentRegistrationComponent } from '../student-registration/student-registration.component';
 import { PermissionsService } from '../service/permissions.service';
 import { DatePipe } from '@angular/common';
+import { WidthType } from 'docx';
 
 @Component({
   selector: 'app-student-list',
@@ -29,7 +30,7 @@ export class StudentListComponent implements OnInit {
         return 'Unknown';
     }
   };
-  detailsRenderer = (params: any) => {
+  studentDetailsRenderer = (params: any) => {
     const data = params.data;
     return `
       <div>
@@ -40,13 +41,33 @@ export class StudentListComponent implements OnInit {
       </div>
     `;
   };
+  parentDetailsRenderer = (params: any) => {
+    const data = params.data;
+    return `
+      <div>
+        <div>${data.parent_guardian_name}</div>
+        <div><a  style="color: inherit" href="mailto:${data.parent_guardian_email}"><i class="fa-solid fa-envelope"></i> ${data.parent_guardian_email}</a></div>
+        <div><i class="fa-solid fa-phone"></i> ${data.parent_guardian_contact}</div>
+      </div>
+    `;
+  };
+
+  emergencyDetailsRenderer = (params: any) => {
+    const data = params.data;
+    return `
+      <div>
+        <div>${data.emergency_contact_name}</div>
+        <div><i class="fa-solid fa-phone"></i> ${data.emergency_contact_number}</div>
+      </div>
+    `;
+  };
   
 
   colDefs = [
     {
       headerName: 'Student Details',
       field: 'details',
-      cellRenderer: this.detailsRenderer,
+      cellRenderer: this.studentDetailsRenderer,
       autoHeight: true,
       valueGetter: (params: any) => {
         const data = params.data;
@@ -66,16 +87,41 @@ export class StudentListComponent implements OnInit {
     { headerName: 'Date of Birth', field: 'date_of_birth', filter: true, valueFormatter: this.dateFormatter, },
     { headerName: 'Registration Number', field: 'registration_number', filter: true },
     { headerName: 'Admission Date', field: 'admission_date', filter: true, valueFormatter: this.dateFormatter, },
-    { headerName: 'Address', field: 'address_line1', filter: true },
-    { headerName: 'Address', field: 'address_line2', filter: true },
-    { headerName: 'City', field: 'city', filter: true },
-    { headerName: 'State', field: 'state', filter: true },
-    { headerName: 'Postal Code', field: 'postal_code', filter: true },
-    { headerName: 'Country', field: 'country', filter: true },
-    { headerName: 'Parent/Guardian Name', field: 'parent_guardian_name', filter: true },
-    { headerName: 'Parent/Guardian Contact', field: 'parent_guardian_contact', filter: true },
-    { headerName: 'Emergency Contact Name', field: 'emergency_contact_name', filter: true },
-    { headerName: 'Emergency Contact Number', field: 'emergency_contact_number', filter: true },
+    { headerName: 'Address', field: 'address', filter: true, valueGetter: this.addressValueGetter, width : 400 },
+
+    { headerName: 'Address', field: 'address_line1', filter: true, hide: true },
+    { headerName: 'Address', field: 'address_line2', filter: true, hide: true },
+    { headerName: 'City', field: 'city', filter: true, hide: true },
+    { headerName: 'State', field: 'state', filter: true, hide: true },
+    { headerName: 'Postal Code', field: 'postal_code', filter: true, hide: true },
+    { headerName: 'Country', field: 'country', filter: true, hide: true },
+    { headerName: 'Parent/Guardian Name', field: 'parent_guardian_name', filter: true, hide: true },
+    { headerName: 'Parent/Guardian Contact', field: 'parent_guardian_contact', filter: true, hide: true },
+    { headerName: 'Parent/Guardian Email', field: 'parent_guardian_email', filter: true, hide: true },
+    { headerName: 'Emergency Contact Name', field: 'emergency_contact_name', filter: true, hide: true },
+    { headerName: 'Emergency Contact Number', field: 'emergency_contact_number', filter: true, hide: true },
+    {
+      headerName: 'Parent/Guardian Details',
+      field: 'parentDetails',
+      cellRenderer: this.parentDetailsRenderer,
+      autoHeight: true,
+      filter: 'agTextColumnFilter',
+      valueGetter: (params: any) => {
+        const data = params.data;
+        return `${data.parent_guardian_name} ${data.parent_guardian_email} ${data.parent_guardian_contact}`;
+      }
+    },
+    {
+      headerName: 'Emergency Contact Details',
+      field: 'emergencyDetails',
+      cellRenderer: this.emergencyDetailsRenderer,
+      autoHeight: true,
+      filter: 'agTextColumnFilter',
+      valueGetter: (params: any) => {
+        const data = params.data;
+        return `${data.emergency_contact_name} ${data.emergency_contact_number}`;
+      }
+    },
   ];
 
   constructor(private studentRegistrationService: StudentRegistrationService, 
@@ -120,5 +166,8 @@ export class StudentListComponent implements OnInit {
     }
     return '';
   }
- 
+  addressValueGetter(params: any) {
+    const data = params.data;
+    return `${data.address_line1}, ${data.address_line2}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
+  }
 };
