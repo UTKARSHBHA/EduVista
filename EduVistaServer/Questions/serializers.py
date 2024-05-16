@@ -234,6 +234,7 @@ class StudentSerializer(serializers.ModelSerializer):
             'profile_picture',
             'parent_guardian_name',
             'parent_guardian_contact',
+            'parent_guardian_email',
             'emergency_contact_name',
             'emergency_contact_number',
         )

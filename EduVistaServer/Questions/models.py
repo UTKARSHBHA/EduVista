@@ -182,10 +182,11 @@ class Student(models.Model):
 
     # Additional Information (Optional)
     profile_picture = models.ImageField(upload_to='student_profile_pics/', blank=True , null=True)
-    parent_guardian_name = models.CharField(max_length=100, blank=True)
-    parent_guardian_contact = models.CharField(max_length=15, blank=True)
-    emergency_contact_name = models.CharField(max_length=100, blank=True)
-    emergency_contact_number = models.CharField(max_length=15, blank=True)
+    parent_guardian_name = models.CharField(max_length=100)
+    parent_guardian_contact = models.CharField(max_length=15)
+    parent_guardian_email = models.EmailField()
+    emergency_contact_name = models.CharField(max_length=100)
+    emergency_contact_number = models.CharField(max_length=15)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.registration_number})"
