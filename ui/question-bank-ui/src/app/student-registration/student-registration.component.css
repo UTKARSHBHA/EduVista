@@ -80,3 +80,9 @@ button:hover {
     text-align: right;
     padding-bottom: 1rem;
   }
+
+  button:disabled {
+    background-color: #cccccc; /* Change the background color */
+    cursor: not-allowed; /* Change the cursor to indicate it's not clickable */
+    opacity: 0.6; /* Optionally, reduce the opacity to further indicate it's disabled */
+}

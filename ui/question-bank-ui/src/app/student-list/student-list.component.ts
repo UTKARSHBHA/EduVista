@@ -40,6 +40,7 @@ export class StudentListComponent implements OnInit {
     { headerName: 'Registration Number', field: 'registration_number', filter: true },
     { headerName: 'Admission Date', field: 'admission_date', filter: true },
     { headerName: 'Address', field: 'address_line1', filter: true },
+    { headerName: 'Address', field: 'address_line2', filter: true },
     { headerName: 'City', field: 'city', filter: true },
     { headerName: 'State', field: 'state', filter: true },
     { headerName: 'Postal Code', field: 'postal_code', filter: true },
