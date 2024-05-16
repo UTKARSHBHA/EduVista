@@ -29,6 +29,7 @@ header{
     display: flex;
     flex-direction: column;
     height: 90vh;
+    padding: 20px;
 }
 
 .ag-theme-quartz {

@@ -17,23 +17,23 @@ import { PermissionsService } from '../../service/permissions.service';
 export class QuestionPapersListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    { headerName: 'ID', field: 'id', width:80,filter: true },
+    { headerName: 'ID', field: 'id', maxWidth:200,filter: true },
     //  { headerName: 'Title', field: 'title', filter: true },
-    { headerName: 'Created By',field: 'user', width: 120,filter: true },
+    { headerName: 'Created By',field: 'user', maxWidth: 200,filter: true },
 
-    { headerName: 'Standard', field: 'standard_name', width: 120, filter: true },
-    { headerName: 'Subject', field: 'subject_name', filter: true },
-    { headerName: 'Chapter', field: 'chapter_name', filter: true },
-    { headerName: 'Topics', field: 'topics_name', filter: true },
-    { headerName: 'Total Marks', field: 'total_marks', width: 130, filter: true },
-    { headerName: 'Question Count', field: 'question_count', filter: true },
-    { headerName: 'Created', field: 'created_at', filter: true },
-    { headerName: 'Updated', field: 'updated_at', filter: true },
+    { headerName: 'Standard', field: 'standard_name', maxWidth: 200, filter: true },
+    { headerName: 'Subject', field: 'subject_name', filter: true , maxWidth: 200,},
+    { headerName: 'Chapter', field: 'chapter_name', filter: true , maxWidth: 200,},
+    { headerName: 'Topics', field: 'topics_name', filter: true , maxWidth: 200,},
+    { headerName: 'Total Marks', field: 'total_marks', maxWidth: 200, filter: true },
+    { headerName: 'Question Count', field: 'question_count', filter: true, maxWidth: 200, },
+    { headerName: 'Created', field: 'created_at', filter: true , maxWidth: 200,},
+    { headerName: 'Updated', field: 'updated_at', filter: true, maxWidth: 200, },
     {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
-      width:100,
+      maxWidth:200,
       hide: !this.permissionsService.getPermissions('Questions.delete_questionpaper'),
 
     },
@@ -41,18 +41,23 @@ export class QuestionPapersListComponent implements OnInit {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
-      width:100,
+      maxWidth:200,
       hide: !this.permissionsService.getPermissions('Questions.delete_questionpaper'),
 
     },
   ];
+  autoSizeStrategy: any;
 
   constructor(
     private questionPaperService: QuestionPaperService,
     private router: Router,
     public permissionsService: PermissionsService
 
-  ) {}
+  ) {
+    this.autoSizeStrategy = {
+      type: 'fitCellContents',
+  };
+  }
 
   ngOnInit(): void {
     this.loadQuestionPapers();

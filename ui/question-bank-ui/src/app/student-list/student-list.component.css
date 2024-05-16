@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     height: 90vh;
+    padding: 20px;
+
 }
 
 .ag-theme-quartz {
@@ -36,42 +38,3 @@ header{
     background-color: #0056b3; /* Darker blue on hover */
 }
 
-/* Style for the container of the combined info */
-.ag-cell-combined-info {
-    padding: 4px;
-}
-
-/* Style for the divs containing each piece of information */
-.ag-cell-combined-info > div {
-    margin-bottom: 2px; /* Adds space between lines */
-}
-
-/* Example icon styles */
-.male-icon,.female-icon,.other-gender-icon {
-    font-size: 16px; /* Adjust icon size */
-}
-
-.male-icon {
-    color: blue; /* Example color for male icon */
-}
-
-.female-icon {
-    color: pink; /* Example color for female icon */
-}
-
-.other-gender-icon {
-    color: gray; /* Example color for other gender icon */
-}
-
-.container {
-    padding: 20px;
-  }
-  
-  .ag-theme-quartz {
-    width: 100%;
-  }
-  
-  .ag-cell {
-    white-space: normal !important;
-  }
-  

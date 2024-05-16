@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     height: 90vh;
+    padding: 20px;
 }
 
 .ag-theme-quartz {
-    flex-grow: 1; /* Allow the ag-grid to take up the remaining space */
-    /* Add any other styles you need */
+    flex-grow: 1; 
 }

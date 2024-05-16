@@ -5,25 +5,25 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentRegistrationComponent } from '../student-registration/student-registration.component';
 import { PermissionsService } from '../service/permissions.service';
-import { DatePipe } from '@angular/common';
 import { WidthType } from 'docx';
+import { HighContrastModeDetector } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
   imports: [AgGridAngular],
   templateUrl: './student-list.component.html',
-  styleUrl: './student-list.component.css'
+  styleUrl: './student-list.component.css',
 })
 export class StudentListComponent implements OnInit {
   rowData: any[] = [];
-
-  genderRenderer = (params:any) => {
+  
+  genderRenderer = (params: any) => {
     switch (params.value) {
       case 'M':
-        return '<i class="fa-solid fa-mars" style="color: blue margin-right: 5px;"></i>';
+        return '<i class="fa-solid fa-mars" style="color: blue; margin-right: 5px;"></i>';
       case 'F':
-        return '<i class="fa-solid fa-venus" style="color: pink margin-right: 5px;"></i>';
+        return '<i class="fa-solid fa-venus" style="color: pink ;margin-right: 5px;"></i>';
       case 'O':
         return '<i class="fa-solid fa-venus-mars " style="margin-right: 5px;"></i>';
       default:
@@ -36,8 +36,14 @@ export class StudentListComponent implements OnInit {
       <div>
         <div>${this.genderRenderer({ value: data.gender })}
         ${data.first_name} ${data.last_name}</div>
-        <div><a  style="color: inherit" href="mailto:${data.user?.email}"><i class="fa-solid fa-envelope"  style="margin-right: 5px;"></i> ${data.user?.email}</a></div>
-        <div><i class="fa-solid fa-phone"  style="margin-right: 5px;"></i> ${data.phone_number}</div>
+        <div><a  style="color: inherit" href="mailto:${
+          data.user?.email
+        }"><i class="fa-solid fa-envelope"  style="margin-right: 5px;"></i> ${
+      data.user?.email
+    }</a></div>
+        <div><i class="fa-solid fa-phone"  style="margin-right: 5px;"></i> ${
+          data.phone_number
+        }</div>
       </div>
     `;
   };
@@ -61,7 +67,6 @@ export class StudentListComponent implements OnInit {
       </div>
     `;
   };
-  
 
   colDefs = [
     {
@@ -74,32 +79,88 @@ export class StudentListComponent implements OnInit {
         return `${data.gender} ${data.first_name} ${data.last_name} ${data.user?.email} ${data.phone_number}`;
       },
       filter: 'agTextColumnFilter',
-
-
+      hide: true,
     },
-    
-    { headerName: 'First Name', field: 'first_name', filter: true, hide: true },
-    { headerName: 'Last Name', field: 'last_name', filter: true, hide: true  },
-    { headerName: 'Email', field: 'user.email', filter: true, hide: true  },
-    { headerName: 'Gender', field: 'gender', cellRenderer: this.genderRenderer, filter: true, hide: true  },
-    { headerName: 'Phone Number', field: 'phone_number', filter: true, hide: true  },
-    { headerName: 'Username', field: 'user.username', filter: true },
-    { headerName: 'Date of Birth', field: 'date_of_birth', filter: true, valueFormatter: this.dateFormatter, },
-    { headerName: 'Registration Number', field: 'registration_number', filter: true },
-    { headerName: 'Admission Date', field: 'admission_date', filter: true, valueFormatter: this.dateFormatter, },
-    { headerName: 'Address', field: 'address', filter: true, valueGetter: this.addressValueGetter, width : 400 },
 
-    { headerName: 'Address', field: 'address_line1', filter: true, hide: true },
-    { headerName: 'Address', field: 'address_line2', filter: true, hide: true },
-    { headerName: 'City', field: 'city', filter: true, hide: true },
-    { headerName: 'State', field: 'state', filter: true, hide: true },
-    { headerName: 'Postal Code', field: 'postal_code', filter: true, hide: true },
-    { headerName: 'Country', field: 'country', filter: true, hide: true },
-    { headerName: 'Parent/Guardian Name', field: 'parent_guardian_name', filter: true, hide: true },
-    { headerName: 'Parent/Guardian Contact', field: 'parent_guardian_contact', filter: true, hide: true },
-    { headerName: 'Parent/Guardian Email', field: 'parent_guardian_email', filter: true, hide: true },
-    { headerName: 'Emergency Contact Name', field: 'emergency_contact_name', filter: true, hide: true },
-    { headerName: 'Emergency Contact Number', field: 'emergency_contact_number', filter: true, hide: true },
+    { headerName: 'First Name', field: 'first_name', filter: true, maxWidth: 200,  autoSizeColumnsToFitContent: true },
+    { headerName: 'Last Name', field: 'last_name', filter: true, maxWidth: 200, autoSizeColumnsToFitContent: true },
+    { headerName: 'Email', field: 'user.email', filter: true, maxWidth: 200, autoSizeColumnsToFitContent: true },
+    {
+      headerName: 'Gender',
+      field: 'gender',
+      cellRenderer: this.genderRenderer,
+      filter: true, maxWidth: 200, 
+      
+    },
+    { headerName: 'Phone Number', field: 'phone_number', filter: true, maxWidth: 200,  autoSizeColumnsToFitContent: true },
+    { headerName: 'Username', field: 'user.username', filter: true },
+    {
+      headerName: 'Date of Birth',
+      field: 'date_of_birth',
+      filter: true, maxWidth: 200, 
+      valueFormatter: this.dateFormatter,
+    },
+    {
+      headerName: 'Registration Number',
+      field: 'registration_number',
+      filter: true, maxWidth: 200, 
+    },
+    {
+      headerName: 'Admission Date',
+      field: 'admission_date',
+      filter: true, maxWidth: 200, 
+      valueFormatter: this.dateFormatter,
+    },
+    {
+      headerName: 'Address',
+      field: 'address',
+      filter: true,
+      valueGetter: this.addressValueGetter,
+      maxWidth: 400,
+      
+    },
+
+    { headerName: 'Address', field: 'address_line1', filter: true, maxWidth: 200,  hide: true },
+    { headerName: 'Address', field: 'address_line2', filter: true, maxWidth: 200,  hide: true },
+    { headerName: 'City', field: 'city', filter: true, maxWidth: 200,  hide: true },
+    { headerName: 'State', field: 'state', filter: true, maxWidth: 200,  hide: true },
+    {
+      headerName: 'Postal Code',
+      field: 'postal_code',
+      filter: true, maxWidth: 200, 
+      hide: true,
+    },
+    { headerName: 'Country', field: 'country', filter: true, maxWidth: 200,  hide: true },
+    {
+      headerName: 'Parent/Guardian Name',
+      field: 'parent_guardian_name',
+      filter: true, maxWidth: 200, 
+      hide: true,
+    },
+    {
+      headerName: 'Parent/Guardian Contact',
+      field: 'parent_guardian_contact',
+      filter: true, maxWidth: 200, 
+      hide: true,
+    },
+    {
+      headerName: 'Parent/Guardian Email',
+      field: 'parent_guardian_email',
+      filter: true, maxWidth: 200, 
+      hide: true,
+    },
+    {
+      headerName: 'Emergency Contact Name',
+      field: 'emergency_contact_name',
+      filter: true, maxWidth: 200, 
+      hide: true,
+    },
+    {
+      headerName: 'Emergency Contact Number',
+      field: 'emergency_contact_number',
+      filter: true, maxWidth: 200, 
+      hide: true,
+    },
     {
       headerName: 'Parent/Guardian Details',
       field: 'parentDetails',
@@ -109,7 +170,8 @@ export class StudentListComponent implements OnInit {
       valueGetter: (params: any) => {
         const data = params.data;
         return `${data.parent_guardian_name} ${data.parent_guardian_email} ${data.parent_guardian_contact}`;
-      }
+      },
+      hide: true,
     },
     {
       headerName: 'Emergency Contact Details',
@@ -120,38 +182,39 @@ export class StudentListComponent implements OnInit {
       valueGetter: (params: any) => {
         const data = params.data;
         return `${data.emergency_contact_name} ${data.emergency_contact_number}`;
-      }
+      },
+      hide: true,
     },
   ];
+  autoSizeStrategy: any;
 
-  constructor(private studentRegistrationService: StudentRegistrationService, 
+  constructor(
+    private studentRegistrationService: StudentRegistrationService,
     private matDialog: MatDialog,
-    public permissionsService: PermissionsService,
-
+    public permissionsService: PermissionsService
   ) {
-    
+
+    this.autoSizeStrategy = {
+      type: 'fitCellContents',
+  };
   }
 
   ngOnInit(): void {
     this.loadStudents();
-    this.studentRegistrationService.getStudents().subscribe(data => {
+    this.studentRegistrationService.getStudents().subscribe((data) => {
       this.rowData = data;
     });
   }
 
   loadStudents(): void {
-    this.studentRegistrationService
-      .getStudents()
-      .subscribe((data) => {
-        console.log(data);
-        this.rowData = data.results;
-      });
-    
+    this.studentRegistrationService.getStudents().subscribe((data) => {
+      console.log(data);
+      this.rowData = data.results;
+    });
   }
 
   // Inside student-list.component.ts
 
-  
   openStudentRegistrationModal() {
     const dialogRef = this.matDialog.open(StudentRegistrationComponent, {
       height: '90vh',
@@ -162,7 +225,10 @@ export class StudentListComponent implements OnInit {
   dateFormatter(params: any) {
     if (params.value) {
       const date = new Date(params.value);
-      return `${('0' + date.getDate()).slice(-2)} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+      return `${('0' + date.getDate()).slice(-2)} ${date.toLocaleString(
+        'default',
+        { month: 'short' }
+      )} ${date.getFullYear()}`;
     }
     return '';
   }
@@ -170,4 +236,5 @@ export class StudentListComponent implements OnInit {
     const data = params.data;
     return `${data.address_line1}, ${data.address_line2}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
   }
-};
+  
+}

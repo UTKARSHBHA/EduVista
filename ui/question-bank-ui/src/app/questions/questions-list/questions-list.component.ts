@@ -30,36 +30,38 @@ import { QuestionsComponent } from '../questions.component';
 export class QuestionsListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
-    { headerName: 'ID',field: 'id', width: 50,filter: true },
-    { headerName: 'Created By',field: 'user', width: 120 ,filter: true},
-    { headerName: 'Question', field: 'question_text', filter: true },
-    { headerName: 'Type', field: 'type', filter: true },
-    { headerName: 'Difficulty', field: 'difficulty_level', filter: true },
-    { headerName: 'Standard', field: 'standard_name', filter: true },
-    { headerName: 'Subject', field: 'subject_name', filter: true },
-    { headerName: 'Marks', field: 'marks', filter: true, width: 100 },
+    { headerName: 'ID', field: 'id', maxWidth: 50, filter: true },
+    { headerName: 'Created By', field: 'user', maxWidth: 200, filter: true },
+    { headerName: 'Question', field: 'question_text', filter: true , maxWidth: 400},
+    { headerName: 'Type', field: 'type', filter: true, maxWidth: 200, },
+    { headerName: 'Difficulty', field: 'difficulty_level', filter: true, maxWidth: 200, },
+    { headerName: 'Standard', field: 'standard_name', filter: true, maxWidth: 200, },
+    { headerName: 'Subject', field: 'subject_name', filter: true, maxWidth: 200, },
+    { headerName: 'Marks', field: 'marks', filter: true, maxWidth: 100 },
     {
       headerName: 'Topics',
       field: 'topics_name',
 
       filter: true,
+      maxWidth: 200,
     },
     // { field: 'topic_name' , filter: true },
     // { field: 'topics' , filter: true },
-    { headerName: 'Chapter', field: 'chapter_name', filter: true },
+    { headerName: 'Chapter', field: 'chapter_name', filter: true , maxWidth: 200,},
     {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
-      width: 100,
-      hide: !this.permissionsService.getPermissions('Questions.delete_question'),
-
+      maxWidth: 100,
+      hide: !this.permissionsService.getPermissions(
+        'Questions.delete_question'
+      ),
     },
     {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
-      width: 100,
+      maxWidth: 100,
       hide: !this.permissionsService.getPermissions('Questions.view_question'),
     },
   ];
@@ -73,18 +75,21 @@ export class QuestionsListComponent implements OnInit {
   TopicModal: MatDialogRef<TopicsComponent> | undefined;
   QuestionModal: MatDialogRef<QuestionsComponent> | undefined;
 
+  autoSizeStrategy: any;
 
   constructor(
     private questionsService: QuestionsService,
     private router: Router,
     public permissionsService: PermissionsService,
-    private matDialog: MatDialog,
-
-  ) {}
+    private matDialog: MatDialog
+  ) {
+    this.autoSizeStrategy = {
+      type: 'fitCellContents',
+    };
+  }
 
   ngOnInit(): void {
     this.loadQuestions();
-    
   }
 
   loadQuestions(page: number = 1): void {
@@ -95,7 +100,6 @@ export class QuestionsListComponent implements OnInit {
         this.rowData = data.results;
         this.totalQuestions = data.count;
       });
-    
   }
 
   onPageChange(event: any): void {
@@ -130,7 +134,7 @@ export class QuestionsListComponent implements OnInit {
       });
     }
   }
-  
+
   openStandardModal() {
     this.StandardModal = this.matDialog.open(StandardsComponent, {
       height: '90vh',
@@ -144,27 +148,27 @@ export class QuestionsListComponent implements OnInit {
       height: '90vh',
       width: '90vw',
       disableClose: true,
-    }); 
+    });
   }
   openChapterModal() {
     this.ChapterModal = this.matDialog.open(ChaptersComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,
-    }); 
+    });
   }
   openTopicModal() {
     this.TopicModal = this.matDialog.open(TopicsComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,
-    }); 
+    });
   }
   openQuestionModal() {
     this.QuestionModal = this.matDialog.open(QuestionsComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,
-    }); 
+    });
   }
 }
