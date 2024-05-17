@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { QuestionPaperService } from '../../service/question-paper.service';
+import { QuestionPaperService } from '../../services/question-paper.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

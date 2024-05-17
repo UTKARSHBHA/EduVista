@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
-import { QuestionPaperService } from '../../service/question-paper.service';
-import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
-import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
+import { QuestionPaperService } from '../../services/question-paper.service';
+import { DeleteButtonRendererComponent } from '../../delete-question-button/delete-button.component'; 
+import { ViewButtonRendererComponent } from '../../view-button/view-button.component';
 import { Router } from '@angular/router';
-import { PermissionsService } from '../../service/permissions.service';
+import { PermissionsService } from '../../services/permissions.service';
 
 @Component({
   selector: 'app-question-papers-list',

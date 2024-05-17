@@ -7,12 +7,12 @@ import {
 import { ColDef, FrameworkComponentWrapper } from 'ag-grid-community';
 import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
-import { DeleteButtonRendererComponent } from '../delete-question-button/delete-question-button.component';
-import { ViewButtonRendererComponent } from '../view-question-button/view-question-button.component';
+import { DeleteButtonRendererComponent } from '../../delete-question-button/delete-button.component';
+import { ViewButtonRendererComponent } from '../../view-button/view-button.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { PermissionsService } from '../../service/permissions.service';
+import { PermissionsService } from '../../services/permissions.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { StandardsComponent } from '../../standards/standards.component';
 import { SubjectsComponent } from '../../subjects/subjects.component';

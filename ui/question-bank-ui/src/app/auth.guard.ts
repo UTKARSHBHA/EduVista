@@ -2,7 +2,7 @@
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
-import { PermissionsService } from './service/permissions.service';
+import { PermissionsService } from './services/permissions.service';
 
 // Define the functional guard
 export function AuthGuard(

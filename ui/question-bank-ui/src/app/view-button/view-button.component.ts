@@ -4,11 +4,11 @@
 // import { EventEmitter } from 'stream';
 
 // @Component({
-//   selector: 'app-view-question-button',
+//   selector: 'app-view-button',
 //   standalone: true,
 //   imports: [],
-//   templateUrl: './view-question-button.component.html',
-//   styleUrl: './view-question-button.component.css'
+//   templateUrl: './view-button.component.html',
+//   styleUrl: './view-button.component.css'
 // })
 // export class ViewQuestionButtonComponent implements ICellRendererAngularComp {
 //     agInit(params: ICellRendererParams): void {}
@@ -23,12 +23,12 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
-  selector: 'app-view-question-button',
+  selector: 'app-view-button',
   standalone: true,
   imports: [],
-  styleUrl: './view-question-button.component.css',
+  styleUrl: './view-button.component.css',
   // template: `<button>Delete</button>`,
-  templateUrl: './view-question-button.component.html',
+  templateUrl: './view-button.component.html',
 
 })
 export class ViewButtonRendererComponent implements ICellRendererAngularComp {

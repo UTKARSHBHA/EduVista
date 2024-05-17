@@ -4,11 +4,12 @@ import { StudentRegistrationService } from '../services/student-registration.ser
 import { AgGridAngular } from 'ag-grid-angular';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentRegistrationComponent } from '../student-registration/student-registration.component';
-import { PermissionsService } from '../service/permissions.service';
+import { PermissionsService } from '../services/permissions.service';
 import { WidthType } from 'docx';
 import { HighContrastModeDetector } from '@angular/cdk/a11y';
-import { ViewButtonRendererComponent } from '../questions/view-question-button/view-question-button.component';
+import { ViewButtonRendererComponent } from '../view-button/view-button.component';
 import { Router } from '@angular/router';
+import { DeleteButtonRendererComponent } from '../delete-question-button/delete-button.component';
 
 @Component({
   selector: 'app-student-list',
@@ -250,6 +251,15 @@ export class StudentListComponent implements OnInit {
       hide: true,
     },
     {
+      field: 'Delete',
+      cellRenderer: DeleteButtonRendererComponent,
+      onCellClicked: this.delete.bind(this),
+      maxWidth: 100,
+      hide: !this.permissionsService.getPermissions(
+        'Questions.delete_student'
+      ),
+    },
+    {
       field: 'View',
       cellRenderer: ViewButtonRendererComponent,
       onCellClicked: this.view.bind(this),
@@ -313,5 +323,21 @@ export class StudentListComponent implements OnInit {
     console.log('veiw clicked');
     this.router.navigate(['/student-view', e.data.id]);
     // this.openStudentRegistrationModal(e.data.id);
+  }
+  delete(e: any) {
+    this.deleteStudent(e.data.id);
+  }
+  deleteStudent(studentId: number): void {
+    if (confirm('Are you sure you want to delete this student?')) {
+      this.studentRegistrationService.deleteStudent(studentId).subscribe({
+        next: (response) => {
+          console.log('Student deleted:', response);
+          this.loadStudents();
+        },
+        error: (error) => {
+          console.error('Error deleting student', error);
+        },
+      });
+    }
   }
 }

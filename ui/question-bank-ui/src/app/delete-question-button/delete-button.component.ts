@@ -3,12 +3,12 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ColDef, ColDefUtil, ICellRendererParams } from 'ag-grid-community';
 
 @Component({
-  selector: 'app-delete-question-button',
+  selector: 'app-delete-button',
   standalone: true,
   imports: [],
-  styleUrl: './delete-question-button.component.css',
+  styleUrl: './delete-button.component.css',
   // template: `<button>Delete</button>`,
-  templateUrl: './delete-question-button.component.html',
+  templateUrl: './delete-button.component.html',
 
 })
 export class DeleteButtonRendererComponent implements ICellRendererAngularComp {

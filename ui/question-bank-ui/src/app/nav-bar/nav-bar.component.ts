@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { PermissionsService } from '../service/permissions.service';
+import { PermissionsService } from '../services/permissions.service';
 
 @Component({
   selector: 'app-nav-bar',

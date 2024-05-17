@@ -14,7 +14,7 @@ import { StandardsService } from '../services/standards.service';
 import { SubjectsService } from '../services/subjects.service';
 import { TopicsService } from '../services/topics.service';
 import { ChaptersService } from '../services/chapters.service';
-import { QuestionPaperService } from '../service/question-paper.service';
+import { QuestionPaperService } from '../services/question-paper.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
