@@ -99,7 +99,7 @@
 /* update-question-button.component.css or a similar CSS file */
 
 .update-btn {
-    background-color: #dc3545; /* Red background for the update button */
+    background-color: #007bff; /* Red background for the update button */
     color: #fff; /* White text */
     border: none;
     border-radius: 4px;
@@ -110,5 +110,5 @@
 }
 
 .update-btn:hover {
-    background-color: #c82333; /* Darker red on hover */
+    background-color: #0056b3; /* Darker red on hover */
 }
