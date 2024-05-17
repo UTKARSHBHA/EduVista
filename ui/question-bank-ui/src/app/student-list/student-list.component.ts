@@ -138,6 +138,7 @@ export class StudentListComponent implements OnInit {
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,
+      hide: true,
     },
     { headerName: 'Username', field: 'user.username', filter: true },
     {
@@ -329,6 +330,12 @@ export class StudentListComponent implements OnInit {
       width: '90vw',
       disableClose: true,
       data: { id },
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadStudents();
+      }
     });
   }
   dateFormatter(params: any) {

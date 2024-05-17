@@ -17,6 +17,7 @@ export class PermissionsService {
     }
     
   getPermissions(permission : string){
+    // console.log(this.permissions);
     this.permissions = localStorage.getItem('permissions');
     return this.permissions?.includes(permission)
   }
@@ -140,3 +141,5 @@ export class PermissionsService {
 // 54: "auth.delete_group"
 // ​
 // 55: "Questions.change_question"
+
+// Questions.add_questionpaper,Questions.view_question,Questions.delete_standard,Questions.view_standard,Questions.view_subject,Questions.add_topic,Questions.delete_option,Questions.add_passwordresettoken,auth.delete_group,Questions.delete_customuser,auth.add_permission,Questions.delete_questionpaper,Questions.change_subject,contenttypes.add_contenttype,sessions.delete_session,Questions.view_questionpaper,Questions.delete_subject,admin.add_logentry,Questions.add_question,Questions.delete_student,Questions.view_passwordresettoken,Questions.view_student,admin.view_logentry,Questions.add_chapter,Questions.change_topic,contenttypes.view_contenttype,Questions.add_student,Questions.delete_passwordresettoken,Questions.add_subject,Questions.change_customuser,contenttypes.delete_contenttype,Questions.delete_topic,Questions.view_option,auth.add_group,auth.delete_permission,Questions.change_passwordresettoken,Questions.change_standard,Questions.delete_question,Questions.view_chapter,Questions.change_chapter,sessions.change_session,auth.view_permission,Questions.view_topic,auth.view_group,sessions.add_session,Questions.change_student,Questions.change_question,Questions.change_questionpaper,Questions.add_option,Questions.add_customuser,Questions.add_standard,Questions.change_option,auth.change_group,admin.delete_logentry,Questions.delete_chapter,sessions.view_session,Questions.view_customuser,admin.change_logentry,auth.change_permission,contenttypes.change_contenttype

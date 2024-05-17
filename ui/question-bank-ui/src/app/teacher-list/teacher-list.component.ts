@@ -7,6 +7,7 @@ import { DeleteButtonRendererComponent } from '../delete-button/delete-button.co
 import { ViewButtonRendererComponent } from '../view-button/view-button.component';
 import { UpdateButtonRendererComponent } from '../update-button/update-button.component';
 import { AgGridAngular } from 'ag-grid-angular';
+import { TeacherRegistrationComponent } from '../teacher-registration/teacher-registration.component';
 
 @Component({
   selector: 'app-teacher-list',
@@ -36,7 +37,7 @@ export class TeacherListComponent implements OnInit {
     return `
       <div>
         <div>${this.genderRenderer({ value: data.gender })}
-        ${data.first_name} ${data.last_name}</div>
+        ${data.first_name} ${data.middle_name} ${data.last_name}</div>
         
       </div>
     `;
@@ -123,6 +124,8 @@ export class TeacherListComponent implements OnInit {
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,
+      valueFormatter: this.dateFormatter,
+
     },
     {
       headerName: 'Gender',
@@ -152,6 +155,8 @@ export class TeacherListComponent implements OnInit {
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,
+      valueFormatter: this.dateFormatter,
+
     },
     {
       headerName: 'Address',
@@ -260,12 +265,18 @@ export class TeacherListComponent implements OnInit {
   }
 
   openTeacherRegistrationModal(id: any) {
-    // const dialogRef = this.matDialog.open(TeacherRegistrationComponent, {
-    //   height: '90vh',
-    //   width: '90vw',
-    //   disableClose: true,
-    //   data: { id },
-    // });
+    const dialogRef = this.matDialog.open(TeacherRegistrationComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+      data: { id },
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadTeachers();
+      }
+    });
   }
 
   view(e: any) {
@@ -300,5 +311,15 @@ export class TeacherListComponent implements OnInit {
   addressValueGetter(params: any) {
     const data = params.data;
     return `${data.address_line1}, ${data.address_line2}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
+  }
+  dateFormatter(params: any) {
+    if (params.value) {
+      const date = new Date(params.value);
+      return `${('0' + date.getDate()).slice(-2)} ${date.toLocaleString(
+        'default',
+        { month: 'short' }
+      )} ${date.getFullYear()}`;
+    }
+    return '';
   }
 }

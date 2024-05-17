@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    padding: 20px;
+
+}
+
+.ag-theme-quartz {
+    flex-grow: 1; /* Allow the ag-grid to take up the remaining space */
+    /* Add any other styles you need */
+}
+
+header{
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 2rem;
+
+    /* justify-content: space-between; */
+}
+
+.add-btn {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding around the text */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block for padding */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Add some margin */
+    cursor: pointer; /* Change cursor to pointer when hovering */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.add-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+

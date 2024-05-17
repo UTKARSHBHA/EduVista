@@ -327,6 +327,11 @@ class TeacherViewSet(viewsets.ModelViewSet):
     serializer_class = TeacherSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)  # Set the user field
-        return serializer.save()  # Optionally return the saved object
+    def get_serializer(self, *args, **kwargs):
+        # Set partial=True if it's an update request
+        if self.action == 'update':
+            kwargs['partial'] = True
+        return super().get_serializer(*args, **kwargs)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)  # Set the user field
+    #     return serializer.save()  # Optionally return the saved object
