@@ -1,14 +1,23 @@
 .container{
     min-height: 90vh;
+    width: 60vw;
+    padding: 2rem;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    margin: auto;
+    flex-direction: column;
 }   
-
+.container h2{
+  text-align: center;
+}
 
 .student-details {
     background-color: #ffffff;
     padding: 3rem;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 70%;
+    /* width: 70%; */
     margin: 3rem auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
@@ -126,4 +135,20 @@
 
 .update-btn:hover {
     background-color: #0056b3;
+}
+
+
+.student-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.info-card{
+  width: 48%;
+}
+.info-card h3{
+  font-size: 1.2rem;
+  font-weight: 500;
+  /* background-color: #b3b3b3; */
+  /* color: white; */
 }
