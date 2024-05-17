@@ -40,14 +40,7 @@ export class StudentListComponent implements OnInit {
       <div>
         <div>${this.genderRenderer({ value: data.gender })}
         ${data.first_name} ${data.last_name}</div>
-        <div><a  style="color: inherit" href="mailto:${
-          data.user?.email
-        }"><i class="fa-solid fa-envelope"  style="margin-right: 5px;"></i> ${
-      data.user?.email
-    }</a></div>
-        <div><i class="fa-solid fa-phone"  style="margin-right: 5px;"></i> ${
-          data.phone_number
-        }</div>
+        
       </div>
     `;
   };
@@ -80,10 +73,9 @@ export class StudentListComponent implements OnInit {
       autoHeight: true,
       valueGetter: (params: any) => {
         const data = params.data;
-        return `${data.gender} ${data.first_name} ${data.last_name} ${data.user?.email} ${data.phone_number}`;
+        return `${data.gender} ${data.first_name} ${data.last_name}`;
       },
       filter: 'agTextColumnFilter',
-      hide: true,
     },
 
     {
@@ -92,6 +84,7 @@ export class StudentListComponent implements OnInit {
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,
+      hide: true,
     },
     {
       headerName: 'Last Name',
@@ -99,6 +92,7 @@ export class StudentListComponent implements OnInit {
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,
+      hide: true,
     },
     {
       headerName: 'Email',
@@ -113,6 +107,7 @@ export class StudentListComponent implements OnInit {
       cellRenderer: this.genderRenderer,
       filter: true,
       maxWidth: 200,
+      hide: true,
     },
     {
       headerName: 'Phone Number',
@@ -147,7 +142,7 @@ export class StudentListComponent implements OnInit {
       field: 'address',
       filter: true,
       valueGetter: this.addressValueGetter,
-      maxWidth: 200,
+      maxWidth: 500,
     },
 
     {
@@ -256,9 +251,7 @@ export class StudentListComponent implements OnInit {
       cellRenderer: DeleteButtonRendererComponent,
       onCellClicked: this.delete.bind(this),
       maxWidth: 100,
-      hide: !this.permissionsService.getPermissions(
-        'Questions.delete_student'
-      ),
+      hide: !this.permissionsService.getPermissions('Questions.delete_student'),
     },
     {
       field: 'View',
@@ -281,8 +274,7 @@ export class StudentListComponent implements OnInit {
     private studentRegistrationService: StudentRegistrationService,
     private matDialog: MatDialog,
     public permissionsService: PermissionsService,
-    private router: Router,
-
+    private router: Router
   ) {
     this.autoSizeStrategy = {
       type: 'fitCellContents',

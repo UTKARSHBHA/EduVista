@@ -1,6 +1,6 @@
 
 .update-btn {
-    background-color: #ffc107; /* Red background for the update button */
+    background-color: #007bff; /* Red background for the update button */
     color: #fff; /* White text */
     border: none;
     border-radius: 4px;
@@ -10,5 +10,5 @@
 }
 
 .update-btn:hover {
-    background-color: #ffeb3b; /* Darker red on hover */
+    background-color: #0056b3; /* Darker red on hover */
 }
