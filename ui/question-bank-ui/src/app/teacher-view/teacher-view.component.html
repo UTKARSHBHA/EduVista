@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="btn-container">
+      <button class="delete-btn" (click)="deleteTeacher()">
+        <i class="fas fa-trash"></i>
+      </button>
+      <button class="update-btn" (click)="updateTeacher()">
+        <i class="fas fa-edit"></i>
+      </button>
+    </div>
+    <h2>Teacher Profile</h2>
+    <img
+      *ngIf="teacher.profile_picture"
+      [src]="teacher.profile_picture"
+      alt="Profile Picture"
+      class="profile-picture"
+    />
+    <div class="teacher-details">
+      <div class="info-card personal-info">
+        <h3>Personal Information</h3>
+        <p>
+          <strong>Full Name:</strong> {{ teacher.first_name }}
+          {{ teacher.middle_name }} {{ teacher.last_name }}
+        </p>
+        <p>
+          <strong>Date of Birth:</strong>
+          {{ teacher.date_of_birth | date: 'shortDate' }}
+        </p>
+        <p><strong>Gender:</strong> {{ teacher.gender }}</p>
+        <p><strong>Phone Number:</strong> {{ teacher.phone_number }}</p>
+        <p>
+          <strong>Alternate Phone Number:</strong>
+          {{ teacher.alternate_phone_number }}
+        </p>
+      </div>
+      <div class="info-card contact-info">
+        <h3>Contact Information</h3>
+        <p><strong>Address Line 1:</strong> {{ teacher.address_line1 }}</p>
+        <p><strong>Address Line 2:</strong> {{ teacher.address_line2 }}</p>
+        <p><strong>City:</strong> {{ teacher.city }}</p>
+        <p><strong>State:</strong> {{ teacher.state }}</p>
+        <p><strong>Country:</strong> {{ teacher.country }}</p>
+        <p><strong>Postal Code:</strong> {{ teacher.postal_code }}</p>
+      </div>
+      <div class="info-card professional-info">
+        <h3>Professional Information</h3>
+        <p><strong>Designation:</strong> {{ teacher.designation }}</p>
+        <p><strong>Department:</strong> {{ teacher.department }}</p>
+        <p>
+          <strong>Joining Date:</strong>
+          {{ teacher.joining_date | date: 'shortDate' }}
+        </p>
+      </div>
+      <div class="info-card user-info">
+        <h3>User Account</h3>
+        <p><strong>Username:</strong> {{ teacher.user.username }}</p>
+        <p><strong>Email:</strong> {{ teacher.user.email }}</p>
+      </div>
+    </div>
+  </div>
+  

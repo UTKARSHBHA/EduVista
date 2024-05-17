@@ -112,6 +112,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'teacher-view/:id',
+    loadComponent: () =>
+      import('./teacher-view/teacher-view.component').then(
+        (m) => m.TeacherViewComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'question-paper-view/:id',
     loadComponent: () =>
       // ui/question-bank-ui/src/app/question-papers/question-paper-view/question-paper-view.component.ts

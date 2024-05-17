@@ -23,6 +23,10 @@ export class StudentViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadStudent();
+  }
+
+  loadStudent(){
     const studentId = this.route.snapshot.paramMap.get('id');
     if (studentId) {
       this.studentRegistrationService
@@ -65,6 +69,12 @@ export class StudentViewComponent implements OnInit {
       width: '90vw',
       disableClose: true,
       data: { id },
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadStudent();
+      }
     });
   }
 }
