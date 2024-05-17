@@ -190,3 +190,40 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.registration_number})"
+    
+
+class Teacher(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Foreign key to User model
+    
+    # Basic Details
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, blank=True)
+    
+    # Contact Information
+    phone_number = models.CharField(max_length=15)
+    alternate_phone_number = models.CharField(max_length=15, blank=True)
+    
+    # Demographic Information
+    date_of_birth = models.DateField()
+    gender = models.CharField(max_length=10, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
+    
+    # Employment Information
+    designation = models.CharField(max_length=50)
+    department = models.CharField(max_length=50)
+    joining_date = models.DateField()
+    
+    # Address Information (Optional)
+    address_line1 = models.CharField(max_length=100)
+    address_line2 = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=10)
+    country = models.CharField(max_length=30)
+    
+    # Additional Information (Optional)
+    profile_picture = models.ImageField(upload_to='teacher_profile_pics/', blank=True, null=True)
+    biography = models.TextField(blank=True)
+    
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.designation})"

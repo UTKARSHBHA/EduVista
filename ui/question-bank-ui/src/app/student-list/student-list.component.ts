@@ -67,13 +67,21 @@ export class StudentListComponent implements OnInit {
 
   colDefs = [
     {
+      headerName: 'ID',
+      field: 'id',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+      
+    },
+    {
       headerName: 'Student Details',
       field: 'details',
       cellRenderer: this.studentDetailsRenderer,
       autoHeight: true,
       valueGetter: (params: any) => {
         const data = params.data;
-        return `${data.gender} ${data.first_name} ${data.last_name}`;
+        return `${data.gender} ${data.first_name} ${data.middle_name} ${data.last_name}`;
       },
       filter: 'agTextColumnFilter',
     },
@@ -81,6 +89,14 @@ export class StudentListComponent implements OnInit {
     {
       headerName: 'First Name',
       field: 'first_name',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+      hide: true,
+    },
+    {
+      headerName: 'Middle Name',
+      field: 'middle_name',
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,
@@ -112,6 +128,13 @@ export class StudentListComponent implements OnInit {
     {
       headerName: 'Phone Number',
       field: 'phone_number',
+      filter: true,
+      maxWidth: 200,
+      autoSizeColumnsToFitContent: true,
+    },
+    {
+      headerName: 'Alternate Phone Number',
+      field: 'alternate_phone_number',
       filter: true,
       maxWidth: 200,
       autoSizeColumnsToFitContent: true,

@@ -1,10 +1,10 @@
 from rest_framework import viewsets, status
 
 # Import your serializers
-from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, StudentSerializer, SubjectSerializer, StandardSerializer, TopicSerializer, OptionSerializer
+from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, StudentSerializer, SubjectSerializer, StandardSerializer, TeacherSerializer, TopicSerializer, OptionSerializer
 
 # Import your models
-from .models import Question, Chapter, QuestionPaper, Student, Subject, Standard, Topic, Option
+from .models import Question, Chapter, QuestionPaper, Student, Subject, Standard, Teacher, Topic, Option
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -321,3 +321,12 @@ class StudentViewSet(viewsets.ModelViewSet):
         if self.action == 'update':
             kwargs['partial'] = True
         return super().get_serializer(*args, **kwargs)
+
+class TeacherViewSet(viewsets.ModelViewSet):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Set the user field
+        return serializer.save()  # Optionally return the saved object

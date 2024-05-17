@@ -1,0 +1,21 @@
+<div class="container">
+    <header>
+      <!-- Add a button for adding a new teacher -->
+      <button
+        class="add-btn"
+        mat-raised-button
+        color="primary"
+        (click)="openTeacherRegistrationModal(null)"
+      >
+        Open Teacher Registration
+      </button>
+    </header>
+    <ag-grid-angular
+      class="ag-theme-quartz"
+      [rowData]="rowData"
+      [columnDefs]="colDefs"
+      [domLayout]="'autoHeight'"
+      [autoSizeStrategy]="autoSizeStrategy"
+    >
+    </ag-grid-angular>
+  </div>

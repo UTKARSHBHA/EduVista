@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import Group, CustomUser
 from rest_framework import serializers
-from .models import CustomUser, Question, Chapter, Student, Subject, Standard, Topic, Option
+from .models import CustomUser, Question, Chapter, Student, Subject, Standard, Teacher, Topic, Option
 import base64
 from django.core.files.base import ContentFile
 import logging
@@ -263,3 +263,44 @@ class StudentSerializer(serializers.ModelSerializer):
 
         # Call the superclass's update method
         return super().update(instance, validated_data)
+    
+
+class TeacherSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer()  # Nested serializer for user creation
+    
+    class Meta:
+        model = Teacher
+        fields = (
+            'id',
+            'user',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'phone_number',
+            'alternate_phone_number',
+            'date_of_birth',
+            'gender',
+            'designation',
+            'department',
+            'joining_date',
+            'address_line1',
+            'address_line2',
+            'city',
+            'state',
+            'postal_code',
+            'country',
+            'profile_picture',
+            'biography',
+        )
+
+    def create(self, validated_data):
+        user_serializer = self.fields['user']  # Access nested serializer
+        user_data = validated_data.pop('user')
+        validated_user_data = user_serializer.validate(user_data)  # Validate user data
+        
+        # Create the user object
+        user = CustomUser.objects.create_user(**validated_user_data)
+        
+        # Create the teacher object with the created user
+        teacher = Teacher.objects.create(user=user, **validated_data)
+        return teacher

@@ -86,6 +86,14 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'teacher-list',
+    loadComponent: () =>
+      import('./teacher-list/teacher-list.component').then(
+        (m) => m.TeacherListComponent
+      ),
+    canActivate: [AuthGuard],
+  },
   
   {
     path: 'question-view/:id',
