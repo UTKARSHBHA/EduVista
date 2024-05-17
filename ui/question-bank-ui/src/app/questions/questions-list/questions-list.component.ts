@@ -126,7 +126,7 @@ export class QuestionsListComponent implements OnInit {
       this.questionsService.deleteQuestion(questionId).subscribe({
         next: (response) => {
           console.log('Question deleted:', response);
-          this.loadQuestions(this.currentPage);
+          this.loadQuestions(this.currentPage +1);
         },
         error: (error) => {
           console.error('Error deleting question', error);
