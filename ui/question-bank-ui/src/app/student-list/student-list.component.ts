@@ -311,7 +311,7 @@ export class StudentListComponent implements OnInit {
   }
   view(e: any) {
     console.log('veiw clicked');
-    // this.router.navigate(['/student-view', e.data.id]);
-    this.openStudentRegistrationModal(e.data.id);
+    this.router.navigate(['/student-view', e.data.id]);
+    // this.openStudentRegistrationModal(e.data.id);
   }
 }
