@@ -26,6 +26,10 @@ export class QuestionViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadQuestion()
+    //  this.question$ = this.questionsService.getQuestionById(+questionId);
+  }
+  loadQuestion(){
     const questionId = this.route.snapshot.paramMap.get('id');
     console.log(questionId);
     if (questionId) {
@@ -39,7 +43,6 @@ export class QuestionViewComponent implements OnInit {
       // Handle the case where questionId is null, e.g., by setting a default value or logging an error
       console.error('Question ID is null');
     }
-    //  this.question$ = this.questionsService.getQuestionById(+questionId);
   }
   // In question-view.component.ts
   deleteQuestion(): void {
@@ -61,14 +64,23 @@ export class QuestionViewComponent implements OnInit {
 
   updateQuestion(): void {
     // this.router.navigate(['/questions', this.question.id]);
-    this.openQuestionModal();
+    console.log(this.question.id);
+    this.openQuestionModal(this.question.id);
   }
 
-  openQuestionModal() {
+  openQuestionModal(id : any) {
     this.QuestionModal = this.matDialog.open(QuestionsComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,
+      data: { id },
+
+    });
+    this.QuestionModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadQuestion();
+      }
     });
   }
 }

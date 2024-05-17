@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { QuestionsService } from '../services/questions.service';
 import {} from 'ngx-bootstrap';
 import {
@@ -61,6 +61,8 @@ export class QuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private matDialog: MatDialog,
     private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+
     @Optional() public dialogRef: MatDialogRef<QuestionsComponent>
 
   ) {
@@ -88,7 +90,9 @@ export class QuestionsComponent implements OnInit {
     this.filteredChapters = [];
     this.filteredTopics = [];
 
-    this.questionId = this.route.snapshot.paramMap.get('id');
+    // this.questionId = this.route.snapshot.paramMap.get('id');
+    this.questionId = this.data.id;
+
 
     if (this.questionId) {
       // this.questionForm.get('subject')?.enable();
