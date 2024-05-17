@@ -136,6 +136,7 @@ export class StudentListComponent implements OnInit {
       filter: true,
       maxWidth: 200,
       valueFormatter: this.dateFormatter,
+      tooltipField: "admission_date",
     },
     {
       headerName: 'Address',
@@ -143,6 +144,8 @@ export class StudentListComponent implements OnInit {
       filter: true,
       valueGetter: this.addressValueGetter,
       maxWidth: 500,
+      tooltipValueGetter: this.addressValueGetter,
+    
     },
 
     {

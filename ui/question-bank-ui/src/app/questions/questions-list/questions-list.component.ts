@@ -33,11 +33,33 @@ export class QuestionsListComponent implements OnInit {
   colDefs: ColDef[] = [
     { headerName: 'ID', field: 'id', maxWidth: 50, filter: true },
     { headerName: 'Created By', field: 'user', maxWidth: 200, filter: true },
-    { headerName: 'Question', field: 'question_text', filter: true , maxWidth: 400},
-    { headerName: 'Type', field: 'type', filter: true, maxWidth: 200, },
-    { headerName: 'Difficulty', field: 'difficulty_level', filter: true, maxWidth: 200, },
-    { headerName: 'Standard', field: 'standard_name', filter: true, maxWidth: 200, },
-    { headerName: 'Subject', field: 'subject_name', filter: true, maxWidth: 200, },
+    {
+      headerName: 'Question',
+      field: 'question_text',
+      filter: true,
+      maxWidth: 400,
+      tooltipField: "question_text",
+
+    },
+    { headerName: 'Type', field: 'type', filter: true, maxWidth: 200 },
+    {
+      headerName: 'Difficulty',
+      field: 'difficulty_level',
+      filter: true,
+      maxWidth: 200,
+    },
+    {
+      headerName: 'Standard',
+      field: 'standard_name',
+      filter: true,
+      maxWidth: 200,
+    },
+    {
+      headerName: 'Subject',
+      field: 'subject_name',
+      filter: true,
+      maxWidth: 200,
+    },
     { headerName: 'Marks', field: 'marks', filter: true, maxWidth: 100 },
     {
       headerName: 'Topics',
@@ -48,7 +70,14 @@ export class QuestionsListComponent implements OnInit {
     },
     // { field: 'topic_name' , filter: true },
     // { field: 'topics' , filter: true },
-    { headerName: 'Chapter', field: 'chapter_name', filter: true , maxWidth: 200,},
+    {
+      headerName: 'Chapter',
+      field: 'chapter_name',
+      filter: true,
+      maxWidth: 200,
+      tooltipField: "chapter_name",
+
+    },
     {
       field: 'Delete',
       cellRenderer: DeleteButtonRendererComponent,
@@ -70,7 +99,9 @@ export class QuestionsListComponent implements OnInit {
       cellRenderer: UpdateButtonRendererComponent,
       onCellClicked: this.update.bind(this),
       maxWidth: 100,
-      hide: !this.permissionsService.getPermissions('Questions.change_question'),
+      hide: !this.permissionsService.getPermissions(
+        'Questions.change_question'
+      ),
     },
   ];
 
@@ -130,7 +161,7 @@ export class QuestionsListComponent implements OnInit {
   }
   update(e: any) {
     console.log('update clicked');
-    this.openQuestionModal(e.data.id)
+    this.openQuestionModal(e.data.id);
     // this.router.navigate(['/question-view', e.data.id]);
   }
 
@@ -139,7 +170,7 @@ export class QuestionsListComponent implements OnInit {
       this.questionsService.deleteQuestion(questionId).subscribe({
         next: (response) => {
           console.log('Question deleted:', response);
-          this.loadQuestions(this.currentPage +1);
+          this.loadQuestions(this.currentPage + 1);
         },
         error: (error) => {
           console.error('Error deleting question', error);
