@@ -9,7 +9,8 @@ import { WidthType } from 'docx';
 import { HighContrastModeDetector } from '@angular/cdk/a11y';
 import { ViewButtonRendererComponent } from '../view-button/view-button.component';
 import { Router } from '@angular/router';
-import { DeleteButtonRendererComponent } from '../delete-question-button/delete-button.component';
+import { DeleteButtonRendererComponent } from '../delete-button/delete-button.component';
+import { UpdateButtonRendererComponent } from '../update-button/update-button.component';
 
 @Component({
   selector: 'app-student-list',
@@ -146,7 +147,7 @@ export class StudentListComponent implements OnInit {
       field: 'address',
       filter: true,
       valueGetter: this.addressValueGetter,
-      maxWidth: 400,
+      maxWidth: 200,
     },
 
     {
@@ -266,6 +267,13 @@ export class StudentListComponent implements OnInit {
       maxWidth: 100,
       hide: !this.permissionsService.getPermissions('Questions.view_student'),
     },
+    {
+      field: 'Update',
+      cellRenderer: UpdateButtonRendererComponent,
+      onCellClicked: this.update.bind(this),
+      maxWidth: 100,
+      hide: !this.permissionsService.getPermissions('Questions.change_student'),
+    },
   ];
   autoSizeStrategy: any;
 
@@ -324,6 +332,12 @@ export class StudentListComponent implements OnInit {
     this.router.navigate(['/student-view', e.data.id]);
     // this.openStudentRegistrationModal(e.data.id);
   }
+  update(e: any) {
+    console.log('update clicked');
+    // this.router.navigate(['/student-view', e.data.id]);
+    this.openStudentRegistrationModal(e.data.id);
+  }
+
   delete(e: any) {
     this.deleteStudent(e.data.id);
   }

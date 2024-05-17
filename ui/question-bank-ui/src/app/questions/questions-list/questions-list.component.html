@@ -16,7 +16,7 @@
             }
         </div>
         @if(permissionsService.getPermissions('Questions.add_question')){
-            <button class="add-btn" (click)="openQuestionModal()">Add</button>
+            <button class="add-btn" (click)="openQuestionModal(null)">Add</button>
         }
     </header>
     

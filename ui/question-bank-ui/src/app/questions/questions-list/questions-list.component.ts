@@ -7,7 +7,7 @@ import {
 import { ColDef, FrameworkComponentWrapper } from 'ag-grid-community';
 import { QuestionsService } from '../../services/questions.service';
 import { Router } from '@angular/router';
-import { DeleteButtonRendererComponent } from '../../delete-question-button/delete-button.component';
+import { DeleteButtonRendererComponent } from '../../delete-button/delete-button.component';
 import { ViewButtonRendererComponent } from '../../view-button/view-button.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthService } from '../../services/auth.service';
@@ -19,6 +19,7 @@ import { SubjectsComponent } from '../../subjects/subjects.component';
 import { ChaptersComponent } from '../../chapters/chapters.component';
 import { TopicsComponent } from '../../topics/topics.component';
 import { QuestionsComponent } from '../questions.component';
+import { UpdateButtonRendererComponent } from '../../update-button/update-button.component';
 
 @Component({
   selector: 'app-questions-list',
@@ -63,6 +64,13 @@ export class QuestionsListComponent implements OnInit {
       onCellClicked: this.view.bind(this),
       maxWidth: 100,
       hide: !this.permissionsService.getPermissions('Questions.view_question'),
+    },
+    {
+      field: 'Update',
+      cellRenderer: UpdateButtonRendererComponent,
+      onCellClicked: this.update.bind(this),
+      maxWidth: 100,
+      hide: !this.permissionsService.getPermissions('Questions.change_question'),
     },
   ];
 
@@ -120,6 +128,11 @@ export class QuestionsListComponent implements OnInit {
     console.log('veiw clicked');
     this.router.navigate(['/question-view', e.data.id]);
   }
+  update(e: any) {
+    console.log('update clicked');
+    this.openQuestionModal(e.data.id)
+    // this.router.navigate(['/question-view', e.data.id]);
+  }
 
   deleteQuestion(questionId: number): void {
     if (confirm('Are you sure you want to delete this question?')) {
@@ -164,11 +177,12 @@ export class QuestionsListComponent implements OnInit {
       disableClose: true,
     });
   }
-  openQuestionModal() {
+  openQuestionModal(id: any) {
     this.QuestionModal = this.matDialog.open(QuestionsComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,
+      data: { id },
     });
   }
 }
