@@ -80,6 +80,19 @@ export class TeacherRegistrationComponent  implements OnInit {
         });
     }
   }
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.registrationForm.get('profile_picture')?.setValue(reader.result);
+      };
+    } else {
+      this.registrationForm.get('profile_picture')?.setValue(null);
+    }
+  }
+
 
   onSubmit() {
     if (this.registrationForm.valid) {

@@ -130,8 +130,18 @@
   
       <!-- Profile picture -->
       <div class="form-group">
-        <label for="profile_picture">Profile Picture</label>
-        <input type="file" id="profile_picture" formControlName="profile_picture" />
+        <label for="profile_picture" class="custom-file-upload">Profile Picture</label>
+        
+  
+          <input
+            #fileInput
+            id="profile_picture"
+            type="file"
+            (change)="onFileSelected($event)"
+          />
+        <input type="hidden" formControlName="image" />
+  
+  
       </div>
   
       <!-- Biography -->
