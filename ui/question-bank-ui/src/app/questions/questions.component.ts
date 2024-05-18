@@ -90,15 +90,11 @@ export class QuestionsComponent implements OnInit {
     this.filteredChapters = [];
     this.filteredTopics = [];
 
-    // this.questionId = this.route.snapshot.paramMap.get('id');
     this.questionId = this.data.id;
 
 
     if (this.questionId) {
-      // this.questionForm.get('subject')?.enable();
-      // this.questionForm.get('standard')?.enable();
-      // this.questionForm.get('topics')?.enable();
-      // this.questionForm.get('chapter')?.enable();
+   
 
 
       this.questionsService
@@ -222,10 +218,7 @@ export class QuestionsComponent implements OnInit {
 
   onSubmit(): void {
     console.log('on submit clicked');
-    // console.log(this.questionId);
-    // console.log(this.questionForm.value);
-    // console.log(this.questionForm.errors);
-    // console.log(this.questionForm.valid);
+ 
     if (this.questionForm.valid) {
       console.log("valid");
       if (this.questionId) {
@@ -235,7 +228,6 @@ export class QuestionsComponent implements OnInit {
           .subscribe({
             next: (data) => {
               console.log('Question updated:', data);
-              // this.loadQuestions();
               this.questionForm.reset(); // Reset the form
               this.selectedFile = null; // Clear the selected file
               this.fileInput.nativeElement.value = ''; // Clear the file input

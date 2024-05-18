@@ -9,7 +9,11 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentRegistrationService } from '../services/student-registration.service';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { Optional } from 'ag-grid-community';
 import { StandardsComponent } from '../standards/standards.component';
 
@@ -19,7 +23,6 @@ import { StandardsComponent } from '../standards/standards.component';
   imports: [ReactiveFormsModule, FormsModule, CommonModule, MatDialogModule],
   templateUrl: './student-registration.component.html',
   styleUrl: './student-registration.component.css',
-  
 })
 export class StudentRegistrationComponent implements OnInit {
   registrationForm: FormGroup;
@@ -31,8 +34,7 @@ export class StudentRegistrationComponent implements OnInit {
     private studentRegistrationService: StudentRegistrationService,
     private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    @Optional() public dialogRef: MatDialogRef<any>,
-
+    @Optional() public dialogRef: MatDialogRef<any>
   ) {
     this.registrationForm = this.formBuilder.group({
       user: this.formBuilder.group(
@@ -75,9 +77,8 @@ export class StudentRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     // this.studentId = this.route.snapshot.paramMap.get('id');
-    console.log('data' , this.data)
+    console.log('data', this.data);
     this.studentId = this.data.id;
-
 
     if (this.studentId) {
       this.registrationForm.removeControl('user');
@@ -96,6 +97,19 @@ export class StudentRegistrationComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.registrationForm.get('profile_picture')?.setValue(reader.result);
+      };
+    } else {
+      this.registrationForm.get('profile_picture')?.setValue(null);
+    }
+  }
+
   onSubmit() {
     if (this.registrationForm.valid) {
       if (this.studentId) {
@@ -108,7 +122,7 @@ export class StudentRegistrationComponent implements OnInit {
               // this.loadQuestions();
               this.registrationForm.reset(); // Reset the form
               alert('Successfully updated the student');
-      this.dialogRef?.close({ refresh: true})
+              this.dialogRef?.close({ refresh: true });
 
               // this.router.navigate(['/student-registration']);
             },
@@ -123,8 +137,7 @@ export class StudentRegistrationComponent implements OnInit {
             (response) => {
               alert('Student registered successfully');
               this.registrationForm.reset();
-      this.dialogRef?.close({ refresh: true})
-
+              this.dialogRef?.close({ refresh: true });
             },
             (error) => {
               console.error(error);

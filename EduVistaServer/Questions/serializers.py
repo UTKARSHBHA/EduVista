@@ -239,7 +239,15 @@ class StudentSerializer(serializers.ModelSerializer):
             'emergency_contact_name',
             'emergency_contact_number',
         )
-
+    def to_internal_value(self, data):
+        # Handle the image field manually
+        image_data = data.get('profile_picture')
+        if image_data and ';base64,' in image_data:
+            format, imgstr = image_data.split(';base64,')
+            ext = format.split('/')[-1]
+            image_name = f"{uuid.uuid4()}_{datetime.now().strftime('%Y%m%d%H%M%S')}.{ext}"
+            data['profile_picture'] = ContentFile(base64.b64decode(imgstr), name=image_name)
+        return super().to_internal_value(data)
     
 
     def create(self, validated_data):

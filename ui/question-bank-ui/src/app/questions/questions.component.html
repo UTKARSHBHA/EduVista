@@ -27,7 +27,6 @@
           bindValue="id"
           formControlName="difficulty_level"
           placeholder="Select Difficulty Level"
-          
         >
         </ng-select>
       </div>
@@ -47,7 +46,6 @@
           formControlName="standard"
           (change)="onStandardSelected($event.id)"
           placeholder="Select Standard"
-
         >
         </ng-select>
       </div>
@@ -67,7 +65,6 @@
           formControlName="subject"
           (change)="onSubjectSelected($event.id)"
           placeholder="Select Subject"
-
         >
         </ng-select>
       </div>
@@ -87,7 +84,6 @@
           formControlName="chapter"
           (change)="onChapterSelected($event.id)"
           placeholder="Select Chapter"
-
         >
         </ng-select>
       </div>
@@ -107,13 +103,12 @@
           [multiple]="true"
           formControlName="topics"
           placeholder="Select Topics"
-
         >
         </ng-select>
       </div>
       <div class="fields">
         <label for="marks">Marks:</label>
-        <input id="marks" type="number" formControlName="marks" min="1"/>
+        <input id="marks" type="number" formControlName="marks" min="1" />
       </div>
       <div class="fields">
         <label for="image" class="custom-file-upload">Image:</label>
@@ -166,10 +161,14 @@
     <!-- </div> -->
     <div class="btnList">
       @if(questionId){
-      <button type="submit" [disabled]="!questionForm.valid">Update Question</button>
+      <button type="submit" [disabled]="!questionForm.valid">
+        Update Question
+      </button>
       } @else{
 
-      <button type="submit" [disabled]="!questionForm.valid">Add Question</button>
+      <button type="submit" [disabled]="!questionForm.valid">
+        Add Question
+      </button>
       }
       <button type="submit" (click)="resetForm()">Reset</button>
     </div>
