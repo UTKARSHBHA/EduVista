@@ -310,15 +310,15 @@ export class StudentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadStudents();
-    this.studentRegistrationService.getStudents().subscribe((data) => {
-      this.rowData = data;
-    });
+    // this.studentRegistrationService.getStudents().subscribe((data) => {
+    //   this.rowData = data;
+    // });
   }
 
   loadStudents(): void {
     this.studentRegistrationService.getStudents().subscribe((data) => {
       console.log(data);
-      this.rowData = data.results;
+      this.rowData = data;
     });
   }
 
