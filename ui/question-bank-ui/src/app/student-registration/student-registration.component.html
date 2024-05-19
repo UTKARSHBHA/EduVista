@@ -4,76 +4,82 @@
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     @if(!studentId){
-    <div formGroupName="user" class="userInfo">
-      <div class="form-group">
+    <!-- <div formGroupName="user" class="userInfo"> -->
+    <div formGroupName="user" class="form-group">
+      <!-- <div class="input-group"> -->
         <label for="username">Username *</label>
         <input type="text" id="username" formControlName="username" />
+      <!-- </div> -->
+      <div
+        *ngIf="registrationForm.get('user.username')?.errors?.['required'] && registrationForm.get('user.username')?.touched"
+        class="error"
+      >
+        Username is required
       </div>
-        <div
-          *ngIf="registrationForm.get('user.username')?.errors?.['required'] && registrationForm.get('user.username')?.touched" 
-          class="error"
-        >Username is required</div>
-      <div class="form-group">
-        <label for="email">Email *</label>
-        <input type="email" id="email" formControlName="email" />
-      </div>
-        <div
-          *ngIf="registrationForm.get('user.email')?.errors?.['required'] && registrationForm.get('user.email')?.touched" 
-          class="error"
+    </div>
+    <div formGroupName="user" class="form-group">
+      <label for="email">Email *</label>
+      <input type="email" id="email" formControlName="email" />
+      <div
+      *ngIf="registrationForm.get('user.email')?.errors?.['required'] && registrationForm.get('user.email')?.touched"
+      class="error"
+      >
+      Email is required
+    </div>
+  </div>
+
+    <div formGroupName="user" class="form-group">
+      <label for="password">Password *</label>
+      <input type="password" id="password" formControlName="password" />
+      <div
+      *ngIf="registrationForm.get('user.password')?.errors?.['required'] && registrationForm.get('user.password')?.touched"
+      class="error"
+      >
+      Password is required
+    </div>
+  </div>
+    <div formGroupName="user" class="form-group">
+      <label for="confirmPassword">Confirm Password *</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+      />
+      <!-- <div
+        *ngIf="registrationForm.get('user.confirmPassword')?.errors?.['required'] && registrationForm.get('user.confirmPassword')?.touched" 
+        class="error"
         >
-          Email is required
-        </div>
-
-
-          <div class="form-group">
-            <label for="password">Password *</label>
-            <input type="password" id="password" formControlName="password" />
-          </div>
-          <div
-          *ngIf="registrationForm.get('user.password')?.errors?.['required'] && registrationForm.get('user.password')?.touched" 
-          class="error"
-          >
-          Password is required
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password *</label>
-          <input
-          type="password"
-          id="confirmPassword"
-          formControlName="confirmPassword"
-          />
-        </div>
-        <!-- <div
-          *ngIf="registrationForm.get('user.confirmPassword')?.errors?.['required'] && registrationForm.get('user.confirmPassword')?.touched" 
-          class="error"
-          >
-          Confirm Password is required
-        </div> -->
-        <div *ngIf="registrationForm.get('user')?.errors?.['notSame'] && registrationForm.get('user.confirmPassword')?.touched" class="error">
-          Passwords do not match.
-        </div>
-      </div>
+        Confirm Password is required
+      </div> -->
+      <div
+      *ngIf="registrationForm.get('user')?.errors?.['notSame'] && registrationForm.get('user.confirmPassword')?.touched"
+      class="error"
+      >
+      Passwords do not match.
+    </div>
+  </div>
+    <!-- </div> -->
     }
     <div class="form-group">
       <label for="first_name">First Name *</label>
       <input type="text" id="first_name" formControlName="first_name" />
-    </div>
       <div
-          *ngIf="registrationForm.controls['first_name'].errors?.['required'] && registrationForm.controls['first_name'].touched"
-          class="error"
-        >
-          First name is required
-        </div>
+      *ngIf="registrationForm.controls['first_name'].errors?.['required'] && registrationForm.controls['first_name'].touched"
+      class="error"
+      >
+      First name is required
+    </div>
+  </div>
     <div class="form-group">
       <label for="last_name">Last Name *</label>
       <input type="text" id="last_name" formControlName="last_name" />
-    </div>
       <div
-          *ngIf="registrationForm.controls['last_name'].errors?.['required'] && registrationForm.controls['last_name'].touched"
-          class="error"
-        >
-          Last name is required
-        </div>
+      *ngIf="registrationForm.controls['last_name'].errors?.['required'] && registrationForm.controls['last_name'].touched"
+      class="error"
+      >
+      Last name is required
+    </div>
+  </div>
     <div class="form-group">
       <label for="middle_name">Middle Name</label>
       <input type="text" id="middle_name" formControlName="middle_name" />
@@ -81,13 +87,13 @@
     <div class="form-group">
       <label for="phone_number">Phone Number *</label>
       <input type="tel" id="phone_number" formControlName="phone_number" />
-    </div>
       <div
-          *ngIf="registrationForm.controls['phone_number'].errors?.['required'] && registrationForm.controls['phone_number'].touched"
-          class="error"
-        >
-          Phone number is required
-        </div>
+      *ngIf="registrationForm.controls['phone_number'].errors?.['required'] && registrationForm.controls['phone_number'].touched"
+      class="error"
+      >
+      Phone number is required
+    </div>
+  </div>
     <div class="form-group">
       <label for="alternate_phone_number">Alternate Phone Number</label>
       <input
@@ -99,13 +105,13 @@
     <div class="form-group">
       <label for="date_of_birth">Date of Birth *</label>
       <input type="date" id="date_of_birth" formControlName="date_of_birth" />
-    </div>
       <div
-          *ngIf="registrationForm.controls['date_of_birth'].errors?.['required'] && registrationForm.controls['date_of_birth'].touched"
-          class="error"
-        >
-          Date of Birth is required
-        </div>
+      *ngIf="registrationForm.controls['date_of_birth'].errors?.['required'] && registrationForm.controls['date_of_birth'].touched"
+      class="error"
+      >
+      Date of Birth is required
+    </div>
+  </div>
     <div class="form-group">
       <label for="gender">Gender *</label>
       <select id="gender" formControlName="gender">
@@ -114,35 +120,35 @@
         <option value="F">Female</option>
         <option value="O">Other</option>
       </select>
-    </div>
       <div
-          *ngIf="registrationForm.controls['gender'].errors?.['required'] && registrationForm.controls['gender'].touched"
-          class="error"
-        >
-          Gender is required
-        </div>
-    
+      *ngIf="registrationForm.controls['gender'].errors?.['required'] && registrationForm.controls['gender'].touched"
+      class="error"
+      >
+      Gender is required
+    </div>
+  </div>
+
     <div class="form-group">
       <label for="admission_date">Admission Date *</label>
       <input type="date" id="admission_date" formControlName="admission_date" />
-    </div>
       <div
-          *ngIf="registrationForm.controls['admission_date'].errors?.['required'] && registrationForm.controls['admission_date'].touched"
-          class="error"
-        >
-          Admission Date is required
-        </div>
+      *ngIf="registrationForm.controls['admission_date'].errors?.['required'] && registrationForm.controls['admission_date'].touched"
+      class="error"
+      >
+      Admission Date is required
+    </div>
+  </div>
     <!-- Address fields -->
     <div class="form-group">
       <label for="address_line1">Address Line 1 *</label>
       <input type="text" id="address_line1" formControlName="address_line1" />
-    </div>
       <div
-          *ngIf="registrationForm.controls['address_line1'].errors?.['required'] && registrationForm.controls['address_line1'].touched"
-          class="error"
-        >
-          Address is required
-        </div>
+      *ngIf="registrationForm.controls['address_line1'].errors?.['required'] && registrationForm.controls['address_line1'].touched"
+      class="error"
+      >
+      Address is required
+    </div>
+  </div>
     <div class="form-group">
       <label for="address_line2">Address Line 2</label>
       <input type="text" id="address_line2" formControlName="address_line2" />
@@ -150,57 +156,56 @@
     <div class="form-group">
       <label for="city">City *</label>
       <input type="text" id="city" formControlName="city" />
-    </div>
       <div
       *ngIf="registrationForm.controls['city'].errors?.['required'] && registrationForm.controls['city'].touched"
       class="error"
-    >
+      >
       City is required
     </div>
+  </div>
     <div class="form-group">
       <label for="state">State *</label>
       <input type="text" id="state" formControlName="state" />
-    </div>
       <div
       *ngIf="registrationForm.controls['state'].errors?.['required'] && registrationForm.controls['state'].touched"
       class="error"
-    >
+      >
       State is required
     </div>
+  </div>
     <div class="form-group">
       <label for="postal_code">Postal Code *</label>
       <input type="text" id="postal_code" formControlName="postal_code" />
-    </div>
       <div
       *ngIf="registrationForm.controls['postal_code'].errors?.['required'] && registrationForm.controls['postal_code'].touched"
       class="error"
-    >
+      >
       Postal Code is required
     </div>
+  </div>
     <div class="form-group">
       <label for="country">Country *</label>
       <input type="text" id="country" formControlName="country" />
-    </div>
       <div
       *ngIf="registrationForm.controls['country'].errors?.['required'] && registrationForm.controls['country'].touched"
       class="error"
-    >
+      >
       Country is required
     </div>
+  </div>
     <!-- Profile picture -->
     <div class="form-group">
-      <label for="profile_picture" class="custom-file-upload">Profile Picture</label>
-      
+      <label for="profile_picture" class="custom-file-upload"
+        >Profile Picture</label
+      >
 
-        <input
-          #fileInput
-          id="profile_picture"
-          type="file"
-          (change)="onFileSelected($event)"
-        />
+      <input
+        #fileInput
+        id="profile_picture"
+        type="file"
+        (change)="onFileSelected($event)"
+      />
       <input type="hidden" formControlName="image" />
-
-
     </div>
     <!-- Parent/Guardian fields -->
     <div class="form-group">
@@ -210,6 +215,12 @@
         id="parent_guardian_name"
         formControlName="parent_guardian_name"
       />
+      <div
+      *ngIf="registrationForm.controls['parent_guardian_name'].errors?.['required'] && registrationForm.controls['parent_guardian_name'].touched"
+      class="error"
+      >
+      Parent/Guardian Name is required
+    </div>
     </div>
     <div class="form-group">
       <label for="parent_guardian_contact">Parent/Guardian Contact *</label>
@@ -218,6 +229,12 @@
         id="parent_guardian_contact"
         formControlName="parent_guardian_contact"
       />
+      <div
+      *ngIf="registrationForm.controls['parent_guardian_contact'].errors?.['required'] && registrationForm.controls['parent_guardian_contact'].touched"
+      class="error"
+      >
+      Parent/Guardian Contact is required
+    </div>
     </div>
     <div class="form-group">
       <label for="parent_guardian_email">Parent/Guardian Email *</label>
@@ -226,6 +243,12 @@
         id="parent_guardian_email"
         formControlName="parent_guardian_email"
       />
+      <div
+      *ngIf="registrationForm.controls['parent_guardian_email'].errors?.['required'] && registrationForm.controls['parent_guardian_email'].touched"
+      class="error"
+      >
+      Parent/Guardian Email is required
+    </div>
     </div>
     <!-- Emergency contact -->
     <div class="form-group">
@@ -235,6 +258,12 @@
         id="emergency_contact_name"
         formControlName="emergency_contact_name"
       />
+      <div
+      *ngIf="registrationForm.controls['emergency_contact_name'].errors?.['required'] && registrationForm.controls['emergency_contact_name'].touched"
+      class="error"
+      >
+      Emergency Contact Name is required
+    </div>
     </div>
     <div class="form-group">
       <label for="emergency_contact_number">Emergency Contact Number *</label>
@@ -243,17 +272,34 @@
         id="emergency_contact_number"
         formControlName="emergency_contact_number"
       />
+      <div
+      *ngIf="registrationForm.controls['emergency_contact_number'].errors?.['required'] && registrationForm.controls['emergency_contact_number'].touched"
+      class="error"
+      >
+      Emergency Contact Number is required
     </div>
-    <div *ngIf="registrationForm.errors?.['notMatching']" class="error-message">
+    </div>
+    <!-- <div *ngIf="registrationForm.errors?.['notMatching']" class="error-message">
       Passwords do not match.
-    </div>
+    </div> -->
     @if(studentId){
 
-      <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Update</button>
-    }
-    @else{
-      <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Register</button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!registrationForm.valid"
+    >
+      Update
+    </button>
+    } @else{
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!registrationForm.valid"
+    >
+      Register
+    </button>
 
     }
-    </form>
+  </form>
 </div>
