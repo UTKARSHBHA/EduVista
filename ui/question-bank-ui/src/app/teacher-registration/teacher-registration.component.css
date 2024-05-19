@@ -12,13 +12,16 @@
   
   /* Form styling */
   form {
-    width: 40vw;
+    width: 60vw;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 1rem; /* Gap between form elements */
   }
   
   .form-group {
+    width: 45%;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -52,6 +55,7 @@
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
+    margin: auto;
   }
   
   button[type="submit"]:disabled {
