@@ -310,7 +310,7 @@ export class TeacherListComponent implements OnInit {
 
   addressValueGetter(params: any) {
     const data = params.data;
-    return `${data.address_line1}, ${data.address_line2}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
+    return `${data.address_line1}, ${data.address_line2 ? data.address_line2+',': "" } ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
   }
   dateFormatter(params: any) {
     if (params.value) {

@@ -350,7 +350,7 @@ export class StudentListComponent implements OnInit {
   }
   addressValueGetter(params: any) {
     const data = params.data;
-    return `${data.address_line1}, ${data.address_line2}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
+    return `${data.address_line1}, ${data.address_line2 ? data.address_line2+',': "" } ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
   }
   view(e: any) {
     console.log('veiw clicked');
