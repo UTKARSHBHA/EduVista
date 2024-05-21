@@ -1,0 +1,21 @@
+<!-- <h2>Tags</h2>
+<ul>
+ @for(tag of tags; track tag.id){
+    <li>{{tag.name}}</li>
+ }
+</ul> -->
+
+<div class="container">
+
+    <h2>Tags</h2>
+    <i class="fa-solid fa-xmark closeModal" mat-button mat-dialog-close></i>
+ 
+    <form class="tag-form" [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+       <div class="inputFields">
+          <label for="name">Name:</label>
+          <input id="name" type="text" formControlName="name">
+       </div>
+       <button type="submit" [disabled]="!tagForm.valid">Add Tag</button>
+    </form>
+    
+ </div>

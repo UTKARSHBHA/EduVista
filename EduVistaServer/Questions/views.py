@@ -1,10 +1,10 @@
 from rest_framework import viewsets, status
 
 # Import your serializers
-from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, StudentSerializer, SubjectSerializer, StandardSerializer, TeacherSerializer, TopicSerializer, OptionSerializer
+from .serializers import CustomTokenObtainPairSerializer, QuestionPaperSerializer, QuestionSerializer, ChapterSerializer, StudentSerializer, SubjectSerializer, StandardSerializer, TeacherSerializer, TopicSerializer, OptionSerializer, TagSerializer
 
 # Import your models
-from .models import Question, Chapter, QuestionPaper, Student, Subject, Standard, Teacher, Topic, Option
+from .models import Question, Chapter, QuestionPaper, Student, Subject, Standard, Tag, Teacher, Topic, Option
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -335,3 +335,11 @@ class TeacherViewSet(viewsets.ModelViewSet):
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)  # Set the user field
     #     return serializer.save()  # Optionally return the saved object
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)

@@ -8,6 +8,9 @@
             @if(permissionsService.getPermissions('Questions.add_subject')){
                 <button class="add-btn" (click)="openSubjectModal()">Add Subject</button>
             }
+            @if(permissionsService.getPermissions('Questions.add_tag')){
+                <button class="add-btn" (click)="openTagModal()">Add Tag</button>
+            }
             @if(permissionsService.getPermissions('Questions.add_chapter')){
                 <button class="add-btn" (click)="openChapterModal()">Add Chapter</button>
             }

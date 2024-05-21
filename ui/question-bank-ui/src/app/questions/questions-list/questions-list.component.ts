@@ -20,6 +20,7 @@ import { ChaptersComponent } from '../../chapters/chapters.component';
 import { TopicsComponent } from '../../topics/topics.component';
 import { QuestionsComponent } from '../questions.component';
 import { UpdateButtonRendererComponent } from '../../update-button/update-button.component';
+import { TagsComponent } from '../../tags/tags.component';
 
 @Component({
   selector: 'app-questions-list',
@@ -110,6 +111,7 @@ export class QuestionsListComponent implements OnInit {
   currentPage = 1;
   StandardModal: MatDialogRef<StandardsComponent> | undefined;
   SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
+  TagModal: MatDialogRef<TagsComponent> | undefined;
   ChapterModal: MatDialogRef<ChaptersComponent> | undefined;
   TopicModal: MatDialogRef<TopicsComponent> | undefined;
   QuestionModal: MatDialogRef<QuestionsComponent> | undefined;
@@ -189,6 +191,13 @@ export class QuestionsListComponent implements OnInit {
 
   openSubjectModal() {
     this.SubjectModal = this.matDialog.open(SubjectsComponent, {
+      height: '90vh',
+      width: '90vw',
+      disableClose: true,
+    });
+  }
+  openTagModal() {
+    this.TagModal = this.matDialog.open(TagsComponent, {
       height: '90vh',
       width: '90vw',
       disableClose: true,

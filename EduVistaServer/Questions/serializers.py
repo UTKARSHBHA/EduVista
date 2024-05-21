@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import Group, CustomUser
 from rest_framework import serializers
-from .models import CustomUser, Question, Chapter, Student, Subject, Standard, Teacher, Topic, Option
+from .models import CustomUser, Question, Chapter, Student, Subject, Standard, Tag, Teacher, Topic, Option
 import base64
 from django.core.files.base import ContentFile
 import logging
@@ -48,6 +48,7 @@ class OptionSerializer(serializers.ModelSerializer):
         fields = ['id', 'text', 'is_correct']
 class QuestionSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
+    tags = serializers.StringRelatedField(many=True)
 
     # print(request.user)
     standard_name = serializers.StringRelatedField(source='standard.name')
@@ -59,7 +60,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', 'topics_name', 'user']
+        fields = ['id', 'question_text', 'type', 'difficulty_level', 'standard', 'subject', 'marks', 'topics', 'chapter' , 'options','standard_name' , 'subject_name' , 'chapter_name', 'image', 'topics_name', 'user', 'tags']
 
     def get_topics_name(self, obj):
         # Assuming 'topics' is a ManyToMany field on the Question model
@@ -323,3 +324,11 @@ class TeacherSerializer(serializers.ModelSerializer):
         # Create the teacher object with the created user
         teacher = Teacher.objects.create(user=user, **validated_data)
         return teacher
+    
+
+class TagSerializer(serializers.ModelSerializer):
+    creator = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        model = Tag
+        fields = ['id', 'name', 'creator']

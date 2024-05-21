@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, QuestionPaper, Subject, Standard, Chapter, Teacher, Topic, Option, CustomUser, Student
+from .models import Question, QuestionPaper, Subject, Standard, Chapter, Tag, Teacher, Topic, Option, CustomUser, Student
 # Register your models here.
 
 admin.site.register(Question)
@@ -12,6 +12,7 @@ admin.site.register(QuestionPaper)
 admin.site.register(CustomUser)
 admin.site.register(Student)
 admin.site.register(Teacher)
+admin.site.register(Tag)
 
 
 # @admin.register(CustomUser)

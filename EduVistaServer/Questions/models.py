@@ -81,6 +81,14 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class Question(models.Model):
     TYPE_CHOICES = [
@@ -103,6 +111,7 @@ class Question(models.Model):
     question_text = models.TextField()
     image = models.ImageField(upload_to='questions-images/', blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, related_name='questions')
 
     def __str__(self):
         return self.question_text
@@ -227,3 +236,5 @@ class Teacher(models.Model):
     
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.designation})"
+
+
