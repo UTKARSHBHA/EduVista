@@ -1,39 +1,48 @@
 <!-- <div class="container"> -->
-  <div *ngIf="questionPaper.length > 0" id="questionPaper">
-    <div class="questionPaperHeader">
-      <h2>Question Paper</h2>
-      <div class="questionPaperButtonContainer">
+<div *ngIf="questionPaper.length > 0" id="questionPaper">
+  <div class="questionPaperHeader">
+    <h2>Question Paper</h2>
+    <div class="questionPaperButtonContainer">
+      <button (click)="printQuestionPaper()" class="print-btn no-print">
+        <i class="fas fa-print"></i>
+      </button>
+      <button class="btn" (click)="saveQuestionPaper()">
+        <i class="fas fa-save"></i>
+      </button>
+    </div>
+  </div>
 
-        <button (click)="printQuestionPaper()" class="print-btn no-print">
-          <i class="fas fa-print"></i> 
-        </button>
-        <button 
-        class="btn"
-        (click)="saveQuestionPaper()"
-        >
-          <i class="fas fa-save"></i>
-        </button>
-      </div>    
+  <div *ngFor="let question of questionPaper; let i = index" class="question">
+
+    <div class="replace-fields">
+
+      
+      <ng-select [multiple]="true" [(ngModel)]="question.selectedTags">
+        @for (tag of question.tags; track tag.id) {
+          <ng-option [value]="tag.id">{{tag.name}}</ng-option>
+        }
+      </ng-select>
+      
+      <i
+      class="fas fa-exchange-alt replace-btn"
+      (click)="getDifferentQuestion(i)"
+      ></i>
     </div>
 
-    <div *ngFor="let question of questionPaper; let i = index" class="question">
-      <i class="fas fa-exchange-alt replace-btn" (click)="getDifferentQuestion(i)"></i>
-      <p>
-        Question {{ i + 1 }}: {{ question.question_text }}</p>
-      <div class="questionMetaData">
-        <p>Type:{{ question.type }}</p>
-        <p>Marks:{{ question.marks }}</p>
-        
-      </div>
-      <div
+    <p>Question {{ i + 1 }}: {{ question.question_text }}</p>
+    <div class="questionMetaData">
+      <p>Type:{{ question.type }}</p>
+      <p>Marks:{{ question.marks }}</p>
+    </div>
+    <div
       *ngIf="question.options && question.options.length > 0"
       class="options"
-      >
+    >
       <p>Options:</p>
       <ol type="A">
         <li *ngFor="let option of question.options">{{ option.text }}</li>
       </ol>
     </div>
   </div>
-  </div>
+</div>
 <!-- </div> -->

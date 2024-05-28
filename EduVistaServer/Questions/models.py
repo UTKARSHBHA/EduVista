@@ -143,6 +143,8 @@ class QuestionPaper(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, blank=True, null=True)
     topics = models.ManyToManyField(Topic, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+
     question_paper_json = models.JSONField()
     total_marks = models.IntegerField()
     question_count = models.IntegerField()

@@ -165,17 +165,19 @@ class SignupSerializer(serializers.ModelSerializer):
 
 class QuestionPaperSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
+    # tags = TagSerializer(many=True, read_only=False)
 
     standard_name = serializers.SerializerMethodField()
     subject_name = serializers.SerializerMethodField()
     chapter_name = serializers.SerializerMethodField()
     topics_name = serializers.SerializerMethodField()
+    tags_name = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = QuestionPaper
-        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name', 'created_at', 'updated_at', 'user']
+        fields = ['id', 'standard', 'subject', 'chapter', 'topics', 'tags','question_paper_json' , 'total_marks', 'question_count', 'standard_name', 'chapter_name' , 'topics_name' ,'subject_name', 'created_at', 'updated_at', 'user', 'tags_name']
 
     def get_standard_name(self, obj):
         return obj.standard.name if obj.standard else None
@@ -188,6 +190,9 @@ class QuestionPaperSerializer(serializers.ModelSerializer):
 
     def get_topics_name(self, obj):
         return ', '.join([topic.name for topic in obj.topics.all()]) if obj.topics.exists() else None
+    
+    def get_tags_name(self, obj):
+        return ', '.join([tag.name for tag in obj.tags.all()]) if obj.tags.exists() else None
 
 
 

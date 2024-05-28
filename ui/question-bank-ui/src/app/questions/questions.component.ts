@@ -26,6 +26,8 @@ import { SubjectsComponent } from '../subjects/subjects.component';
 import { TopicsComponent } from '../topics/topics.component';
 import { ChaptersComponent } from '../chapters/chapters.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TagsComponent } from '../tags/tags.component';
+import { TagsService } from '../services/tags.service';
 
 @Component({
   selector: 'app-questions',
@@ -40,14 +42,17 @@ export class QuestionsComponent implements OnInit {
   chapters: any[] = [];
   topics: any[] = [];
   subjects: any[] = [];
+  tags: any[] = [];
   standards: any[] = [];
 
   questionId: any = null;
   StandardModal: MatDialogRef<StandardsComponent> | undefined;
   SubjectModal: MatDialogRef<SubjectsComponent> | undefined;
+  TagModal: MatDialogRef<TagsComponent> | undefined;
   TopicModal: MatDialogRef<TopicsComponent> | undefined;
   ChapterModal: MatDialogRef<ChaptersComponent> | undefined;
   filteredSubjects: any[] = [];
+  // filteredTags: any[] = [];
   filteredChapters: any[] = [];
   filteredTopics: any[] = [];
 
@@ -57,6 +62,7 @@ export class QuestionsComponent implements OnInit {
     private chaptersService: ChaptersService,
     private topicsService: TopicsService,
     private subjectsService: SubjectsService,
+    private tagsService: TagsService,
     private standardsService: StandardsService,
     private route: ActivatedRoute,
     private matDialog: MatDialog,
@@ -74,6 +80,7 @@ export class QuestionsComponent implements OnInit {
       subject: ['', Validators.required],
       marks: ['', Validators.required],
       topics: [[], Validators.required],
+      tags: [[], Validators.required],
       chapter: ['', Validators.required],
       image: [null],
       options: this.formBuilder.array([]),
@@ -83,6 +90,7 @@ export class QuestionsComponent implements OnInit {
   ngOnInit(): void {
     this.loadChapters();
     this.loadTopics();
+    this.loadTags();
     this.loadSubjects();
     this.loadStandards();
 
@@ -183,6 +191,11 @@ export class QuestionsComponent implements OnInit {
   loadSubjects(): void {
     this.subjectsService.getSubjects().subscribe((data: any) => {
       this.subjects = data;
+    });
+  }
+  loadTags(): void {
+    this.tagsService.getTags().subscribe((data: any) => {
+      this.tags = data;
     });
   }
 
@@ -313,6 +326,20 @@ export class QuestionsComponent implements OnInit {
     });
     
   }
+  openTagModal() {
+    this.TagModal = this.matDialog.open(TagsComponent, {
+      disableClose: true,
+      height: '90vh',
+      width: '90vw',
+    });
+    this.TagModal.afterClosed().subscribe((result: any) => {
+      console.log('The dialog was closed', result);
+      if(result && result.refresh){
+        this.loadTags();
+      }
+    });
+    
+  }
   openTopicModal() {
     this.TopicModal = this.matDialog.open(TopicsComponent, {
       disableClose: true,
@@ -373,6 +400,16 @@ export class QuestionsComponent implements OnInit {
     this.questionForm.get('topics')?.setValue(null);
     this.filteredTopics = [];
   }
+  // onTagSelected(subjectId: any) {
+  //   // const subjectId = event.id;
+  //   this.filteredChapters = this.chapters.filter(
+  //     (chapter) => chapter.subject === subjectId
+  //   );
+  //   // Optionally, reset the selected chapter and topic
+  //   this.questionForm.get('chapter')?.setValue(null);
+  //   this.questionForm.get('topics')?.setValue(null);
+  //   this.filteredTopics = [];
+  // }
 
   onChapterSelected(chapterId: any) {
     // const chapterId = event.id;

@@ -82,9 +82,15 @@
 }
 
 .replace-btn{
-    text-align: end;
+    /* text-align: end; */
 
   padding: 1rem;
 cursor: pointer;
 
+}
+
+.replace-fields{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

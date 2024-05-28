@@ -290,7 +290,7 @@ class GetNewQuestionView(APIView):
     def post(self, request, *args, **kwargs):
         question_to_replace = request.data.get('questionToReplace')
         existing_questions_ids = request.data.get('existingQuestionsIds').split(',')
-        
+        selected_tags = request.data.get('selectedTags')
         # Logic to find a new question that matches the criteria and is not in the list of existing questions
         # This is a placeholder for your actual logic
         new_questions = list( Question.objects.filter(
@@ -300,12 +300,12 @@ class GetNewQuestionView(APIView):
             topics__in=question_to_replace['topics'],
             difficulty_level=question_to_replace['difficulty_level'],
             marks=question_to_replace['marks'],
-            type=question_to_replace['type']
-        ).exclude(id__in=existing_questions_ids))
+            type=question_to_replace['type'],
+            tags__in=selected_tags,
+        ).exclude(id__in=existing_questions_ids).distinct())
 
-        new_question = choice(new_questions)
-        
-        if new_question:
+        if new_questions:
+            new_question = choice(new_questions)
             return Response(QuestionSerializer(new_question).data, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No suitable question found.'}, status=status.HTTP_404_NOT_FOUND)

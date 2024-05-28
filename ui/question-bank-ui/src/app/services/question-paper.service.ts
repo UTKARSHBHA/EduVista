@@ -33,7 +33,7 @@ getQuestionPaperById(id: string): Observable<any> {
   return this.http.get<any>(url);
 }
 
-getNewQuestion(questionToReplace: any, existingQuestions: any[]): Observable<any> {
+getNewQuestion(questionToReplace: any, selectedTags: any,  existingQuestions: any[]): Observable<any> {
   // Convert the existing questions array to a format that can be sent in the request
   const existingQuestionsIds = existingQuestions.map(q => q.id).join(',');
 
@@ -41,6 +41,7 @@ getNewQuestion(questionToReplace: any, existingQuestions: any[]): Observable<any
   
   const requestObject = {
     questionToReplace,
+    selectedTags,
     existingQuestionsIds
   };
 
