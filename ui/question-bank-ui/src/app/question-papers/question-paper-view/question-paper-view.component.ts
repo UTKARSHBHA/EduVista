@@ -20,6 +20,7 @@ export class QuestionPaperViewComponent implements OnInit {
 
   @Output() saveRequested = new EventEmitter<void>();
 
+  tags: any[] = [];
 
 
   constructor(
@@ -66,12 +67,16 @@ export class QuestionPaperViewComponent implements OnInit {
     }
 
 
-    
+    this.loadTags();
     
   }
 
   
-
+  loadTags(): void {
+    this.tagsService.getTags().subscribe((data: any) => {
+      this.tags = data;
+    });
+  }
  
 
   printQuestionPaper(): void {

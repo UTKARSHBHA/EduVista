@@ -18,7 +18,7 @@
 
       
       <ng-select [multiple]="true" [(ngModel)]="question.selectedTags">
-        @for (tag of question.tags; track tag.id) {
+        @for (tag of tags; track tag.id) {
           <ng-option [value]="tag.id">{{tag.name}}</ng-option>
         }
       </ng-select>
