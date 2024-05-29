@@ -14,13 +14,30 @@ import { NgSelectModule } from '@ng-select/ng-select';
   styleUrl: './question-paper-view.component.css',
 })
 export class QuestionPaperViewComponent implements OnInit {
+  filteredTags:any =[]
+  filterTags(e: any): void {
+    console.log("inside filterTags", e);
+    let searchTerm:any = e.term;
+    if(searchTerm.length < 3){
+      this.filteredTags = [];
+      return;
+    }
+    if (!searchTerm.trim()) {
+      // If the search term is empty, show all tags
+      this.filteredTags = [...this.tags];
+    } else {
+      // Filter tags based on the search term
+      this.filteredTags = this.tags.filter(tag => tag.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+  }
   @Input() questionPaper: any = [];
   @Input() showSaveButton: boolean = false;
   @Input() questionPaperID: string | null = null; // Add this line
 
   @Output() saveRequested = new EventEmitter<void>();
 
-  tags: any[] = [];
+  tags: any[] = [{name:'xyz',id:1}];
+  tags2: any[] = [{name:'xyz',id:1}];
 
 
   constructor(

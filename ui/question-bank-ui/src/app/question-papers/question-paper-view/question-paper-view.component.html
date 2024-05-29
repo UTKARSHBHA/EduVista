@@ -17,12 +17,23 @@
     <div class="replace-fields">
 
       
-      <ng-select [multiple]="true" [(ngModel)]="question.selectedTags">
+      <!-- <ng-select [multiple]="true" [(ngModel)]="question.selectedTags">
         @for (tag of tags; track tag.id) {
           <ng-option [value]="tag.id">{{tag.name}}</ng-option>
         }
-      </ng-select>
+      </ng-select> -->
       
+      <ng-select [multiple]="true" [(ngModel)]="question.selectedTags" (search)="filterTags($event)">
+        <ng-option *ngFor="let tag of filteredTags" [value]="tag.id">{{tag.name}}</ng-option>
+      </ng-select>
+
+
+      <!-- <ng-select [items]="filteredTags" 
+           bindLabel="name" 
+           bindValue="id" 
+           [(ngModel)]="question.selectedTags">
+      </ng-select> -->
+
       <i
       class="fas fa-exchange-alt replace-btn"
       (click)="getDifferentQuestion(i)"
