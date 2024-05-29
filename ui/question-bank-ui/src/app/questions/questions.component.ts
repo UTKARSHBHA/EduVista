@@ -184,7 +184,7 @@ export class QuestionsComponent implements OnInit {
   loadTopics(): void {
     this.topicsService.getTopics().subscribe((data: any) => {
       this.topics = data;
-      // console.log('topics', this.topics);
+      console.log('topics', this.topics);
     });
   }
 
@@ -308,6 +308,9 @@ export class QuestionsComponent implements OnInit {
       console.log('The dialog was closed', result);
       if(result && result.refresh){
         this.loadStandards();
+        this.updateFilteredData();
+        // make this async
+
       }
     });
 
@@ -320,8 +323,10 @@ export class QuestionsComponent implements OnInit {
     });
     this.SubjectModal.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed', result);
+      
       if(result && result.refresh){
         this.loadSubjects();
+        this.updateFilteredData();
       }
     });
     
@@ -334,8 +339,10 @@ export class QuestionsComponent implements OnInit {
     });
     this.TagModal.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed', result);
+      
       if(result && result.refresh){
         this.loadTags();
+        this.updateFilteredData();
       }
     });
     
@@ -348,8 +355,10 @@ export class QuestionsComponent implements OnInit {
     });
     this.TopicModal.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed', result);
+      
       if(result && result.refresh){
         this.loadTopics();
+        this.updateFilteredData();
       }
     });
   }
@@ -361,18 +370,28 @@ export class QuestionsComponent implements OnInit {
     });
     this.ChapterModal.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed', result);
+      this.updateFilteredData();
+
       if(result && result.refresh){
         this.loadChapters();
       }
     });
   }
 
-  onStandardSelected(standardId: any) {
-    // const standardId = event.id;
-    // Find the selected standard from the standards list
-    const selectedStandard = this.standards?.find(
-      (standard) => standard.id === standardId
-    );
+  onStandardSelected(e: any) {
+    // console.log(e);
+    // console.log(this.questionForm);
+    if(e){
+
+      let standardId = e.id;
+      this.questionForm.patchValue({standard: standardId});
+      // console.log("standardId", standardId);
+      // const standardId = event.id;
+      // Find the selected standard from the standards list
+      const selectedStandard = this.standards?.find(
+        (standard) => standard.id === standardId
+      );
+      console.log("selected standard", selectedStandard);
     if (selectedStandard && selectedStandard.subjects) {
       // Filter subjects based on the IDs stored in the selected standard's 'subjects' key
       this.filteredSubjects = this.subjects.filter((subject) =>
@@ -382,6 +401,11 @@ export class QuestionsComponent implements OnInit {
       // If no standard is selected or it has no subjects, reset the filtered subjects list
       this.filteredSubjects = [];
     }
+  }
+  else{
+    this.filteredSubjects = [];
+
+  }
     // Optionally, reset the selected subject, chapter, and topic
     this.questionForm.get('subject')?.setValue(null);
     this.questionForm.get('chapter')?.setValue(null);
@@ -390,15 +414,26 @@ export class QuestionsComponent implements OnInit {
     this.filteredTopics = [];
   }
 
-  onSubjectSelected(subjectId: any) {
-    // const subjectId = event.id;
-    this.filteredChapters = this.chapters.filter(
-      (chapter) => chapter.subject === subjectId
-    );
-    // Optionally, reset the selected chapter and topic
-    this.questionForm.get('chapter')?.setValue(null);
-    this.questionForm.get('topics')?.setValue(null);
-    this.filteredTopics = [];
+  onSubjectSelected(e: any) {
+    // console.log(e);
+    console.log(this.questionForm);
+
+    if(e){
+
+      const subjectId = e.id;
+      this.questionForm.patchValue({subject: subjectId});
+      this.filteredChapters = this.chapters.filter(
+        (chapter) => chapter.subject === subjectId
+      );
+    }
+    else{
+      this.filteredChapters = [];
+
+    }
+      // Optionally, reset the selected chapter and topic
+      this.questionForm.get('chapter')?.setValue(null);
+      this.questionForm.get('topics')?.setValue(null);
+      this.filteredTopics = [];
   }
   // onTagSelected(subjectId: any) {
   //   // const subjectId = event.id;
@@ -411,13 +446,50 @@ export class QuestionsComponent implements OnInit {
   //   this.filteredTopics = [];
   // }
 
-  onChapterSelected(chapterId: any) {
-    // const chapterId = event.id;
-    this.filteredTopics = this.topics.filter(
-      (topic) => topic.chapter === chapterId
-    );
-    console.log(this.filteredTopics);
-    // Optionally, reset the selected topic
-    this.questionForm.get('topics')?.setValue(null);
+  onChapterSelected(e: any) {
+    console.log(this.questionForm);
+
+    if(e){
+
+      const chapterId = e.id;
+      this.questionForm.patchValue({chapter: chapterId});
+      this.filteredTopics = this.topics.filter(
+        (topic) => topic.chapter === chapterId
+      );
+      console.log(this.filteredTopics);
+      // Optionally, reset the selected topic
+      this.questionForm.get('topics')?.setValue(null);
+    }
+  }
+
+
+  updateFilteredData(): void {
+    // console.log(this.questionForm);
+    // this.loadStandards();
+    // this.loadSubjects();
+    // this.loadChapters();
+    // this.loadTopics();
+    // console.log('topics',this.topics);
+    // console.log(this.questionForm);
+
+    const standard = this.questionForm.get('standard')?.value;
+    const subject = this.questionForm.get('subject')?.value;
+    const chapter = this.questionForm.get('chapter')?.value;
+
+    console.log(standard, subject, chapter);
+    
+    // console.log(standard);
+    if (standard) {
+      this.onStandardSelected({id: standard});  
+    }
+    // console.log(subject);
+    if (subject) {
+      this.onSubjectSelected({id: subject});
+    }
+    // console.log(chapter);
+    if (chapter) {
+      this.onChapterSelected({id: chapter});
+    }
+    
   }
 }

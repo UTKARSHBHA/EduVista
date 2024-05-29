@@ -44,7 +44,7 @@
           bindLabel="name"
           bindValue="id"
           formControlName="standard"
-          (change)="onStandardSelected($event.id)"
+          (change)="onStandardSelected($event)"
           placeholder="Select Standard"
         >
         </ng-select>
@@ -63,7 +63,7 @@
           bindLabel="name"
           bindValue="id"
           formControlName="subject"
-          (change)="onSubjectSelected($event.id)"
+          (change)="onSubjectSelected($event)"
           placeholder="Select Subject"
         >
         </ng-select>
@@ -83,7 +83,7 @@
           bindLabel="name"
           bindValue="id"
           formControlName="chapter"
-          (change)="onChapterSelected($event.id)"
+          (change)="onChapterSelected($event)"
           placeholder="Select Chapter"
         >
         </ng-select>
