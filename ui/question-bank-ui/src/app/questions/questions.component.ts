@@ -163,41 +163,76 @@ export class QuestionsComponent implements OnInit {
     });
   }
 
-  loadStandards(): void {
-    this.standardsService.getStandards().subscribe((data: any) => {
-      this.standards = data;
+  loadStandards(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.standardsService.getStandards().subscribe(
+        (data: any) => {
+          this.standards = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      );
     });
   }
-  // loadQuestions(): void {
-  //   this.questionsService.getQuestions().subscribe((data) => {
-  //     this.questions = data;
-  //   });
-  // }
+  loadChapters(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.chaptersService.getChapters().subscribe(
+        (data: any) => {
+          this.chapters = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+  loadTopics(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.topicsService.getTopics().subscribe(
+        (data: any) => {
+          this.topics = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+  loadSubjects(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.subjectsService.getSubjects().subscribe(
+        (data: any) => {
+          this.subjects = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+  loadTags(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.tagsService.getTags().subscribe(
+        (data: any) => {
+          this.tags = data;
+          resolve();
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
 
-  loadChapters(): void {
-    this.chaptersService.getChapters().subscribe((data: any) => {
-      this.chapters = data;
-      // console.log('chapters', this.chapters);
-    });
-  }
+  
 
-  loadTopics(): void {
-    this.topicsService.getTopics().subscribe((data: any) => {
-      this.topics = data;
-      console.log('topics', this.topics);
-    });
-  }
 
-  loadSubjects(): void {
-    this.subjectsService.getSubjects().subscribe((data: any) => {
-      this.subjects = data;
-    });
-  }
-  loadTags(): void {
-    this.tagsService.getTags().subscribe((data: any) => {
-      this.tags = data;
-    });
-  }
+
 
   selectedFile: File | null = null;
 
@@ -304,10 +339,10 @@ export class QuestionsComponent implements OnInit {
       width: '90vw',
       disableClose: true,
     });
-    this.StandardModal.afterClosed().subscribe((result: any) => {
+    this.StandardModal.afterClosed().subscribe(async (result: any) => {
       console.log('The dialog was closed', result);
       if(result && result.refresh){
-        this.loadStandards();
+        await this.loadStandards();
         this.updateFilteredData();
         // make this async
 
@@ -321,11 +356,11 @@ export class QuestionsComponent implements OnInit {
       height: '90vh',
       width: '90vw',
     });
-    this.SubjectModal.afterClosed().subscribe((result: any) => {
+    this.SubjectModal.afterClosed().subscribe(async (result: any) => {
       console.log('The dialog was closed', result);
       
       if(result && result.refresh){
-        this.loadSubjects();
+        await this.loadSubjects();
         this.updateFilteredData();
       }
     });
@@ -337,11 +372,11 @@ export class QuestionsComponent implements OnInit {
       height: '90vh',
       width: '90vw',
     });
-    this.TagModal.afterClosed().subscribe((result: any) => {
+    this.TagModal.afterClosed().subscribe(async (result: any) => {
       console.log('The dialog was closed', result);
       
       if(result && result.refresh){
-        this.loadTags();
+        await this.loadTags();
         this.updateFilteredData();
       }
     });
@@ -353,11 +388,11 @@ export class QuestionsComponent implements OnInit {
       height: '90vh',
       width: '90vw',
     });
-    this.TopicModal.afterClosed().subscribe((result: any) => {
+    this.TopicModal.afterClosed().subscribe(async (result: any) => {
       console.log('The dialog was closed', result);
       
       if(result && result.refresh){
-        this.loadTopics();
+        await this.loadTopics();
         this.updateFilteredData();
       }
     });
@@ -368,12 +403,12 @@ export class QuestionsComponent implements OnInit {
       height: '90vh',
       width: '90vw',
     });
-    this.ChapterModal.afterClosed().subscribe((result: any) => {
+    this.ChapterModal.afterClosed().subscribe(async (result: any) => {
       console.log('The dialog was closed', result);
-      this.updateFilteredData();
-
+      
       if(result && result.refresh){
-        this.loadChapters();
+        await this.loadChapters();
+        this.updateFilteredData();
       }
     });
   }

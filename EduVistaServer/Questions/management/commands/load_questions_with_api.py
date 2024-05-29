@@ -83,7 +83,7 @@ class Command(BaseCommand):
                             'user': user
                         }
                     )
-
+    
                     # If the question was not created (meaning it already existed), skip to the next iteration
                     if not created:
                         print('not created')
