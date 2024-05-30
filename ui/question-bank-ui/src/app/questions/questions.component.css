@@ -186,3 +186,8 @@ button:disabled {
   cursor: pointer;
   font-size: 1.5rem;
 }
+
+.questionText textarea{
+  width: 100%;
+  resize: vertical;
+}
