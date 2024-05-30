@@ -47,6 +47,9 @@ from rest_framework.permissions import DjangoModelPermissions
 from rest_framework_simplejwt.views import TokenObtainPairView
 from random import choice
 
+from .models import EntranceTest
+from .serializers import EntranceTestSerializer
+
 
 # Create a logger instance
 logger = logging.getLogger(__name__)
@@ -343,3 +346,15 @@ class TagViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+
+
+class EntranceTestViewSet(viewsets.ModelViewSet):
+    queryset = EntranceTest.objects.all()
+    serializer_class = EntranceTestSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def perform_create(self, serializer):
+        serializer.save()
+        return serializer.save()

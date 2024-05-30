@@ -7,6 +7,7 @@ import logging
 import uuid
 from datetime import datetime
 from .models import QuestionPaper
+from .models import EntranceTest
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -337,3 +338,13 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ['id', 'name', 'creator']
+
+
+
+class EntranceTestSerializer(serializers.ModelSerializer):
+    subject_name = serializers.StringRelatedField(source='subject.name')
+    standard_name = serializers.StringRelatedField(source='standard.name')
+
+    class Meta:
+        model = EntranceTest
+        fields = ['id', 'subject', 'standard', 'date', 'start_time', 'end_time', 'exam_type', 'registration_fee', 'description', 'location', 'subject_name', 'standard_name']
