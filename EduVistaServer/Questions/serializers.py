@@ -353,17 +353,8 @@ class EntranceTestSerializer(serializers.ModelSerializer):
 class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = ['name', 'email', 'phone_number', 'age', 'parents_name', 'parents_phone_number', 'highest_educational_qualification', 'entrance_test', 'candidate_id']
-
-    def to_representation(self, instance):
-        return {
-            'name': instance.name,
-            'email': instance.email,
-            'phone_number': instance.phone_number,
-            'age': instance.age,
-            'parents_name': instance.parents_name,
-            'parents_phone_number': instance.parents_phone_number,
-            'highest_educational_qualification': instance.highest_educational_qualification,
-            'entrance_test': instance.entrance_test,
-            'candidate_id': instance.candidate_id,
-        }
+        fields = [
+            'name', 'email', 'phone_number', 'date_of_birth', 'parents_name', 'parents_phone_number', 
+            'highest_qualification', 'educational_institution', 'year_of_completion', 
+            'entrance_test_applied_for', 'address', 'city', 'state'
+        ]

@@ -3,7 +3,6 @@ import { EntranceTestService } from '../services/entrance-test.service';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { DeleteButtonRendererComponent } from '../delete-button/delete-button.component';
-import { ViewButtonRendererComponent } from '../view-button/view-button.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionsService } from '../services/permissions.service';
 import { RegisterButtonRendererComponent } from '../register-button/register-button.component';
@@ -40,19 +39,9 @@ export class EntranceTestListComponent  implements OnInit {
       cellRenderer: RegisterButtonRendererComponent,
       onCellClicked: this.register.bind(this),
       maxWidth:200,
-      // hide: !this.permissionsService.getPermissions('Questions.add_candidate'),
 
     },
-    // {
-    //   headerName: 'Register',
-    //   field: 'actions',
-    //   cellRenderer: (params: any) => {
-    //     return `<button class="btn btn-sm btn-primary" onclick="navigateToCandidates(${params.value})">Register Candidate</button>`;
-    //   },
-    //   maxWidth: 150,
-    //   suppressSizeToFit: true,
-    //   checkboxSelection: true,
-    // }
+    
 
   ];
   autoSizeStrategy: any;
@@ -100,10 +89,7 @@ export class EntranceTestListComponent  implements OnInit {
       });
     }
   }
-  // view(e: any) {
-  //   console.log('veiw clicked');
-  //   this.router.navigate(['/question-paper-view', e.data.id]);
-  // }
+
 
   navigateToCandidates(entranceTestId: number) {
     this.router.navigate(['/candidates', entranceTestId], { relativeTo: this.route });
