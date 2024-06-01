@@ -370,7 +370,6 @@ class CandidateViewSet(viewsets.ModelViewSet):
     serializer_class = CandidateSerializer
     permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
-    def list(self, request, *args, **kwargs):
-        # Assuming you have a serializer context
-        serializer = CandidateSerializer(data=request.data)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        serializer.save()
+        return serializer.save()

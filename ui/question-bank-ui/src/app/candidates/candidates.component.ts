@@ -44,9 +44,9 @@ export class CandidatesComponent implements OnInit {
   
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const entranceTestId = params['entranceTestId'];
+      const candidateId = params['candidateId'];
       // Assuming you have a FormGroup instance named candidateForm
-      this.candidateForm.controls['entrance_test_applied_for'].setValue(entranceTestId);
+      this.candidateForm.controls['entrance_test_applied_for'].setValue(candidateId);
       console.log(this.candidateForm);
     });
 

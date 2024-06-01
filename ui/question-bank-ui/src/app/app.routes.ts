@@ -69,6 +69,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'candidate-list',
+    loadComponent: () =>
+      import('./candidate-list/candidate-list.component').then(
+        (m) => m.CandidateListComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'options',
     loadComponent: () =>
       import('./options/options.component').then((m) => m.OptionsComponent),
