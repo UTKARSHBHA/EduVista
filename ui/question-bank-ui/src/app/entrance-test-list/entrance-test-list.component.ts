@@ -26,7 +26,15 @@ export class EntranceTestListComponent  implements OnInit {
     { headerName: 'Registration Fee', field: 'registration_fee', filter: true, maxWidth: 200 },
     { headerName: 'Description', field: 'description', filter: true, maxWidth: 200 },
     { headerName: 'Location', field: 'location', filter: true, maxWidth: 200 },
-    // Add buttons if needed, similar to the example
+    {
+      field: 'Delete',
+      cellRenderer: DeleteButtonRendererComponent,
+      onCellClicked: this.delete.bind(this),
+      maxWidth:200,
+      hide: !this.permissionsService.getPermissions('Questions.delete_entrancetest'),
+
+    },
+
   ];
   autoSizeStrategy: any;
 
@@ -52,22 +60,22 @@ export class EntranceTestListComponent  implements OnInit {
     });
   }
 
-  // delete(e: any) {
-  //   this.deleteQuestionPaper(e.data.id);
-  // }
-  // deleteQuestionPaper(questionPaperId: number): void {
-  //   if (confirm('Are you sure you want to delete this question?')) {
-  //     this.questionPaperService.deleteQuestionPaper(questionPaperId).subscribe({
-  //       next: (response) => {
-  //         console.log('Question Paper deleted:', response);
-  //         this.loadQuestionPapers();
-  //       },
-  //       error: (error) => {
-  //         console.error('Error deleting question paper', error);
-  //       },
-  //     });
-  //   }
-  // }
+  delete(e: any) {
+    this.deleteEntranceTest(e.data.id);
+  }
+  deleteEntranceTest(entranceTestId: number): void {
+    if (confirm('Are you sure you want to delete this question?')) {
+      this.entranceTestService.deleteEntranceTest(entranceTestId).subscribe({
+        next: (response) => {
+          console.log('Question Paper deleted:', response);
+          this.loadEntranceTests();
+        },
+        error: (error) => {
+          console.error('Error deleting entrance test', error);
+        },
+      });
+    }
+  }
   // view(e: any) {
   //   console.log('veiw clicked');
   //   this.router.navigate(['/question-paper-view', e.data.id]);

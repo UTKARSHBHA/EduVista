@@ -17,6 +17,10 @@ export class EntranceTestService {
   getEntranceTests(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
-
+  deleteEntranceTest(id: number): Observable<any> {
+    const url = `${this.apiUrl}${id}/`;
+    return this.http.delete<any>(url);
+  }
+  
   
 }
