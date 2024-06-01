@@ -266,23 +266,25 @@ class Candidate(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     date_of_birth = models.DateField()
-    parents_name = models.CharField(max_length=255, blank=True)
-    parents_phone_number = models.CharField(max_length=15, blank=True)
+    parents_name = models.CharField(max_length=255,)
+    parents_phone_number = models.CharField(max_length=15,)
 
     # Education
-    highest_qualification = models.CharField(max_length=255, blank=True)
-    educational_institution = models.CharField(max_length=255, blank=True)
-    year_of_completion = models.IntegerField(blank=True, null=True)
+    highest_qualification = models.CharField(max_length=255, )
+    educational_institution = models.CharField(max_length=255, )
+    year_of_completion = models.IntegerField()
 
     # Test-related information
     entrance_test_applied_for = models.ForeignKey(
-        'EntranceTest', on_delete=models.SET_NULL, blank=True, null=True
+        'EntranceTest', on_delete=models.CASCADE
     )
 
     # Additional details
-    address = models.CharField(max_length=255, blank=True)
-    city = models.CharField(max_length=255, blank=True)
-    state = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    postal_code = models.CharField(max_length=10)
+    country = models.CharField(max_length=30)
 
     class Meta:
         verbose_name_plural = "candidates"

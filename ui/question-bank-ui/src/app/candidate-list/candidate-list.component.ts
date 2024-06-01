@@ -54,20 +54,29 @@ export class CandidateListComponent implements OnInit {
       headerName: 'Address',
       field: 'address',
       filter: true,
-      maxWidth: 200,
+      valueGetter: this.addressValueGetter,
+      maxWidth: 500,
+      tooltipValueGetter: this.addressValueGetter,
+    
     },
-    {
-      headerName: 'City',
-      field: 'city',
-      filter: true,
-      maxWidth: 200,
-    },
-    {
-      headerName: 'State',
-      field: 'state',
-      filter: true,
-      maxWidth: 200,
-    },
+    // {
+    //   headerName: 'Address',
+    //   field: 'address',
+    //   filter: true,
+    //   maxWidth: 200,
+    // },
+    // {
+    //   headerName: 'City',
+    //   field: 'city',
+    //   filter: true,
+    //   maxWidth: 200,
+    // },
+    // {
+    //   headerName: 'State',
+    //   field: 'state',
+    //   filter: true,
+    //   maxWidth: 200,
+    // },
   ];
   
   autoSizeStrategy: any;
@@ -93,6 +102,10 @@ export class CandidateListComponent implements OnInit {
     });
   }
 
+  addressValueGetter(params: any) {
+    const data = params.data;
+    return `${data.address}, ${data.city}, ${data.state}, ${data.postal_code}, ${data.country}`;
+  }
   // delete(e: any) {
   //   this.deleteEntranceTest(e.data.id);
   // }
