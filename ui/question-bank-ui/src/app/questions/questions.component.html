@@ -107,26 +107,7 @@
         >
         </ng-select>
       </div>
-      <!-- <div class="fields">
-        <div class="labelButton">
-          <label for="tag">Tag:</label>
-          <i
-            style="font-size: 30px; color: green; cursor: pointer"
-            class="fa-solid fa-circle-plus"
-            (click)="openTagModal()"
-          ></i>
-        </div>
-        <ng-select
-          [items]="tags"
-          bindLabel="name"
-          bindValue="id"
-          [multiple]="true"
-
-          formControlName="tag"
-          placeholder="Select Tag"
-        >
-        </ng-select>
-      </div> -->
+      
       <div class="fields">
         <label for="marks">Marks:</label>
         <input id="marks" type="number" formControlName="marks" min="1" />
@@ -166,7 +147,6 @@
               type="checkbox"
               formControlName="is_correct"
             />
-            <!-- </div> -->
             <button
               *ngIf="optionsArray.length > 2"
               (click)="removeOption(i)"
@@ -179,7 +159,6 @@
       </div>
     </div>
     }
-    <!-- </div> -->
     <div class="btnList">
       @if(questionId){
       <button type="submit" [disabled]="!questionForm.valid">

@@ -39,6 +39,10 @@
 
     <li><a routerLink="/teacher-list">Teacher</a></li>
     }
+    @if(permissionsService.getPermissions('Questions.view_entrancetest')){
+
+    <li><a routerLink="/entrance-test">Entrance Test List</a></li>
+    }
   </ul>
   <div class="navbar-actions">
     <!-- <button *ngIf="authService.isTokenExpired()" (click)="login()">

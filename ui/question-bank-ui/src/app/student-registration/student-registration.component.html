@@ -4,12 +4,9 @@
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     @if(!studentId){
-    <!-- <div formGroupName="user" class="userInfo"> -->
     <div formGroupName="user" class="form-group">
-      <!-- <div class="input-group"> -->
         <label for="username">Username *</label>
         <input type="text" id="username" formControlName="username" />
-      <!-- </div> -->
       <div
         *ngIf="registrationForm.get('user.username')?.errors?.['required'] && registrationForm.get('user.username')?.touched"
         class="error"
@@ -45,12 +42,7 @@
         id="confirmPassword"
         formControlName="confirmPassword"
       />
-      <!-- <div
-        *ngIf="registrationForm.get('user.confirmPassword')?.errors?.['required'] && registrationForm.get('user.confirmPassword')?.touched" 
-        class="error"
-        >
-        Confirm Password is required
-      </div> -->
+      
       <div
       *ngIf="registrationForm.get('user')?.errors?.['notSame'] && registrationForm.get('user.confirmPassword')?.touched"
       class="error"
@@ -58,7 +50,6 @@
       Passwords do not match.
     </div>
   </div>
-    <!-- </div> -->
     }
     <div class="form-group">
       <label for="first_name">First Name *</label>
@@ -138,7 +129,6 @@
       Admission Date is required
     </div>
   </div>
-    <!-- Address fields -->
     <div class="form-group">
       <label for="address_line1">Address Line 1 *</label>
       <input type="text" id="address_line1" formControlName="address_line1" />
@@ -193,7 +183,6 @@
       Country is required
     </div>
   </div>
-    <!-- Profile picture -->
     <div class="form-group">
       <label for="profile_picture" class="custom-file-upload"
         >Profile Picture</label
@@ -207,7 +196,6 @@
       />
       <input type="hidden" formControlName="image" />
     </div>
-    <!-- Parent/Guardian fields -->
     <div class="form-group">
       <label for="parent_guardian_name">Parent/Guardian Name *</label>
       <input
@@ -250,7 +238,6 @@
       Parent/Guardian Email is required
     </div>
     </div>
-    <!-- Emergency contact -->
     <div class="form-group">
       <label for="emergency_contact_name">Emergency Contact Name *</label>
       <input
@@ -279,9 +266,7 @@
       Emergency Contact Number is required
     </div>
     </div>
-    <!-- <div *ngIf="registrationForm.errors?.['notMatching']" class="error-message">
-      Passwords do not match.
-    </div> -->
+  
     @if(studentId){
 
     <button
