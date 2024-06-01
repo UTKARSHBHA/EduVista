@@ -1,0 +1,71 @@
+<div class="candidates">
+    <h2>Add Candidate</h2>
+    <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name*</label>
+        <input type="text" id="name" formControlName="name" class="form-control" required>
+        <div *ngIf="candidateForm.get('name')?.errors?.['required'] && candidateForm.get('name')?.touched" class="error">
+          Name is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email*</label>
+        <input type="email" id="email" formControlName="email" class="form-control" required>
+        <div *ngIf="candidateForm.get('email')?.errors?.['required'] || candidateForm.get('email')?.errors?.['email'] && candidateForm.get('email')?.touched" class="error">
+          Email is required and must be a valid format
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone_number">Phone Number*</label>
+        <input type="tel" id="phone_number" formControlName="phone_number" class="form-control" required>
+        <div *ngIf="candidateForm.get('phone_number')?.errors?.['required'] && candidateForm.get('phone_number')?.touched" class="error">
+          Phone Number is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="date_of_birth">Date of Birth*</label>
+        <input type="date" id="date_of_birth" formControlName="date_of_birth" class="form-control" required>
+        <div *ngIf="candidateForm.get('date_of_birth')?.errors?.['required'] && candidateForm.get('date_of_birth')?.touched" class="error">
+          Date of Birth is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="parents_name">Parents' Name</label>
+        <input type="text" id="parents_name" formControlName="parents_name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="parents_phone_number">Parents' Phone Number</label>
+        <input type="tel" id="parents_phone_number" formControlName="parents_phone_number" class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="highest_qualification">Highest Qualification</label>
+        <input type="text" id="highest_qualification" formControlName="highest_qualification" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="educational_institution">Educational Institution</label>
+        <input type="text" id="educational_institution" formControlName="educational_institution" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="year_of_completion">Year of Completion</label>
+        <input type="number" id="year_of_completion" formControlName="year_of_completion" class="form-control">
+      </div>
+  
+  
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" formControlName="address" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" formControlName="city" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" id="state" formControlName="state" class="form-control">
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Add Candidate</button>
+    </form>
+  </div>
+  

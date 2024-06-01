@@ -55,6 +55,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'candidates/:entranceTestId',
+    loadComponent: () =>
+      import('./candidates/candidates.component').then((m) => m.CandidatesComponent),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'entrance-test-list',
     loadComponent: () =>
       import('./entrance-test-list/entrance-test-list.component').then(

@@ -1,0 +1,76 @@
+/* General styling for the candidates component */
+.candidates {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: fit-content;
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    min-height: 90vh;
+}
+
+/* Form styling */
+.candidates form {
+    width: 60vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    background-color: #ffffff; /* White background for the form */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Form group styling */
+.candidates .form-group {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Input and select styling */
+.candidates .form-group input,
+.candidates .form-group select {
+    width: 100%; /* Full width to utilize the form width */
+    padding: 0.5rem;
+    border: 1px solid #ced4da; /* Light grey border */
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+/* Button styling */
+.candidates button {
+    flex-basis: 100%;
+    margin: auto;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; /* Primary blue */
+    color: #ffffff; /* White text */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.candidates button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Error message styling */
+.candidates .error {
+    color: red;
+    padding-bottom: 1rem;
+}
+
+/* Close modal button styling */
+.candidates .closeModal {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
