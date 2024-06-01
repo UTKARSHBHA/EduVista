@@ -51,6 +51,11 @@ from .models import EntranceTest
 from .serializers import EntranceTestSerializer
 
 
+from rest_framework import viewsets
+from.models import Candidate
+from.serializers import CandidateSerializer
+
+
 # Create a logger instance
 logger = logging.getLogger(__name__)
 
@@ -358,3 +363,14 @@ class EntranceTestViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
         return serializer.save()
+
+
+class CandidateViewSet(viewsets.ModelViewSet):
+    queryset = Candidate.objects.all()
+    serializer_class = CandidateSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+
+    def list(self, request, *args, **kwargs):
+        # Assuming you have a serializer context
+        serializer = CandidateSerializer(data=request.data)
+        return Response(serializer.data)

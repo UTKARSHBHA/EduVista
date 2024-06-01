@@ -259,3 +259,33 @@ class EntranceTest(models.Model):
 
     def __str__(self):
         return f"{self.subject.name} - {self.standard.name} - {self.date} - {self.start_time} to {self.end_time}"
+
+
+class Candidate(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15)
+    date_of_birth = models.DateField()
+    parents_name = models.CharField(max_length=255, blank=True)
+    parents_phone_number = models.CharField(max_length=15, blank=True)
+
+    # Education
+    highest_qualification = models.CharField(max_length=255, blank=True)
+    educational_institution = models.CharField(max_length=255, blank=True)
+    year_of_completion = models.IntegerField(blank=True, null=True)
+
+    # Test-related information
+    entrance_test_applied_for = models.ForeignKey(
+        'EntranceTest', on_delete=models.SET_NULL, blank=True, null=True
+    )
+
+    # Additional details
+    address = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
+    state = models.CharField(max_length=255, blank=True)
+
+    class Meta:
+        verbose_name_plural = "candidates"
+
+    def __str__(self):
+        return self.name

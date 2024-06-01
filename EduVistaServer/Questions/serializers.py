@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import Group, CustomUser
 from rest_framework import serializers
-from .models import CustomUser, Question, Chapter, Student, Subject, Standard, Tag, Teacher, Topic, Option
+from .models import Candidate, CustomUser, Question, Chapter, Student, Subject, Standard, Tag, Teacher, Topic, Option
 import base64
 from django.core.files.base import ContentFile
 import logging
@@ -348,3 +348,22 @@ class EntranceTestSerializer(serializers.ModelSerializer):
     class Meta:
         model = EntranceTest
         fields = ['id', 'subject', 'standard', 'date', 'start_time', 'end_time', 'exam_type', 'registration_fee', 'description', 'location', 'subject_name', 'standard_name']
+
+
+class CandidateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidate
+        fields = ['name', 'email', 'phone_number', 'age', 'parents_name', 'parents_phone_number', 'highest_educational_qualification', 'entrance_test', 'candidate_id']
+
+    def to_representation(self, instance):
+        return {
+            'name': instance.name,
+            'email': instance.email,
+            'phone_number': instance.phone_number,
+            'age': instance.age,
+            'parents_name': instance.parents_name,
+            'parents_phone_number': instance.parents_phone_number,
+            'highest_educational_qualification': instance.highest_educational_qualification,
+            'entrance_test': instance.entrance_test,
+            'candidate_id': instance.candidate_id,
+        }
