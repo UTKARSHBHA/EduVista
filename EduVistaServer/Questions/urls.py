@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import EntranceTestViewSet, QuestionViewSet, ChapterViewSet, StandardViewSet, StudentViewSet, TagViewSet, TeacherViewSet, TopicViewSet, SubjectViewSet, OptionViewSet, QuestionPaperViewSet
+from .views import CandidateViewSet, EntranceTestViewSet, QuestionViewSet, ChapterViewSet, StandardViewSet, StudentViewSet, TagViewSet, TeacherViewSet, TopicViewSet, SubjectViewSet, OptionViewSet, QuestionPaperViewSet
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -16,6 +16,7 @@ from.views import GetNewQuestionView
 
 router = DefaultRouter()
 router.register(r'entrance-tests', EntranceTestViewSet)
+router.register(r'candidates', CandidateViewSet)
 
 router.register(r'questions', QuestionViewSet)
 router.register(r'standards', StandardViewSet)
