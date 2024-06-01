@@ -262,10 +262,13 @@ class EntranceTest(models.Model):
 
 
 class Candidate(models.Model):
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, blank=True)    
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     date_of_birth = models.DateField()
+    gender = models.CharField(max_length=10, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
     parents_name = models.CharField(max_length=255,)
     parents_phone_number = models.CharField(max_length=15,)
 
@@ -290,4 +293,4 @@ class Candidate(models.Model):
         verbose_name_plural = "candidates"
 
     def __str__(self):
-        return self.name
+        return f"{self.first_name} {self.last_name}"

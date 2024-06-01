@@ -353,8 +353,8 @@ class EntranceTestSerializer(serializers.ModelSerializer):
 class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = [
-            'name', 'email', 'phone_number', 'date_of_birth', 'parents_name', 'parents_phone_number', 
-            'highest_qualification', 'educational_institution', 'year_of_completion', 
-            'entrance_test_applied_for', 'address', 'city', 'state'
+        fields = ['id',
+            'first_name', 'last_name', 'middle_name', 'email', 'phone_number', 'date_of_birth', 'gender', 
+            'parents_name', 'parents_phone_number', 'highest_qualification', 'educational_institution', 
+            'year_of_completion', 'entrance_test_applied_for', 'address', 'city', 'state', 'postal_code', 'country'
         ]
