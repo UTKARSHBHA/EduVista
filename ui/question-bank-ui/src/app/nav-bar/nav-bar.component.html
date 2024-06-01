@@ -39,9 +39,13 @@
 
     <li><a routerLink="/teacher-list">Teacher</a></li>
     }
+    @if(permissionsService.getPermissions('Questions.add_entrancetest')){
+
+    <li><a routerLink="/entrance-test">Entrance Test</a></li>
+    }
     @if(permissionsService.getPermissions('Questions.view_entrancetest')){
 
-    <li><a routerLink="/entrance-test">Entrance Test List</a></li>
+    <li><a routerLink="/entrance-test-list">Entrance Test List</a></li>
     }
   </ul>
   <div class="navbar-actions">

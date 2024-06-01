@@ -55,6 +55,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'entrance-test-list',
+    loadComponent: () =>
+      import('./entrance-test-list/entrance-test-list.component').then(
+        (m) => m.EntranceTestListComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'options',
     loadComponent: () =>
       import('./options/options.component').then((m) => m.OptionsComponent),

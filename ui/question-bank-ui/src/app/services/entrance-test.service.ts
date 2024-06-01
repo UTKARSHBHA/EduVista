@@ -14,6 +14,9 @@ export class EntranceTestService {
   createEntranceTest(testData: any) {
     return this.http.post<any>(this.apiUrl, testData);
   }
+  getEntranceTests(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 
   
 }

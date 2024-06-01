@@ -18,7 +18,6 @@ export class QuestionPapersListComponent implements OnInit {
   rowData: any[] = [];
   colDefs: ColDef[] = [
     { headerName: 'ID', field: 'id', maxWidth:200,filter: true },
-    //  { headerName: 'Title', field: 'title', filter: true },
     { headerName: 'Created By',field: 'user', maxWidth: 200,filter: true },
 
     { headerName: 'Standard', field: 'standard_name', maxWidth: 200, filter: true },
